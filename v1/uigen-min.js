@@ -1,1 +1,5081 @@
-var naviman_domain="https://naviman.shopifas.com/",naviman_css="https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify@latest/v1/uigen-min.css",UIGEN_ENV="DEPLOYMENT",naviman_json_cdn="https://naviplus.b-cdn.net/naviplus/data/json",naviman_json_files="https://naviplus.b-cdn.net/naviplus/data/",naviman_cache_miniseconds=36e5;void 0===naviman&&(window.isWelcomeLogged||(console.log("%cNavi+ is Menu Builder for Mobile + Desktop: Sticky Navbar, Tab bar, Mega Menu, Slide Menu & Grid Menu.. | Website: https://apps.shopify.com/pronavi-navigation-design","color:green; font-size: 16px"),window.isWelcomeLogged=!0));var naviman=function(){var VERTICAL_CHILDREN_WIDTH=200,DESKTOP_MAX_WIDTH=400,SCROLL_TO_HIDE=58,BOX_SHADOW="box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10);",shop="",embed_id="",windowWidth=window.innerWidth,windowHeight=window.innerHeight,cartCount=0,BADGE_HIDE=0,BADGE_DOT=1,BADGE_ISCART_WITHCOUNT=2,navimanData=[];"undefined"==typeof NAVIGLOBAL&&(NAVIGLOBAL=[],NAVIGLOBAL.ITEM_KINDS=[],NAVIGLOBAL.MENU_KINDS=[],NAVIGLOBAL.ITEM_KINDS={ICON_IMAGE_TEXT:1,GROUP_TITLE:2,BLANK_SPACE:3,BIG_IMAGE_TEXT:4,CUSTOM_HTML:5,BUTTON:6},NAVIGLOBAL.ITEM_DISPLAY_LAYOUT={TOP_DOWN:1,LEFT_RIGHT:2,ICON_IMAGE_ONLY:3,TEXT_ONLY:4,EMPTY:5},NAVIGLOBAL.MENU_KINDS={STICKY_MOBILE_TABBAR:1,STICKY_MOBILE_HEADER:2,STICKY_FAB_SUPPORT:11,SECTION_MOBILE_HEADER:20,SECTION_MOBILE_MEGAMENU:31,SECTION_MOBILE_GRID:41,SECTION_MOBILE_BANNER:42,SECTION_MEGAMENU:131,STICKY_HAMBURGER:141,CONTEXT_DROPDOWN:151},NAVIGLOBAL.MOBILE_POSITION={BOTTOM:1,TOP:2,RIGHT_CENTER:3,LEFT_CENTER:4,RIGHT_BOTTOM:5,LEFT_BOTTOM:6},NAVIGLOBAL.DESKTOP_POSITION={BOTTOM_CENTER_FLOAT:0,BOTTOM_CENTER:1,BOTTOM_RIGHT:2,BOTTOM_LEFT:3,BOTTOM_FULL:4,RIGHT_TOP:5,LEFT_TOP:6,LEFT_FULL_TOP:7,LEFT_FULL_CENTER:8,RIGHT_FULL_TOP:9,RIGHT_FULL_CENTER:10,TOP_FULL:11},NAVIGLOBAL.LAYOUT={DEFAULT:1,HIGHLIGHT:2,FLOATING:3,FAB:4});var clearCSS_JS=function(e){return void 0===e?"":e=(e=(e=(e=(e=e.trim()).strReplace("<script>","")).strReplace("<\/script>","")).strReplace("<style>","")).strReplace("</style>","")},addStyleToHeader=function(e){var t=document.createElement("style");t.type="text/css",t.styleSheet?t.styleSheet.cssText=e:t.appendChild(document.createTextNode(e)),document.getElementsByTagName("head")[0].appendChild(t)},isHadValue=function(e){return void 0!==e&&""!=e.toString().trim()},defaultValue=function(e,t){return void 0===e||""==e.toString().trim()?t:platformValue(e)},isElitePlan=function(e){return void 0!==e&&void 0!==e.plan&&"Elite"==e.plan},standardizeCSS=function(e,t){if(""==e)return e;if((e=(e=(e=(e=(e=e.replace(/\/\*[\s\S]*?\*\//g,"")).replace(/\s{2,}/g," ")).replace(/\s*({|}|,|;|:)\s*/g,"$1")).replace(/&nbsp;/g," ")).trim()).length>=t.length+1&&e.substring(0,t.length+1)=="."+t)return e;var n,i,o,a,l=t.length;t=" #"+t+" ",e=(e=(e=e.replace(/\/\*(?:(?!\*\/)[\s\S])*\*\/|[\r\n\t]+/g,"")).replace(/}(\s*)@/g,"}@")).replace(/}(\s*)}/g,"}}");for(var r=0;r<e.length-2;r++)n=e[r],i=e[r+1],"@"===n&&"f"!==i&&(o=!0),o||"{"!==n||(a=!0),a&&"}"===n&&(a=!1),a||"@"===i||"}"===i||"}"!==n&&","!==n&&("{"!==n&&";"!==n||!o)||(e=e.slice(0,r+1)+t+e.slice(r+1),r+=l,o=!1);return 0!==e.indexOf(t)&&0!==e.indexOf("@")&&(e=" "+t+e),e},isMobileMode=function(){return windowWidth<=768},getCurrentTemplate=function(){let e=window.location.pathname.toUpperCase().trim();return"/"==e||""==e?"index":e.includes("PRODUCTS")?"products":e.includes("COLLECTIONS")?"collections":e.includes("PAGES")?"pages":e.includes("BLOGS")?"blogs":"others"},jsonp=function(e){return new Promise((function(t,n){var i="_"+Math.round(1e4*Math.random()),o="jsonp_callback_"+i;window[o]=function(e){delete window[o];var n=document.getElementById(i);n.parentNode.removeChild(n),t(e)};var a=e+"&callback="+o,l=document.createElement("script");l.src=a,l.id=i,l.addEventListener("error",n),(document.getElementsByTagName("head")[0]||document.body||document.documentElement).appendChild(l)}))},displayElement=function(e,t,n="block"){isNull(e)||isNull(e.style)||(e.style.display=t?n:"none")},isNull=function(e){return null==e||void 0===e};String.prototype.strReplace=function(e,t){var n=e.replace(/[-\/\\^$*+?.()|[\]{}]/g,"\\$&"),i=new RegExp(n,"ig");return this.replace(i,t)};var debugConsole=function(e){"DEVELOPMENT"==UIGEN_ENV&&console.log(e)},itemMedia=function(e,t,n,i="",o,a="",l="",r=""){let u=!0;(void 0===t||""==t.trim())&&(u=!1);var c="";""!=o&&"0"!=o&&(c+=" height: fit-content; ");var s="";if(""!=a&&(s+=' style="height:'+a+'px" '),u){d='<div class="image-border" '+l+' ><span class="image-box" '+i+'><span class="image"><img '+s+' src="'+naviman_json_files+t+'"></span></span></div>';return""!=r&&(d=r+d+"</a>"),d}var d='<span class="icon" style="'+c+'" ><i class="'+e+'" '+i+"></i></span>";return""!=r&&(d=r+d+"</a>"),d},defaultMarginPadding=function(e){return null==e&&(e={top:0,right:0,bottom:0,left:0}),e.top=platformValue(e.top),e.right=platformValue(e.right),e.bottom=platformValue(e.bottom),e.left=platformValue(e.left),""==e.top&&(e.top=0),""==e.right&&(e.right=0),""==e.bottom&&(e.bottom=0),""==e.left&&(e.left=0),e};function encodeBody(e){var t=e;const n=t.split("body=");if(2==n.length){var i=encodeURIComponent(n[1]);t=n[0]+"body="+i}return t}function isUrlContain(e){var t=window.location.pathname+window.location.search;t=t.toLowerCase();var n=e.split(",");for(let e=0;e<n.length;e++)if(n[e]=n[e].trim().toLowerCase(),""!=n[e]&&t.includes(n[e]))return!0;return!1}function isUserLoggedIn(){try{if(null==window.ShopifyAnalytics.meta.page.customerId)return!1}catch({name:e,message:t}){return!1}return!0}var hexToRgba=function(e,t=1){return e=e.replace("#",""),`rgba(${parseInt(e.substring(0,2),16)}, ${parseInt(e.substring(2,4),16)}, ${parseInt(e.substring(4,6),16)}, ${t})`},isSettingBeTrue=function(e,t=!1){return isHadValue(e)?1==e||"true"==e:t},removeExtraSpaces=function(e){return e.replace(/\s+/g," ").trim()},menuPositionClass=function(e){var t="";switch(parseInt(e.setting.mobilePosition)){case NAVIGLOBAL.MOBILE_POSITION.BOTTOM:t+=" mobile-bottom ";break;case NAVIGLOBAL.MOBILE_POSITION.TOP:t+=" mobile-top ";break;case NAVIGLOBAL.MOBILE_POSITION.RIGHT_CENTER:t+=" mobile-right-center ";break;case NAVIGLOBAL.MOBILE_POSITION.LEFT_CENTER:t+=" mobile-left-center ";break;case NAVIGLOBAL.MOBILE_POSITION.RIGHT_BOTTOM:t+=" mobile-right-bottom ";break;case NAVIGLOBAL.MOBILE_POSITION.LEFT_BOTTOM:t+=" mobile-left-button "}switch(parseInt(e.setting.desktopPosition)){case NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_CENTER_FLOAT:t+=" desktop-bottom-center-float ";break;case NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_CENTER:t+=" desktop-bottom-center ";break;case NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_RIGHT:case NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_RIGHT:t+=" desktop-bottom-right ";break;case NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_LEFT:t+=" desktop-bottom-left ";break;case NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_FULL:t+=" desktop-bottom-full ";break;case NAVIGLOBAL.DESKTOP_POSITION.RIGHT_TOP:t+=" desktop-right-top ";break;case NAVIGLOBAL.DESKTOP_POSITION.LEFT_TOP:t+=" desktop-left-top ";break;case NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_TOP:t+=" desktop-left-full-top ";break;case NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_CENTER:t+=" desktop-left-full-center ";break;case NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_TOP:t+=" desktop-right-full-top ";break;case NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_CENTER:t+=" desktop-right-full-center ";break;case NAVIGLOBAL.DESKTOP_POSITION.TOP_FULL:t+=" desktop-top-full "}return t},showNaviOverlay=function(){null!=document.getElementsByClassName("naviman_app_overlay")&&0!=document.getElementsByClassName("naviman_app_overlay").length&&(document.getElementsByClassName("naviman_app_overlay")[0].style.display="block")},hideNaviOverlay=function(){null!=document.getElementsByClassName("naviman_app_overlay")&&0!=document.getElementsByClassName("naviman_app_overlay").length&&(document.getElementsByClassName("naviman_app_overlay")[0].style.display="none")},showNaviOverlayGlobal=function(){null!=document.getElementsByClassName("naviman_app_overlay_global")&&0!=document.getElementsByClassName("naviman_app_overlay_global").length&&(document.getElementsByClassName("naviman_app_overlay_global")[0].style.display="block",document.body.style.overflow="hidden")},hideNaviOverlayGlobal=function(){null!=document.getElementsByClassName("naviman_app_overlay_global")&&0!=document.getElementsByClassName("naviman_app_overlay_global").length&&(document.getElementsByClassName("naviman_app_overlay_global")[0].style.display="none",document.body.style.overflow="initial")},isBackendMode=function(){return"undefined"!=typeof DEPLOY_ENVIROIMENT&&"DESIGNING"==DEPLOY_ENVIROIMENT},getSEOUrl=function(e){var t=window.location.origin;return""==(e=e.trim())?t:"#"==e||e.includes("html")?e:e.includes("open:")||e.includes("scroll:")||e.includes("javascript:")||e.includes("tel:")||e.includes("sms:")||e.includes("mailto:")||e.includes("share:")?"":t+"/"+e},getMenuKind=function(e,t){return isBackendMode()?"undefined"!=typeof fakeMenuKind?fakeMenuKind:"1":void 0!==e&&void 0!==e.bottombars&&void 0!==e.bottombars[t]?e.bottombars[t]:-1},getClassOfMenuKind=function(e,t){switch(getMenuKind(e,t)){case NAVIGLOBAL.MENU_KINDS.STICKY_MOBILE_TABBAR:return"STICKY_MOBILE_TABBAR";case NAVIGLOBAL.MENU_KINDS.STICKY_MOBILE_HEADER:return"STICKY_MOBILE_HEADER";case NAVIGLOBAL.MENU_KINDS.STICKY_FAB_SUPPORT:return"STICKY_FAB_SUPPORT";case NAVIGLOBAL.MENU_KINDS.STICKY_MOBILE_TABBAR:return"STICKY_MOBILE_TABBAR";case NAVIGLOBAL.MENU_KINDS.SECTION_MOBILE_HEADER:return"SECTION_MOBILE_HEADER";case NAVIGLOBAL.MENU_KINDS.SECTION_MOBILE_MEGAMENU:return"SECTION_MOBILE_MEGAMENU";case NAVIGLOBAL.MENU_KINDS.SECTION_MOBILE_GRID:return"SECTION_MOBILE_GRID";case NAVIGLOBAL.MENU_KINDS.SECTION_MOBILE_BANNER:return"SECTION_MOBILE_BANNER";case NAVIGLOBAL.MENU_KINDS.SECTION_MEGAMENU:return"SECTION_MEGAMENU";case NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER:return"STICKY_HAMBURGER";case NAVIGLOBAL.MENU_KINDS.CONTEXT_DROPDOWN:return"CONTEXT_DROPDOWN"}};function stringToArray(e){return e.split(/[,;]/).map((e=>e.trim())).filter((e=>""!==e))}function removeAllEventListeners(e){const t=e.cloneNode(!0);return e.parentNode.replaceChild(t,e),t}function encodeQuery(e){let t=btoa(e);return t=t.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""),t}function decodeQuery(e){return e=e.replace(/-/g,"+").replace(/_/g,"/"),atob(e)}function parseAttributes(e){return e.split(/[,;]+/).map((e=>e.trim())).filter((e=>/^[a-zA-Z0-9_-]+\s*=\s*[^\s]+/.test(e)))}function formatAttributes(e){return e.map((e=>{let[t,n]=e.split("=");return t=t.trim().replace(/\s+/g,"-"),`${t}="${n.trim()}"`})).join(" ")}function standardizeFunctionString(e){var t=e.replace(/function\s+([a-zA-Z_$][\w$]*)\s*\(([^)]*)\)\s*\{/g,"Navi.$1 = function($2) {");return t=t.replace(/var\s+([a-zA-Z_$][\w$]*)\s*=\s*function\s*\(([^)]*)\)\s*\{/g,"Navi.$1 = function($2) {")}var platformValue=function(e){if(""!=e){if("string"!=typeof e)return e;if(e.startsWith("|")&&(e=e.slice(1)),e.endsWith("|")&&(e=e.slice(0,-1)),!e.includes("|"))return e;const t=e.split("|");return window.innerWidth<=768?""!==t[0]?t[0].trim():t[1].trim()||"":""!==t[1]?t[1].trim():t[0].trim()||""}return e},generateCSS_init=function(e){e.submenuWidth=defaultValue(e.submenuWidth,200),e.textSize=defaultValue(e.textSize,10),e.spaceTextIcon=defaultValue(e.spaceTextIcon,2),e.iconSize=defaultValue(e.iconSize,22),e.height=defaultValue(e.height,54),e.borderRadius=defaultValue(e.borderRadius,0),e.opacity=defaultValue(e.opacity,100),e.bottomMargin=defaultValue(e.bottomMargin,""),e.settingMargin=defaultMarginPadding(e.settingMargin),e.settingPadding=defaultMarginPadding(e.settingPadding)},generateCSS_paddingMargin=function(e,t,n){var i="";return i+=t+" { margin: "+e.settingMargin.top+"px "+e.settingMargin.right+"px "+e.settingMargin.bottom+"px "+e.settingMargin.left+"px  } ",i+=t+" { padding: "+e.settingPadding.top+"px "+e.settingPadding.right+"px "+e.settingPadding.bottom+"px "+e.settingPadding.left+"px  } "},generateCSS_UI_Level1_Menuitems=function(e,t,n,i,o){var a="";if(isHadValue(e.textColor)&&(a+=t+" ul li.item .name { color: "+e.textColor+"; } ",a+=t+" ul li.item .description { color: "+e.textColor+"; } "),isHadValue(e.fontFamily)){let i='<style> @import url("https://fonts.googleapis.com/css2?family='+e.fontFamily+'&display=swap"); </style>';n.insertAdjacentHTML("beforebegin",i),a+=t+' {font-family: "'+e.fontFamily.strReplace("+"," ")+'", "Roboto"} '}if(isHadValue(e.textSize)&&(a+=t+" ul li.item > .inner .name { font-size: "+e.textSize+"px; } ",a+=t+" ul li.item > .inner .name > { font-size: "+e.textSize+"px; } "),isHadValue(e.dividerColor)&&(a+=t+" ul li.item_divider { border-color: "+e.dividerColor+"; } "),isHadValue(e.badgeColor)&&(a+=t+"ul li.item_badge .inner .icon::before, "+t+" ul li.item_badge .inner .image::before { color: "+e.badgeColor+"; } "),isHadValue(e.iconColor)&&(a+=t+"ul li.item .icon i { color: "+e.iconColor+"; } "),isHadValue(e.iconSize)&&(a+=t+"ul li.item .icon i { font-size: "+e.iconSize+"px; } ",a+=t+"ul li.item ul li.child .icon i { font-size: "+e.iconSize+"px; } ",a+=t+"ul li.item ul li.child .icon { height: "+(parseInt(e.iconSize)+4)+"px; } ",a+=t+"ul li.item ul li.child .info { width: calc(100% -   "+parseInt(e.iconSize)+"px); } ",a+=t+"ul li.item .image img { height: "+e.iconSize+"px; } ",a+=t+"ul li.item ul li.child .image img { height: "+e.iconSize+"px; } ",a+=t+"ul li.item ul li.child .image { height: "+(parseInt(e.iconSize)+4)+"px; } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(a+=t+" ul li.item_primary > .inner { left: calc(50% - 26px); position: absolute; padding-top: "+(16-(e.iconSize-12)/2)+"px; } ")),("true"==e.textHide||1==e.textHide)&&(a+=t+" ul li.item > .inner .name { display:none; } ",a+=t+" ul li.item > .inner .description { display:none; } ",e.layout!=NAVIGLOBAL.LAYOUT.FAB)){let n=!1;if(isMobileMode()&&(e.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.RIGHT_CENTER&&e.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.LEFT_CENTER&&e.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.RIGHT_BOTTOM&&e.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.LEFT_BOTTOM||(n=!0)),isMobileMode()||e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_TOP&&e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_TOP&&e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_TOP&&e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_CENTER||(n=!0),n){let n=parseInt(e.height)-e.textSize;a+=t+" ul li.item { height: "+n+"px } ",a+=t+"{ height: "+n*i.length+"px } "}}return a},generateCSS_UI_Level1_Background=function(e,t,n){var i="";if(isSettingBeTrue(e.level1BackgroundHide))i+=t+"{ background: initial; } ",i+=t+"{ box-shadow: none !important; } ";else if(isHadValue(e.backgroundImage))if(e.backgroundImage.includes("?")){var o=e.backgroundImage.split("?"),a=o[0],l=parseInt(o[1]);0!=l?(i+=t+'{ background-image: url("'+a+'"); background-size: cover; } ',i+=t+"{ background-color: "+hexToRgba(e.backgroundColor,1-l/100)+"; background-blend-mode: hue; } "):(i+=t+"{ background: "+e.backgroundColor+" } ",i+=t+'{ background-image: url("'+a+'"); background-size: cover; } ')}else i+=t+"{ background: "+e.backgroundColor+" } ";else isHadValue(e.backgroundColor)&&(i+=t+"{ background: "+e.backgroundColor+" } ");return isSettingBeTrue(e.level1Dropshadow,!0)||(i+=t+" { box-shadow: none !important; } "),i+=t+"ul li.item { height: "+e.height+"px } ",isHadValue(e.layout)&&(e.layout==NAVIGLOBAL.LAYOUT.DEFAULT||e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT?(i+=t+"{ border-radius: "+e.borderRadius+"px "+e.borderRadius+"px 0px 0px } ",i+=t+" ul li ul.children { border-radius: "+e.borderRadius+"px; } "):i+=t+"{ border-radius: "+e.borderRadius+"px } ",e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&(i+=t+" ul li ul.children { border-radius: "+e.borderRadius+"px; } "),e.layout==NAVIGLOBAL.LAYOUT.FAB&&(i+=t+" ul li.item { border-radius: "+e.borderRadius+"px; } ",i+=t+" ul li ul.children { border-radius: "+e.borderRadius/2+"px;} ")),isHadValue(e.opacity)&&(i+=t+"{ opacity: "+e.opacity/100+" } "),i},generateCSS_UI_Level2=function(e,t,n,i,o){var a="";return isHadValue(e.submenuTextColor)&&(a+=t+" ul li.item ul li.child .name { color: "+e.submenuTextColor+"; } ",a+=t+" ul li.item a { color: "+e.submenuTextColor+"; } ",a+=t+" ul li.item ul li.child .description { color: "+e.submenuTextColor+"; } "),isHadValue(e.submenuIconColor)&&(a+=t+" ul li.item ul li.child .icon i { color: "+e.submenuIconColor+"; } "),isSettingBeTrue(e.level2BackgroundHide)?(a+=t+" ul li ul.children { background: initial; } ",a+=t+" ul li ul.children { box-shadow: none !important; } "):isHadValue(e.submenuBackgroundColor)&&(a+=t+" ul li ul.children { background: "+e.submenuBackgroundColor+" } "),isSettingBeTrue(e.level2Dropshadow,!0)||(a+=t+" ul li ul.children { box-shadow: none !important; } "),isHadValue(e.submenuDividerColor)&&(a+=t+" ul li.child_divider { border-color: "+e.submenuDividerColor+"; } "),a},generateCSS_Publish=function(e,t,n){var i="";return i+=" @media only screen and (max-width: 768px) { ","false"!=e.mobileDisplay&&0!=e.mobileDisplay||(i+=t+" { display: none !important; } "),isMobileMode()||(i+=t+" { display: none !important; } "),i+=" } ",i+=" @media only screen and (min-width: 769px) { ","false"!=e.desktopDisplay&&0!=e.desktopDisplay||(i+=t+" { display: none !important; } "),isMobileMode()&&(i+=t+" { display: none !important; } "),i+=" } "},generateCSS_Position=function(e,t,n){return"true"!=e.mobileAutoHide&&1!=e.mobileAutoHide||"true"!=e.mobileDisplay&&1!=e.mobileDisplay||scrollToHide("mobile",t),"true"!=e.desktopAutoHide&&1!=e.desktopAutoHide||"true"!=e.desktopDisplay&&1!=e.desktopDisplay||e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_TOP&&e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_CENTER&&e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_TOP&&e.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_CENTER&&scrollToHide("desktop",t)," @media only screen and (max-width: 768px) {}  @media only screen and (min-width: 769px) {} "},generateCSS_Advance=function(e,t,n,i,o){var a="",l=document.createElement("script");l.textContent=clearCSS_JS(e.jsCode),document.body.appendChild(l);var r=document.createElement("script");return r.textContent=standardizeFunctionString(clearCSS_JS(e.jsNaviCode)),document.body.appendChild(r),n.insertAdjacentHTML("beforebegin","<style>"+standardizeCSS(clearCSS_JS(e.cssCode),i)+"</style>"),n.insertAdjacentHTML("beforebegin","<style>"+clearCSS_JS(e.cssCodeGlobal)+"</style>"),isHadValue(e.zIndex)&&(a+=t+" { z-index: "+e.zIndex+"; } "),a},generateCSS_FixByLayout=function(e,t,n,i){var o="";return e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(""!=e.highlightColor.trim()&&(o+=t+" ul li.item_primary > .inner { background: "+e.highlightColor+"; } "),""!=e.highlightIconColor.trim()&&(o+=t+" ul li.item_primary > .inner i { color: "+e.highlightIconColor+"; } ")),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(o+=t+" { bottom: "+e.bottomMargin+"px; } "),e.layout==NAVIGLOBAL.LAYOUT.FAB&&(o+=t+" { width: "+e.height+"px; left: initial; right: 16px; height: "+parseInt(e.height)+"px; width: "+parseInt(e.height)*n.length+"px; } ",o+=t+" ul li ul.children { left: initial; right: 0px; bottom: 4px; width: "+e.submenuWidth+"px; } ",o+=t+" ul li ul.children { "+BOX_SHADOW+";} ",""!=e.bottomMargin&&(o+=t+" { bottom: "+parseInt(e.bottomMargin)+"px; } ")),o},generateCSS_UI_Common=function(e,t,n,i,o){var a="";return isHadValue(e.spaceTextIcon)&&(e.spaceTextIcon<0?(a+=t+" ul li.item .inner { gap: 0px }",a+=t+" ul li.item .inner .info { margin-top: "+e.spaceTextIcon+"px }"):a+=t+" ul li.item .inner { gap: "+e.spaceTextIcon+"px }"),isUserLoggedIn()?(a+=t+" ul li.publish-show-logined { display: initial }",a+=t+" ul li.publish-hide-logined { display: none }"):(a+=t+" ul li.publish-show-logined { display: none }",a+=t+" ul li.publish-hide-logined { display: initial }"),a},getItemValue=function(e,t,n){return null!=e[t]?e[t]:n},generateCSS_Level1_Width=function(e,t,n,i,o){var a="",l=0,r=0,u=0,c=0;return i.forEach((e=>{var t=getItemValue(e,"ispublished",1),n=getItemValue(e,"hidewhenlogined",0),i=getItemValue(e,"showwhenlogined",0),o=getItemValue(e,"widthlayout",1);0!=t&&(1==n&&isUserLoggedIn()||(1!=i||isUserLoggedIn())&&(14==o&&(l+=parseInt(e.widthfix)),2==o&&(r+=8.3333333333),3==o&&(r+=16.6666666666),4==o&&(r+=25),5==o&&(r+=33.3333333333),6==o&&(r+=41.6666666666),7==o&&(r+=50),8==o&&(r+=58.3333333333),9==o&&(r+=66.6666666666),10==o&&(r+=75),11==o&&(r+=83.3333333333),12==o&&(r+=91.6666666666),13==o&&(r+=100),15==o&&(r+=10),16==o&&(r+=20),17==o&&(r+=50),18==o&&(r+=100),1==o&&u++,100==r&&u>c&&(c=u,u=0)))})),0==u&&0==c?"":(c>0&&(u=c),r>=100&&(r=0),a+=t+" ul li.item { width: calc( calc( "+(100-r)+"% - "+l+"px) / "+u+") } ")},generateCSS=function(e,t,n,i,o,a){generateCSS_init(n);let l="<style>",r=" ."+t+" ",u=" #"+t+" ";l+=generateCSS_UI_Common(n,r,e,i,a),l+=generateCSS_UI_Level1_Menuitems(n,r,e,i,a),l+=generateCSS_UI_Level1_Background(n,r,a),l+=generateCSS_paddingMargin(n,r,a),l+=generateCSS_UI_Level2(n,r,a),l+=generateCSS_FixByLayout(n,r,i,a),l+=generateCSS_Level1_Width(n,r,e,i,a),l+=generateCSS_Publish(n,r,a),l+=generateCSS_Position(n,r,a),l+=generateCSS_Advance(n,r,e,t,a),"true"!=n.mobileDisplay&&1!=n.mobileDisplay||(l+=generateCSS_FixForMobile(r,n,i,a)),"true"!=n.desktopDisplay&&1!=n.desktopDisplay||(l+=generateCSS_FixForDesktop(r,n,i,o,a)),l+=generateCSS_FixForHambuger(u,n,i,o,a,t,e),l+="</style>",e.insertAdjacentHTML("beforebegin",l)},generateCSS_FixForMobile=function(e,t,n,i){if(t.layout==NAVIGLOBAL.LAYOUT.FAB)return"";if(!isMobileMode())return"";let o=" @media only screen and (max-width: 768px) {";return o+=function(e,t){var n="";return e.mobilePosition==NAVIGLOBAL.MOBILE_POSITION.BOTTOM&&("true"!=e.mobileAutoHide&&1!=e.mobileAutoHide&&(n+=" body { padding-bottom: "+(parseInt(e.height)+0)+"px; }"),n+=t+" { box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.05); } ",parseInt(e.settingPadding.left)+parseInt(e.settingPadding.right)>0&&(n+=t+"ul li ul.children { width: calc( 100% + "+(parseInt(e.settingPadding.left)+parseInt(e.settingPadding.right))+"px ); } ",parseInt(e.settingPadding.left)>0&&(n+=t+"ul li ul.children { left: -"+parseInt(e.settingPadding.left)+"px; } ")),0==e.settingMargin.left&&0==e.settingMargin.right||(n+=t+" { width: calc( 100% - "+(parseInt(e.settingMargin.left)+parseInt(e.settingMargin.right))+"px) }; ")),n}(t,e),o+=function(e,t,n,i){var o="";return e.mobilePosition==NAVIGLOBAL.MOBILE_POSITION.TOP&&(o+=t+" { bottom: initial; top:0px; } ",0!=i.not_sticky&&"false"!=i.not_sticky||(o+=" body {padding-top: "+e.height+"px;} "),o+=t+" ul li ul.children { bottom: initial; top: "+(parseInt(e.height)+0)+"px; "+BOX_SHADOW+" } ",o+=t+" { border-radius: 0px 0px "+e.borderRadius+"px "+e.borderRadius+"px } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(o+=t+" ul li.item_primary > .inner { margin-top: 0px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&0!=e.bottomMargin&&(o+=t+" { bottom: initial; top: "+parseInt(e.bottomMargin)+"px; } ",o+=t+" { border-radius: "+e.borderRadius+"px } ",o+=" body {padding-top: "+(parseInt(e.height)+parseInt(e.bottomMargin)+8)+"px} "),o+=t+" ul li ul.children { border-top: solid 1px rgba(0,0,0,0.05); border-bottom:0px; } ",parseInt(e.settingPadding.left)+parseInt(e.settingPadding.right)>0&&(o+=t+"ul li ul.children { width: calc( 100% + "+(parseInt(e.settingPadding.left)+parseInt(e.settingPadding.right))+"px ); } ",parseInt(e.settingPadding.left)>0&&(o+=t+"ul li ul.children { left: -"+parseInt(e.settingPadding.left)+"px; } ")),0==e.settingMargin.left&&0==e.settingMargin.right||(o+=t+" { width: calc( 100% - "+(parseInt(e.settingMargin.left)+parseInt(e.settingMargin.right))+"px) }; ")),o}(t,e,0,i),o+=function(e,t,n){var i="";return e.mobilePosition==NAVIGLOBAL.MOBILE_POSITION.RIGHT_CENTER&&(i+=t+" { width: "+e.height+"px; left: initial; right: 0px; height: "+(parseInt(e.height)+8)*n.length+"px } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { top: "+(windowHeight-(parseInt(e.height)+8)*n.length)/2+"px; }",i+=t+" { border-radius: "+e.borderRadius+"px 0px 0px "+e.borderRadius+"px } ",i+=t+" ul li ul.children { left: -201px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item_primary > .inner { margin-top: 0px; margin-left: -8px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(i+=t+" { right: "+parseInt(e.bottomMargin)+"px; } ",i+=t+" { border-radius: "+e.borderRadius+"px } "),isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } ",i+=t+" ul li ul.children {left: "+(-e.submenuWidth-1)+"px; } "),i}(t,e,n),o+=function(e,t,n){var i="";return e.mobilePosition==NAVIGLOBAL.MOBILE_POSITION.RIGHT_BOTTOM&&(i+=t+" { width: "+e.height+"px; left: initial; right: 0px; height: "+(parseInt(e.height)+8)*n.length+"px } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { top: "+(windowHeight-(parseInt(e.height)+8)*n.length)/2+"px; }",i+=t+" { border-radius: "+e.borderRadius+"px 0px 0px "+e.borderRadius+"px } ",i+=t+" ul li ul.children { left: -201px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item_primary > .inner { margin-top: 0px; margin-left: -8px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(i+=t+" { right: "+parseInt(e.bottomMargin)+"px; } ",i+=t+" { border-radius: "+e.borderRadius+"px } "),i+=t+" { top: initial; bottom: 24px; } ",isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } ",i+=t+" ul li ul.children {left: "+(-e.submenuWidth-1)+"px; } ",i+=t+" ul li.item { position: relative; } ",i+=t+" ul li ul.children { margin-top: initial; bottom: 0px; top: initial; } "),i}(t,e,n),o+=function(e,t,n){var i="";return e.mobilePosition==NAVIGLOBAL.MOBILE_POSITION.LEFT_CENTER&&(i+=t+" { width: "+e.height+"px; right: initial; left: 0px; height: "+(parseInt(e.height)+8)*n.length+"px } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { top: "+(windowHeight-(parseInt(e.height)+8)*n.length)/2+"px; }",i+=t+" { border-radius: 0px "+e.borderRadius+"px "+e.borderRadius+"px 0px } ",i+=t+" ul li ul.children { left: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item_primary > .inner { margin-top: 0px; margin-left: 1px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(i+=t+" { left: "+parseInt(e.bottomMargin)+"px; } ",i+=t+" { border-radius: "+e.borderRadius+"px } "),isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } "),i}(t,e,n),o+=function(e,t,n){var i="";return e.mobilePosition==NAVIGLOBAL.MOBILE_POSITION.LEFT_BOTTOM&&(i+=t+" { width: "+e.height+"px; right: initial; left: 0px; height: "+(parseInt(e.height)+8)*n.length+"px } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { top: "+(windowHeight-(parseInt(e.height)+8)*n.length)/2+"px; }",i+=t+" { border-radius: 0px "+e.borderRadius+"px "+e.borderRadius+"px 0px } ",i+=t+" ul li ul.children { left: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item_primary > .inner { margin-top: 0px; margin-left: 1px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(i+=t+" { left: "+parseInt(e.bottomMargin)+"px; } ",i+=t+" { border-radius: "+e.borderRadius+"px } "),i+=t+" { top: initial; bottom: 24px; } ",isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } ",i+=t+" ul li.item { position: relative; } ",i+=t+" ul li ul.children { margin-top: initial; bottom: 0px; top: initial; } "),i}(t,e,n),o+="}",o},generateCSS_FixForDesktop=function(e,t,n,i,o){if(t.layout==NAVIGLOBAL.LAYOUT.FAB)return"";if(isMobileMode())return"";let a=" @media only screen and (min-width: 769px) {";return i?a+=function(e,t){var n="";return n+=t+" { bottom: initial; top:0px; } ",n+=t+" ul li ul.children { bottom: initial; top: "+(parseInt(e.height)+0)+"px; "+BOX_SHADOW+" } ",n+=t+" ul li ul.children { border-top: solid 1px rgba(0,0,0,0.05); border-bottom:0px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } "}(t,e):(a+=function(e,t){var n="";return e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_CENTER_FLOAT&&(n+=t+" { width: "+1.3*DESKTOP_MAX_WIDTH+"px; } ",n+=t+" { left: 50%; transform: translate(-50%, 0); } ",n+=t+" ul li.item{ position: relative; } ",n+=t+" ul li ul.children{ left: initial; right: 0px; bottom: "+(parseInt(e.height)+1)+"px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } ",n+=t+" { border-radius: "+e.borderRadius+"px } "),n}(t,e),a+=function(e,t){var n="";return e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_CENTER&&(n+=t+" { width: "+1.3*DESKTOP_MAX_WIDTH+"px; } ",n+=t+" { left: 50%; transform: translate(-50%, 0); } ",n+=t+" ul li.item{ position: relative; } ",n+=t+" ul li ul.children{ left: initial; right: 0px; bottom: "+(parseInt(e.height)+1)+"px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } "),n}(t,e),a+=function(e,t){var n="";return e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_RIGHT&&(n+=t+" { width: "+DESKTOP_MAX_WIDTH+"px; left: initial; right: 16px; } ",n+=t+" ul li.item{ position: relative; } ",n+=t+" ul li ul.children{ left: initial; right: 0px; bottom: "+(parseInt(e.height)+1)+"px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } "),n}(t,e),a+=function(e,t){var n="";return e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_LEFT&&(n+=t+" { width: "+DESKTOP_MAX_WIDTH+"px; left: 16px; } ",n+=t+" ul li.item{ position: relative; } ",n+=t+" ul li ul.children{ left: initial; right: 0px; bottom: "+(parseInt(e.height)+1)+"px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } "),n}(t,e),a+=function(e,t){var n="";return e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_FULL&&(n+=t+" .navigation { width: "+2*DESKTOP_MAX_WIDTH+"px; } ",n+=t+" .navigation { left: initial; } ",n+=t+" ul li.item{ position: relative; } ",n+=t+" ul li ul.children{ left: initial; right: 0px; bottom: "+(parseInt(e.height)+1)+"px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } "),n}(t,e),a+=function(e,t,n){var i="";if(e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.RIGHT_TOP){i+=t+" { width: "+e.height+"px; left: initial; right: 0px; height: "+(parseInt(e.height)+8)*n.length+"px } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { top: "+(windowHeight-(parseInt(e.height)+8)*n.length)/2+"px; }",i+=t+" { border-radius: "+e.borderRadius+"px 0px 0px "+e.borderRadius+"px } ",i+=t+" ul li ul.children { left: -201px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { "+BOX_SHADOW+" } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item_primary > .inner { margin-top: 0px; margin-left: -8px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(i+=t+" { right: "+parseInt(e.bottomMargin)+"px; } ",i+=t+" { border-radius: "+e.borderRadius+"px } "),isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),e.layout!=NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item .inner {width: initial; } ");let o=-e.submenuWidth-1;i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+o+"px; } ",i+=t+" ul li.item { width: 100%; } "}return i}(t,e,n),a+=function(e,t,n){var i="";if(e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.LEFT_TOP){i+=t+" { width: "+e.height+"px; right: initial; left: 0px; height: "+(parseInt(e.height)+8)*n.length+"px } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { top: "+(windowHeight-(parseInt(e.height)+8)*n.length)/2+"px; }",i+=t+" { border-radius: 0px "+e.borderRadius+"px "+e.borderRadius+"px 0px } ",i+=t+" ul li ul.children { left: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { "+BOX_SHADOW+" } ",e.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item_primary > .inner { margin-top: 0px; margin-left: 1px } "),e.layout==NAVIGLOBAL.LAYOUT.FLOATING&&""!=e.bottomMargin&&(i+=t+" { left: "+parseInt(e.bottomMargin)+"px; } ",i+=t+" { border-radius: "+e.borderRadius+"px } "),isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),e.layout!=NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item .inner {width: initial; } ");let o=-e.submenuWidth-1;o=parseInt(e.height)+1,i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+o+"px; } ",i+=t+" ul li.item { width: 100%; } "}return i}(t,e,n),a+=function(e,t){var n="";if(e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_TOP){isHadValue(e.dividerColor)&&(n+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),e.layout!=NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(n+=t+" ul li.item .inner {width: initial; } ");let i=-e.submenuWidth-1;n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+i+"px; } ",n+=t+" ul li.item { width: 100%; } ",n+=" body {width: calc(100% - "+e.height+"px); margin-left: "+e.height+"px; } ",n+=t+" { width: "+e.height+"px; right: initial; left: 0px; top: 0px; height: 100vh; padding-top: 16px; } ",n+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",n+=t+" { border-radius: 0px; } ",n+=t+" ul li ul.children { left: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",n+=t+" ul li ul.children { "+BOX_SHADOW+" } ",n+=t+" { padding-top: 16px; } ",n+=t+" ul li.item { width: 100%; min-width: 24px; } "}return n}(t,e),a+=function(e,t,n){var i="";if(e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_CENTER){isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),e.layout!=NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item .inner {width: initial; } ");let o=-e.submenuWidth-1;i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+o+"px; } ",i+=t+" ul li.item { width: 100%; } ",i+=" body {width: calc(100% - "+e.height+"px); margin-left: "+e.height+"px; } ",i+=t+" { width: "+e.height+"px; right: initial; left: 0px; top: 0px; height: 100vh; padding-top: 16px; } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { border-radius: 0px; } ",i+=t+" ul li ul.children { left: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { "+BOX_SHADOW+" } ",i+=t+" { padding-top: "+(window.innerHeight-(parseInt(e.height)+8)*n.length)/2+"px; } ",i+=t+" ul li.item { width: 100%; min-width: 24px; } "}return i}(t,e,n),a+=function(e,t){var n="";if(e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_TOP){isHadValue(e.dividerColor)&&(n+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),e.layout!=NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(n+=t+" ul li.item .inner {width: initial; } ");let i=-e.submenuWidth-1;n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+i+"px; } ",n+=t+" ul li.item { width: 100%; } ",n+=" body {width: calc(100% - "+e.height+"px); margin-right: "+e.height+"px; } ",n+=t+" { width: "+e.height+"px; right: 0; left: initial; top: 0px; height: 100vh; padding-top: 16px; } ",n+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",n+=t+" { border-radius: 0px; } ",n+=t+" ul li ul.children { right: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",n+=t+" ul li ul.children { "+BOX_SHADOW+" } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+i+"px; } ",n+=t+" { padding-top: 16px; } ",n+=t+" ul li.item { width: 100%; min-width: 24px; } "}return n}(t,e),a+=function(e,t,n){var i="";if(e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_CENTER){isHadValue(e.dividerColor)&&(i+=t+" ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px "+e.dividerColor+"; margin-bottom: -1px; } "),e.layout!=NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(i+=t+" ul li.item .inner {width: initial; } ");let o=-e.submenuWidth-1;i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+o+"px; } ",i+=t+" ul li.item { width: 100%; } ",i+=" body {width: calc(100% - "+e.height+"px); margin-right: "+e.height+"px; } ",i+=t+" { width: "+e.height+"px; right: 0; left: initial; top: 0px; height: 100vh; padding-top: 16px; } ",i+=t+" ul li.item { width: "+e.height+"px; height: "+(parseInt(e.height)+8)+"px; } ",i+=t+" { border-radius: 0px; } ",i+=t+" ul li ul.children { right: "+(parseInt(e.height)+1)+"px; bottom: initial; margin-top: -"+(parseInt(e.height)+8)+"px; width: "+VERTICAL_CHILDREN_WIDTH+"px; } ",i+=t+" ul li ul.children { "+BOX_SHADOW+" } ",i+=t+" ul li ul.children {width: "+e.submenuWidth+"px; left: "+o+"px; } ",e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_TOP?i+=t+" { padding-top: 16px; } ":10==e.desktopPosition&&(i+=t+" { padding-top: "+(window.innerHeight-(parseInt(e.height)+8)*n.length)/2+"px; } "),i+=t+" ul li.item { width: 100%; min-width: 24px; } "}return i}(t,e,n),a+=function(e,t){var n="";return e.desktopPosition==NAVIGLOBAL.DESKTOP_POSITION.TOP_FULL&&(n+=t+" .navigation { width: "+2*DESKTOP_MAX_WIDTH+"px; } ",n+=t+" .navigation { left: initial; } ",n+=t+" ul li.item{ position: relative; } ",n+=t+" ul li ul.children{ left: initial; right: 0px; top: "+(parseInt(e.height)+1)+"px; } ",n+=t+" ul li ul.children {width: "+e.submenuWidth+"px; } ",n+=" body { padding-top: "+(parseInt(e.height)+0)+"px; }"),n}(t,e)),a+=function(e,t,n,i){i||window.addEventListener("resize",(function(e){}))}(0,0,0,i),a+="}",a},generateCSS_FixForHambuger=function(e,t,n,i,o,a,l){var r=" ";if(getMenuKind(window.naviman_shopinfo,a)==NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER)return isHadValue(t.submenuBackgroundColor)&&(r+=e+" ul.children { background: "+t.submenuBackgroundColor+"; } "),isHadValue(t.submenuDividerColor)&&(r+=e+" ul.children ul.children { border-color: "+t.submenuDividerColor+"; } "),setTimeout((function(){const t=document.querySelector(e+" ul > li.is-parent-top");if(null!=t){var n="<style>";n+=e+" ul > li.is-parent-top::after { top: "+(t.clientHeight/2-10)+"px; } ",n+="</style>",l.insertAdjacentHTML("beforebegin",n)}}),2e3),r},init=function(){},fixNotStickyMenu=function(e,t,n,i){if(0===i.length)return;if(""==i.embed_id)return;if(0==i.not_sticky||"false"==i.not_sticky)return;let o="<style>";o+="#"+n+" { bottom: initial; top: initial;}",o+="</style>",e.insertAdjacentHTML("beforebegin",o)},fixMegaMenu=function(e,t,n,i){if(getMenuKind(window.naviman_shopinfo,n)!=NAVIGLOBAL.MENU_KINDS.SECTION_MEGAMENU)return;let o="<style>";o+="#"+n+" ul li ul.children { max-height: initial;  } ",o+="</style>",e.insertAdjacentHTML("beforebegin",o)},fixNotStickyParents=function(e,t,n,i){var o=t.data.setting,a=function(e){for(var t=0;;){if(++t>=30)return null;if("SECTION"==e.nodeName)return e;if("MAIN"==e.nodeName)return null;if(e==document.body)return null;e=e.parentElement}}(e);if(null!=a){a.style.position="relative",menuKind=getMenuKind(window.naviman_shopinfo,n),menuKind==NAVIGLOBAL.MENU_KINDS.SECTION_MEGAMENU&&(a.style.backgroundColor=o.backgroundColor,0==o.level1BackgroundHide&&(a.style.boxShadow="0px 4px 8px 0px rgba(0, 0, 0, 0.05)",document.getElementById(n).style.boxShadow="initial"));var l=49;if(isHadValue(o.zIndex)&&(l=o.zIndex-1),a.style.zIndex=l,(1==o.fixedTopScrolling||"true"==o.fixedTopScrolling)&&(a.style.position="sticky",a.style.top=0,0==o.level1Dropshadow||"false"==o.level1Dropshadow)){var r=a.offsetTop;window.onscroll=function(){window.pageYOffset>r?a.style.boxShadow="0px 4px 8px 0px rgba(0, 0, 0, 0.05)":a.style.boxShadow="initial"}}}var u=function(e){for(var t=0;;){if(++t>=30)return null;if(e.className.includes("shopify-block"))return e;if("MAIN"==e.nodeName)return null;if(e==document.body)return null;e=e.parentElement}}(e);if(null!=u&&(u.style.display="flex"),1==i.embed_is_full||"true"==i.embed_is_full){var c=function(e){for(var t=0;;){if(++t>=30)return null;if(e.className.includes("page-width"))return e;if("MAIN"==e.nodeName)return null;if(e==document.body)return null;e=e.parentElement}}(e);null!=c&&(c.style.padding="0px")}},drawBottomNav=function(e,t,n,i,o=[]){var a=n,l=i,r=document.getElementById("naviman_app");""==l||1!=o.not_sticky&&"true"!=o.not_sticky||(r=document.getElementById(l+"-container"));var u=function(e,n,i,o,a,l){var r='<ul class="'+O([" children ",p(o)])+' " '+h(o,i)+">",k=isSettingBeTrue(n.data.setting.desktopHover);return window.innerWidth<=768&&(k=!1),e.forEach((e=>{0;var o=P(e),p=B(e),h=M(e),F=d(2,h,{dividercolor:C(e,"dividercolor",""),dividersize:C(e,"dividersize",""),dividertype:C(e,"dividertype","")},i.setting),K=G(e),W="child ";1==h&&(W+="child_divider "),W+=D(e);var j=naviLanguage.stringByLanguage(e.url),z=V(j),q=U(j),Y=C(e,"textcolor",""),X=C(e,"textsize",""),$=C(e,"iconcolor",""),J=C(e,"iconsize",""),Z=C(e,"backgroundcolor",""),Q=C(e,"backgroundimage",""),ee=w(e),te=N(e),ne=C(e,"align","inherit"),ie=C(e,"classname",""),oe=C(e,"animation",""),ae=C(e,"displaylayout","");""==ae&&(ae="layout-automatic"),""==e.icon&&""==e.image&&(ae="text-only"),""==e.name&&(ae=""==e.icon&&""==e.image?"empty":"icon-image-only");var le=C(e,"attr","");""==ae&&(ae="left-right");var re=C(e,"ispublished",1),ue=C(e,"hidewhenlogined",0),ce=C(e,"showwhenlogined",0),se=_(I(C(e,"padding",""))),de=b(I(C(e,"margin",""))),pe=s(C(e,"heightfix","")),he=g(C(e,"iconboxcolor",""),C(e,"iconboxpadding",""),C(e,"iconboxradius","")),me=C(e,"css","");R(j)&&openInbox_loopHideFAB();var ge="return naviman.gotoUrl(event, this, "+p+", '"+j+"', '"+n.embed_id+"', "+a+")",_e="return naviman.gotoUrl(event, this, "+p+", '#', '"+n.embed_id+"', "+a+")",be='onclick="'+ge+'" ';k&&p&&(ie.includes("navi-nohover")||ie.includes("navi-hover")||(be+=' onMouseEnter="'+_e+'" ')),(z||q)&&(be="");var Ie="";(z||q)&&(Ie=' style="position:relative" ');var fe="";p&&(fe=" is-parent ");var ve="";isElitePlan(window.naviman_shopinfo)&&(ve='<a href="'+getSEOUrl(j)+'" onclick="return false;">'),r+="<li "+L([E(Z,Q,i,2),y(ne),ee.style,te,Ie,se,me,F,pe])+c(le)+' linkto="'+j+'" class="'+O([W,ie,ae,f(o),v(re,ue,ce),ee.class,S(ne),fe])+'" '+be+' data-name="'+e.name+'" data-kind="'+o+'">',r+='<div class="inner '+T(oe)+'"'+L([de])+">",r+='<span class="arrow"></span>',K==BADGE_ISCART_WITHCOUNT&&(r+='<span class="cart_count">'+cartCount+"</span>"),r+=itemMedia(e.icon,e.image,t,A($,J,he,m(C(e,"iconboxpadding",""))),m(C(e,"iconboxpadding","")),J,y(ne),ve);var Te='<div class="info">';"text-only"==ae&&(Te='<div class="info" '+L(he,m(C(e,"iconboxpadding","")))),r+=Te,r+='<div class="flexcol">',""!=ve&&(r+=ve),r+='<span class="name"'+x(Y,X)+">"+naviLanguage.stringByLanguage(e.name)+"</span>",""!=ve&&(r+="</a>"),""!=e.description&&(r+='<div class="description"'+x(Y,"")+">"+naviLanguage.stringByLanguage(e.description)+"</div>"),r+="</div>",r+="</div>",r+=H(z,q,j),r+="</div>",p&&(r+=u(e.children,n,i,{Animation:C(e,"submenuanimation",""),Background:C(e,"submenubackgroundcolor",""),BackgroundImage:C(e,"submenubackgroundimage","")},a,l)),r+="</li>"})),r+="</ul>"},c=function(e){if(""==e)return"";var t=parseAttributes(decodeQuery(e));return 0==t.length?"":formatAttributes(t)},s=function(e){return""==e?"":" height: "+String(e).strReplace("px"," ").strReplace("pt"," ")+"px; "},d=function(e=1,t,n,i){if(1!=t)return"";var o=' style="',a="right-";return 1==e?isMobileMode()?i.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.RIGHT_CENTER&&i.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.LEFT_CENTER&&i.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.RIGHT_BOTTOM&&i.mobilePosition!=NAVIGLOBAL.MOBILE_POSITION.LEFT_BOTTOM||(a="bottom-"):i.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_TOP&&i.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_TOP&&i.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_TOP&&i.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_CENTER&&i.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_TOP&&i.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_CENTER||(a="bottom-"):a="bottom-",""!=n.dividercolor&&(o+="border-"+a+"color:"+n.dividercolor+";"),""!=n.dividersize&&(o+="border-"+a+"width:"+String(n.dividersize).strReplace("px","").strReplace("pt","")+"px;"),""!=n.dividertype&&(o+="border-"+a+"style:"+n.dividertype+";"),o+='"'},p=function(e){return""!=e.Animation?T(e.Animation):""},h=function(e,t){return E(e.Background,e.BackgroundImage,t,2)},m=function(e){return I(e).top},g=function(e,t,n){if(""==e)return"";var i="";return i+="background-color:"+e+";",""!=t&&(i+=_(I(t)),i+=" display: inline-block; "),""!=n&&(i+="border-radius:"+String(n).strReplace("px","").strReplace("pt","")+"px"),i},_=function(e){return 0==e.top&0==e.right&0==e.bottom&0==e.left?"":" padding: "+e.top+"px "+e.right+"px "+e.bottom+"px "+e.left+"px; "},b=function(e){return 0==e.top&0==e.right&0==e.bottom&0==e.left?"":" margin: "+e.top+"px "+e.right+"px "+e.bottom+"px "+e.left+"px; "},I=function(e){var t={top:0,right:0,bottom:0,left:0};if(""==e)return t;var n=(e=String(e).strReplace("px"," ").strReplace("pt"," ").strReplace(","," ").strReplace("|"," ").strReplace(";"," ")).split(" ").map(Number);switch(n.length){case 1:t.top=n[0],t.right=n[0],t.bottom=n[0],t.left=n[0];break;case 2:t.top=n[0],t.right=n[1],t.bottom=n[0],t.left=n[1];break;case 3:t.top=n[0],t.right=n[1],t.bottom=n[2],t.left=n[1];break;case 4:t.top=n[0],t.right=n[1],t.bottom=n[2],t.left=n[3]}return t},f=function(e){return e==NAVIGLOBAL.ITEM_KINDS.ICON_IMAGE_TEXT?" kind-icon-image-text ":e==NAVIGLOBAL.ITEM_KINDS.GROUP_TITLE?" kind-group-title ":e==NAVIGLOBAL.ITEM_KINDS.BLANK_SPACE?" kind-blank-space ":e==NAVIGLOBAL.ITEM_KINDS.BIG_IMAGE_TEXT?" kind-big-image-text ":e==NAVIGLOBAL.ITEM_KINDS.CUSTOM_HTML?" kind-custom-html ":e==NAVIGLOBAL.ITEM_KINDS.BUTTON?" kind-button ":void 0},v=function(e,t,n){var i=" ";return 1!=e&&(i+="publish-hide "),1==t&&(i+="publish-hide-logined "),1==n&&(i+="publish-show-logined "),""==i.trim()?"":i},T=function(e){return""!=e?" animate__animated "+e:""},L=function(e){let t=' style="';for(var n=0;n<e.length;n++){t+=e[n].replace(/style="|"/g,"")}return t+='"',removeExtraSpaces(t)},O=function(e){let t="";for(var n=0;n<e.length;n++)t+=e[n]+" ";return removeExtraSpaces(t)},y=function(e){var t=' style="';return"inherit"!=e&&(t+=" text-align: "+e+"; "),'style=""'==(t+='" ').trim()?"":t},S=function(e){var t=" ";return"inherit"!=e&&(t+=" align-"+e+" "),'style=""'==t.trim()?"":t},E=function(e,t,n,i=1){var o=' style="';if(""!=t)if(t.includes("?")){var a=t.split("?"),l=a[0],r=parseInt(a[1]);0!=r?(""==e&&(e=1==i?n.setting.backgroundColor:n.setting.submenuBackgroundColor),o+=" background-image: url('"+l+"'); background-size: cover; ",o+=" background-color: "+hexToRgba(e,1-r/100)+"; background-blend-mode: hue; "):o+=" background-color: "+e+"; "}else o+=" background-color: "+e+"; ",o+=" background-image: url("+t+"); background-size: cover;";else""!=e&&(o+=" background-color: "+e+"; ");return'style=""'==(o+='" ').trim()?"":o},x=function(e,t){var n=' style="';return""!=e&&(n+=" color: "+e+"; "),""!=t&&(n+=" font-size: "+t+"px; "),'style=""'==(n+='" ').trim()?"":n},A=function(e,t,n="",i=0){var o=' style="';return""!=e&&(o+=" color: "+e+"; "),""!=t&&(o+=" font-size: "+t+"px;",0==i&&(o+=" height: "+t+"px; ")),""!=n&&(o+=n),'style=""'==(o+='" ').trim()?"":o},N=function(e){var t=C(e,"position",1),n=' style="';return 2==t&&(n+="position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center;z-index: 0; "),3==t&&(n+="position: absolute; right: 0; text-align: right; "),4==t&&(n+="position: absolute; left: 0; text-align: left; "),'style=""'==(n+='" ').trim()?"":n},w=function(e){var t=C(e,"widthlayout",1),n="";if(1==t&&(n=""),2==t&&(n="8.3333333333%"),3==t&&(n="16.6666666666%"),4==t&&(n="25%"),5==t&&(n="33.3333333333%"),6==t&&(n="41.6666666666%"),7==t&&(n="50%"),8==t&&(n="58.3333333333%"),9==t&&(n="66.6666666666%"),10==t&&(n="75%"),11==t&&(n="83.3333333333%"),12==t&&(n="91.6666666666%"),13==t&&(n="100%"),15==t&&(n="10%"),16==t&&(n="20%"),17==t&&(n="50%"),18==t&&(n="100%"),14==t){var i=C(e,"widthfix","");""!=i&&(n=String(i).replace("pt","").replace("px","")+"px")}20==t&&(n="auto");var o="",a="";return""!=n&&(o=" width: "+n+";",a=" widthfix "),{width:n,style:o,class:a}};var C=function(e,t,n){if(null!=e[t]){var i=e[t];return("string"==typeof(o=i)||o instanceof String)&&(i=i.trim()),i=platformValue(i)}var o;return n},k=function(e){var t=0;return e.setting.layout==NAVIGLOBAL.LAYOUT.HIGHLIGHT&&(7!=e.dragdrop.length&&5!=e.dragdrop.length&&3!=e.dragdrop.length||(t=(e.dragdrop.length+1)/2)),t},P=function(e){var t=1;return null!=e.kind&&(t=e.kind),t},M=function(e){var t=0;return null!=e.divider&&(t=e.divider),t},B=function(e){var t=!1;return void 0!==e.children&&e.children.length>0&&(t=!0),t},G=function(e){var t=BADGE_HIDE;return 1==e.badge&&(t=isHadValue(e.badgeiscart)?0==e.badgeiscart?BADGE_HIDE:BADGE_ISCART_WITHCOUNT:BADGE_DOT),t},H=function(e,t,n){var i=" ";return(e||t)&&(i+='<a href="'+encodeBody(n.strReplace("[url]",window.location.href))+'">',i+='<span class="telsms-click-spaces"></span>',i+="</a>"),i},F=function(e){var t=" ";return 1==e.badge?(t+=" item_badge",isHadValue(e.badgeiscart)&&1==e.badgeiscart&&(t+=" item_badge_withcount ",1==e.badgecartcount?t+="":t+=" item_badge_withcount item_badge_withcount_hide")):t+="",t},D=function(e){var t=" ";return 1==e.badge?(t+=" child_badge",isHadValue(e.badgeiscart)&&1==e.badgeiscart&&(t+=" child_badge_withcount ",1==e.badgecartcount?t+="":t+=" child_badge_withcount child_badge_withcount_hide")):t+="",t},R=function(e){return 10==e.length&&"open:inbox"==e.substring(0,10).toLowerCase()},V=function(e){return e.length>=4&&"tel:"==e.substring(0,4).toLowerCase()},U=function(e){return e.length>=4&&"sms:"==e.substring(0,4).toLowerCase()},K=""!=l;e.forEach((n=>{navimanData.push(n);var i=!0;if(!isBackendMode())if(null==n.data.setting.displayGlobal||"0"==n.data.setting.displayGlobal)i=!1,K&&(i=!0);else{let e=n.data.setting.displayGlobalPages,t=getCurrentTemplate();e.includes(t)||(i=!1)}(isHadValue(n.data.setting.publishContainKeyword)&&(i=!!isUrlContain(n.data.setting.publishContainKeyword)),isHadValue(n.data.setting.publishDontContainKeyword)&&(i=!isUrlContain(n.data.setting.publishDontContainKeyword)),isHadValue(n.data.setting.publishTriggerIDClass))&&stringToArray(n.data.setting.publishTriggerIDClass).forEach((function(e,t){console.log("Add trigger event to: "+e),document.querySelectorAll(e).forEach((function(e){removeAllEventListeners(e).addEventListener("click",(function(){openNaviMenu(n.embed_id)}),!1)}))}));if(isMobileMode()&&(0!=n.data.setting.mobileDisplay&&"false"!=n.data.setting.mobileDisplay||(i=!1)),isMobileMode()||0!=n.data.setting.desktopDisplay&&"false"!=n.data.setting.desktopDisplay||(i=!1),i){let i=n.data;0==document.getElementsByClassName("naviman_app_overlay").length&&r.insertAdjacentHTML("afterend",'<div class="naviman_app_overlay"> </div>'),0==document.getElementsByClassName("naviman_app_overlay_global").length&&document.body.insertAdjacentHTML("afterend",'<div class="naviman_app_overlay_global"> </div>');var p="";if("0 0 0 0"!=o.embed_margin&&""!=o.embed_margin.trim()){var h=I(o.embed_margin);p+=" margin: "+h.top+"px "+h.right+"px "+h.bottom+"px "+h.left+"px "}var D="";null!=n.data.setting.attribute&&(D=formatAttributes(parseAttributes(n.data.setting.attribute)));var W='<div style="visibility: hidden;'+p+'" '+D+' name="'+n.name+'" id="'+n.embed_id+'" class="naviItem '+n.embed_id+menuPositionClass(i)+" "+getClassOfMenuKind(window.naviman_shopinfo,n.embed_id)+'"></div>';r.insertAdjacentHTML("beforeend",W);var j=document.getElementById(n.embed_id);j.classList.add("naviman_layout"+i.setting.layout),generateCSS(j,n.embed_id,i.setting,i.dragdrop,K,o),isBackendMode()||jsonp(t+"ajax-main.php?action=updateVisit&shop="+a).then((function(e){})),j.insertAdjacentHTML("beforeend",function(e,n,i,o){var a=0,l=k(e),r="";""!=o.embed_title&&(r+="<h2>"+o.embed_title+"</h2>");var p=isSettingBeTrue(n.data.setting.desktopHover);window.innerWidth<=768&&(p=!1);var h=r+'<span class="hamburger_close" style="display: none"><i class="ri-close-line"></i></span><ul class="navigation">';return e.dragdrop.forEach((r=>{a++;var k=P(r),D=B(r),K=M(r),W=d(1,K,{dividercolor:C(r,"dividercolor",""),dividersize:C(r,"dividersize",""),dividertype:C(r,"dividertype","")},e.setting),j=G(r),z="";D&&(z=" is-parent-top ");var q="item ";1==K&&(q+="item_divider "),l==a&&(q+="item_primary "),q+=F(r);var Y=naviLanguage.stringByLanguage(r.url),X=V(Y),$=U(Y),J=C(r,"textcolor",""),Z=C(r,"textsize",""),Q=C(r,"iconcolor",""),ee=C(r,"iconsize",""),te=C(r,"backgroundcolor",""),ne=C(r,"backgroundimage",""),ie=w(r),oe=N(r),ae=C(r,"align","inherit"),le=C(r,"classname",""),re=C(r,"animation",""),ue=C(r,"displaylayout","");""==ue&&(ue="layout-automatic"),""==r.icon&&""==r.image&&(ue="text-only"),""==r.name&&(ue=""==r.icon&&""==r.image?"empty":"icon-image-only");var ce=C(r,"attr",""),se=C(r,"ispublished",1),de=C(r,"hidewhenlogined",0),pe=C(r,"showwhenlogined",0),he=s(C(r,"heightfix","")),me=C(r,"css",""),ge=_(I(C(r,"padding",""))),_e=b(I(C(r,"margin",""))),be=g(C(r,"iconboxcolor",""),C(r,"iconboxpadding",""),C(r,"iconboxradius",""));R(Y)&&openInbox_loopHideFAB();var Ie="return naviman.gotoUrl(event, this, "+D+", '"+Y+"', '"+n.embed_id+"', "+i+")",fe="return naviman.gotoUrl(event, this, "+D+", '#', '"+n.embed_id+"', "+i+")",ve='onclick="'+Ie+'" ';p&&D&&(le.includes("navi-nohover")||le.includes("navi-hover")||(ve+='onMouseEnter="'+fe+'" ',ve+='onMouseLeave="'+fe+'" ')),(X||$)&&(ve="");var Te="";(X||$)&&(Te=' style="position:relative" ');var Le="";isElitePlan(window.naviman_shopinfo)&&(Le='<a href="'+getSEOUrl(Y)+'" onclick="return false;">'),h+="<li "+L([E(te,ne,e,1),y(ae),ie.style,oe,Te,ge,me,W,he])+c(ce)+' linkto="'+Y+'" class="'+O([q,le,ue,f(k),v(se,de,pe),ie.class,S(ae),z])+'" '+ve+' data-name="'+r.name+'" data-kind="'+k+'">',h+='<div class="inner '+T(re)+'"'+L([_e])+">",h+='<span class="arrow"></span>',j==BADGE_ISCART_WITHCOUNT&&(h+='<span class="cart_count">'+cartCount+"</span>"),h+=itemMedia(r.icon,r.image,t,A(Q,ee,be,m(C(r,"iconboxpadding",""))),C(r,"iconboxpadding",""),ee,y(ae),Le);var Oe='<div class="info">';"text-only"==ue&&(Oe='<div class="info" '+L(be,m(C(r,"iconboxpadding","")))),h+=Oe,h+='<div class="flexcol">',""!=Le&&(h+=Le),h+='<span class="name"'+x(J,Z)+">"+naviLanguage.stringByLanguage(r.name)+"</span>",""!=Le&&(h+="</a>"),""!=r.description&&(h+='<div class="description" '+x(J,"")+">"+naviLanguage.stringByLanguage(r.description)+"</div>"),h+="</div>",h+="</div>",h+=H(X,$,Y),h+="</div>",D&&(h+=u(r.children,n,e,{Animation:C(r,"submenuanimation",""),Background:C(r,"submenubackgroundcolor",""),BackgroundImage:C(r,"submenubackgroundimage","")},i,o)),h+="</li>"})),h+="</ul>"}(i,n,K,o)),""==l||1!=o.not_sticky&&"true"!=o.not_sticky||(fixNotStickyMenu(j,a,n.embed_id,o),fixMegaMenu(j,a,n.embed_id,o),fixNotStickyParents(r,e[0],l,o)),setTimeout((()=>{var e=!0;isDisplayTrigger(n)&&(e=!1),isBackendMode()&&(e=!0),e&&addStyleToHeader("#"+n.embed_id+" { visibility: visible !important }")}),250),callbackPublicFunc_delay(drawBottomNav,n.embed_id)}}))},saveLog=function(e,t,n,i,o,a){const l=new URLSearchParams({shop:e,to_url:t,from_url:n,item_name:i,embed_id:o,platform:a});jsonp(naviman_domain+"ajax-main.php?action=saveLog&"+l.toString()).then((function(e){}))},standalizeFuncWillVar=function(e){e=(e=e.strReplace('"',"")).strReplace("'","");let t="",n=[];for(let i=0;i<e.length;i++)if("("!==e[i]||0!==i&&'"'===e[i-1])if(")"!==e[i]||i!==e.length-1&&'"'===e[i+1])t+=e[i];else{if(t+='"'+e[i],!(n.length>0&&"("===n[n.length-1]))return null;n.pop()}else t+=e[i]+'"',n.push("(");return n.length>0?null:t},gotoUrl=function(event,item,is_parent,url,embed_id,isNaviSection){var menuKind=getMenuKind(window.naviman_shopinfo,embed_id);if(is_parent)item.classList.contains("child")?showLevel3Items(item,isNaviSection,menuKind):showLevel2Items(item,menuKind);else{if(isBackendMode())return""!=url&&showSnackbar("Link to: <u>"+url+"</u>"),!1;let logShop=naviman_shopinfo.shop,logFromUrl=window.location.href,logItemName=item.dataset.name,logEmbedId=embed_id,logPlatform="M";window.innerWidth>768&&(logPlatform="D");let openNewTab=!1;url.toLowerCase().includes("@new")&&(openNewTab=!0,url=url.replace(/@new/gi,"")),"https://m.me/"==url.substring(0,13).toLowerCase()&&(openNewTab=!0),"https://wa.me/"==url.substring(0,14).toLowerCase()&&(openNewTab=!0);let logDomain="https://"+window.location.hostname;if(url=url.trim(),""==url&&(saveLog(logShop,logDomain,logFromUrl,logItemName,logEmbedId,logPlatform),openNewTab?window.open(logDomain):window.location.href=logDomain),"#"==url)return saveLog(logShop,url,logFromUrl,logItemName,logEmbedId,logPlatform),!1;if(url.length>1){if("#"==url.charAt(0)){let e=logFromUrl+url;saveLog(logShop,e,logFromUrl,logItemName,logEmbedId,logPlatform),window.location.href=e}if(url.length>=4&&"tel:"==url.substring(0,4).toLowerCase())return!1;if(url.length>=4&&"sms:"==url.substring(0,4).toLowerCase())return!1;if(url.length>=5&&"open:"==url.substring(0,5).toLowerCase()){if(jsFunction=url.strReplace(":",""),saveLog(logShop,url,logFromUrl,logItemName,logEmbedId,logPlatform),url.length>=13&&"open:navimenu"==url.substring(0,13).toLowerCase()){const func=splitTriggerFunction(jsFunction);return eval("naviman."+func.functionName+'("'+func.variableName+'")'),!1}return eval("naviman."+jsFunction)(),!1}if(url.length>=6&&"share:"==url.substring(0,6).toLowerCase())return jsFunction=url.strReplace(":",""),saveLog(logShop,url,logFromUrl,logItemName,logEmbedId,logPlatform),eval("naviman."+jsFunction)(),!1;if(url.length>=7&&"scroll:"==url.substring(0,7).toLowerCase()){jsFunction=url.strReplace(":","");var isScrollOnPage=!0;return url.length>=10&&"scroll:top"==url.substring(0,10).toLowerCase()&&(isScrollOnPage=!1),url.length>=13&&"scroll:bottom"==url.substring(0,13).toLowerCase()&&(isScrollOnPage=!1),isScrollOnPage&&(jsFunction=standalizeFuncWillVar(jsFunction)),saveLog(logShop,url,logFromUrl,logItemName,logEmbedId,logPlatform),jsFunction.includes("(")?eval("naviman."+jsFunction):eval("naviman."+jsFunction)(),!1}if(url.length>=7&&"mailto:"==url.substring(0,7).toLowerCase())return window.open(url),!1;if(url.length>=11&&"javascript:"==url.substring(0,11).toLowerCase()){let jsFunction=url.substring(11,url.length);return jsFunction=jsFunction.strReplace("(","").strReplace(")",""),saveLog(logShop,"js/"+jsFunction,logFromUrl,logItemName,logEmbedId,logPlatform),console.log("Call function: "+jsFunction),eval(jsFunction)(),event.preventDefault(),!1}let isHadDomain=!1;url.length>=4&&"http"==url.substring(0,4).toLowerCase()&&(isHadDomain=!0),isHadDomain||("/"!=url.charAt(0)&&(url="/"+url),url=logDomain+url),saveLog(logShop,url,logFromUrl,logItemName,logEmbedId,logPlatform),openNewTab?"https://wa.me/"==url.substring(0,14).toLowerCase()?(console.log("Fixed for Whats App"),window.open(url,"WhatsApp","width=200,height=100")):window.open(url):(window.location.href=url,url.includes("#")&&setTimeout((function(){location.reload()}),500))}}event.stopPropagation()},hideAllLevel3Items=function(){document.querySelectorAll(".naviman_app ul.children ul.children").forEach((e=>{e.style.display="none"})),document.querySelectorAll(".naviman_app ul.children ul.children").forEach((e=>{e.style.display="none"}))},findIDofMenuItem=function(e){return null==e||null==e.parentElement?null:e.classList.contains("naviItem")?e.id:findIDofMenuItem(e.parentElement)},showLevel3Items=function(e,t,n){var i=window.innerWidth<=768;if(!i){var o=!0;if(null!=e&&(o="block"===e.querySelector("ul.children").style.display),o)return void(e.querySelector("ul.children").style.display="none")}var a=!1;i&&(a=!0),n!=NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER&&n!=NAVIGLOBAL.MENU_KINDS.CONTEXT_DROPDOWN||(a=!1);var l=e.parentElement;let r=e.querySelector("ul.children");if(n!=NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER&&n!=NAVIGLOBAL.MENU_KINDS.CONTEXT_DROPDOWN&&a){var u=document.createElement("li");u.setAttribute("class","overlay-container"),u.innerHTML='<span class="overlay" onclick="return naviman.backToLevel1(event, this)"></span>',l.appendChild(u)}if("none"==r.style.display||""==r.style.display||"initial"==r.style.display?(hideAllLevel3Items(),n==NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER||n==NAVIGLOBAL.MENU_KINDS.CONTEXT_DROPDOWN?displayElement(r,!0,"inline-block"):displayElement(r,!0,"block"),e.classList.add("menu-expand"),e.classList.add("menu-expand-level2")):(hideAllLevel3Items(),e.classList.remove("menu-expand"),e.classList.remove("menu-expand-level2"),r.style.display="none"),a){var c=0;if(r.getAttribute("ulLength"))c=r.getAttribute("ulLength");else{c=8;let e=r.querySelectorAll("li.child");for(p=0;p<e.length;p++)c+=e[p].offsetHeight;r.setAttribute("ulLength",c)}e.parentElement.style.height=c+"px",e.parentElement.scrollTop=0,e.parentElement.style.overflow="hidden",isFromNotSkickyMenu(e)||showNaviOverlay(),r.style.height=c+"px",r.getAttribute("ulChildrentTopFixed")?ulChildrentTopFixed=r.getAttribute("ulChildrentTopFixed"):(ulChildrentTopFixed=r.getBoundingClientRect().top-r.parentElement.parentElement.getBoundingClientRect().top,r.setAttribute("ulChildrentTopFixed",ulChildrentTopFixed)),1!=t&&"true"!=t||(ulChildrentTopFixed-=10),r.style.top=-ulChildrentTopFixed+"px",r.style.zIndex=3,i&&(r.style.left=48-r.parentElement.getBoundingClientRect().left+"px")}if(!i){for(var s=findIDofMenuItem(e),d=null,p=0;p<navimanData.length;p++)if(navimanData[p].embed_id==s){d=navimanData[p];break}var h=d.data.setting;r.parentElement.parentElement.style.overflow="visible",n!=NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER&&n!=NAVIGLOBAL.MENU_KINDS.CONTEXT_DROPDOWN&&(r.style.width=r.parentElement.parentElement.offsetWidth+"px"),h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_CENTER&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_RIGHT&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_LEFT&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_FULL&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.TOP_FULL&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.BOTTOM_CENTER_FLOAT||(0==h.subDirection||"false"==h.subDirection?r.style.left="-"+r.parentElement.parentElement.offsetWidth+"px":r.style.left=r.parentElement.parentElement.offsetWidth+"px",r.style.overflow="visible",r.style.height="fit-content",r.style.top="initial",r.style.bottom="0px",t&&(r.style.top="0px",r.style.bottom="initial")),h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_TOP&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_TOP&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.RIGHT_FULL_CENTER||(r.style.left="-"+r.parentElement.parentElement.offsetWidth+"px"),h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_TOP&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_TOP&&h.desktopPosition!=NAVIGLOBAL.DESKTOP_POSITION.LEFT_FULL_CENTER||(r.style.left=r.parentElement.parentElement.offsetWidth+2+"px")}},backToLevel1=function(e,t){for(var n=t.parentElement.parentElement.getElementsByClassName("children"),i=0;i<n.length;i++)displayElement(n[i],!1);var o=t.parentElement.parentElement;o.style.height="initial",o.style.overflow="auto",t.parentElement.remove(),e.stopPropagation()},resetAllItems=function(){document.querySelectorAll(".naviman_app ul.children").forEach((e=>{e.style.display="none"})),document.querySelectorAll(".naviman_app span.arrow").forEach((e=>{e.style.display="none"})),document.querySelectorAll(".naviman_app ul.children").forEach((e=>{e.style.height="initial"})),document.querySelectorAll(".naviman_app li.overlay-container").forEach((e=>{e.remove()})),hideNaviOverlay()},isFromNotSkickyMenu=function(e){for(var t=0;;){if(++t>=30)return!1;if(e.className.includes("section_naviman_app"))return!0;if(e==document.body)return!1;e=e.parentElement}},showLevel2Items=function(e,t){var n=!0;null!=e&&(n="block"===e.querySelector("ul.children").style.display),t!=NAVIGLOBAL.MENU_KINDS.STICKY_HAMBURGER&&t!=NAVIGLOBAL.MENU_KINDS.CONTEXT_DROPDOWN&&resetAllItems(),null!=e&&(n?(displayElement(e.querySelector("ul.children"),!1),displayElement(e.querySelector("span.arrow"),!1),e.classList.remove("menu-expand"),e.classList.remove("menu-expand-level1")):(displayElement(e.querySelector("ul.children"),!0),displayElement(e.querySelector("span.arrow"),!0),e.querySelector("ul.children").style.overflow="auto",e.classList.add("menu-expand"),e.classList.add("menu-expand-level1"),isFromNotSkickyMenu(e)||showNaviOverlay()))},openMobileMenu=function(){const e=document.querySelector(".header__icon--menu");callbackPublicFunc_delay(openMobileMenu),e.addEventListener("click",(()=>{})),e.click()},openCart=function(){const e=document.querySelector(".header__icon--cart");callbackPublicFunc_delay(openCart),e.addEventListener("click",(()=>{})),e.click()},openSearch=function(){var e=!0;if(null==document.querySelector("details-modal.header__search")&&(e=!1),null==document.querySelector("details-modal.header__search").querySelector("details")&&(e=!1),callbackPublicFunc_delay(openSearch),e){document.querySelectorAll("details-modal.header__search details").forEach((e=>{e.setAttribute("open","true"),e.querySelector("input").focus()}))}else{const e=document.querySelector(".header__icon--search");e.addEventListener("click",(()=>{})),e.click()}},clickToElement=function(e){return null!=document.querySelector(e)?setTimeout((()=>(document.querySelector(e).click(),!1)),"200"):console.log("This theme is invalid. Can find: "+e),!1},focusToElement=function(e){return null!=document.querySelector(e)?setTimeout((()=>(document.querySelector(e).focus(),!1)),"200"):console.log("This theme is invalid. Can find: "+e),!1},scrollTop=function(e=0){return callbackPublicFunc_delay(scrollTop),window.scrollTo({top:e,behavior:"smooth"}),!1},scrollOnPage=function(e){var t=document.querySelector(e);null!=t&&t.scrollIntoView({behavior:"smooth"}),callbackPublicFunc_delay(scrollOnPage)},scrollBottom=function(e=0){return callbackPublicFunc_delay(scrollBottom),window.scrollTo({top:document.body.scrollHeight-screen.height-e,behavior:"smooth"}),!1},shareCopyUrl=function(){return navigator.clipboard.writeText(window.location.href),callbackPublicFunc_delay(shareCopyUrl),!1},shareFacebook=function(){var e=window.location.href;return callbackPublicFunc_delay(shareFacebook),window.open("https://www.facebook.com/sharer/sharer.php?u="+e,"_blank"),!1},shareTweet=function(){var e=window.location.href;return callbackPublicFunc_delay(shareTweet),window.open("https://twitter.com/share?url="+e,"_blank"),!1},openMenu_Tailor=function(){return callbackPublicFunc_delay(openMenu_Tailor),clickToElement(".header__controls .header__menu-button")},openSearch_Tailor=function(){return callbackPublicFunc_delay(openSearch_Tailor),clickToElement(".header__controls .header__search-button")},openCart_Tailor=function(){return callbackPublicFunc_delay(openCart_Tailor),clickToElement(".header__controls .header__cart-button")},openMenu_Symmetry=function(){return callbackPublicFunc_delay(openMenu_Symmetry),clickToElement(".mobile-nav-toggle")},openSearch_Symmetry=function(){return callbackPublicFunc_delay(openSearch_Symmetry),clickToElement(".show-search-link")},openCart_Symmetry=function(){return callbackPublicFunc_delay(openCart_Symmetry),clickToElement(".cart-link")},openMenu_Pipeline=function(){return callbackPublicFunc_delay(openMenu_Pipeline),clickToElement('[data-drawer-toggle="hamburger"]')},openCart_Pipeline=function(){return callbackPublicFunc_delay(openCart_Pipeline),clickToElement('[data-drawer-toggle="drawer-cart"]')},openSearch_Pipeline=function(){openMenu_Pipeline(),setTimeout((()=>{focusToElement('[type="search"]')}),"300"),callbackPublicFunc_delay(openSearch_Pipeline)},openMenu_Empire=function(){return callbackPublicFunc_delay(openMenu_Empire),clickToElement(".site-header-menu-toggle--button")},openSearch_Empire=function(){return callbackPublicFunc_delay(openSearch_Empire),clickToElement(".site-header-mobile-search-button--button")},openMenu_Impulse=function(){return document.documentElement.classList.contains("js-drawer-open")||(setTimeout((()=>{document.querySelector(".js-drawer-open-nav").click()}),"200"),callbackPublicFunc_delay(openMenu_Impulse)),!1},openSearch_Impulse=function(){return callbackPublicFunc_delay(openSearch_Impulse),clickToElement(".js-search-header")},openCart_Impulse=function(){return document.documentElement.classList.contains("js-drawer-open")||(setTimeout((()=>{document.querySelector(".js-drawer-open-cart").click()}),"200"),callbackPublicFunc_delay(openCart_Impulse)),!1},openMenu_Enterprise=function(){return callbackPublicFunc_delay(openMenu_Enterprise),clickToElement(".main-menu__toggle")},openCart_Enterprise=function(){return callbackPublicFunc_delay(openCart_Enterprise),clickToElement("#cart-icon")},openMenu_Warehouse=function(){return callbackPublicFunc_delay(openMenu_Warehouse),clickToElement('[data-action="toggle-menu"]')},openCart_Warehouse=function(){return callbackPublicFunc_delay(openCart_Warehouse),clickToElement('[data-action="toggle-mini-cart"]')},openSearch_Warehouse=function(){return callbackPublicFunc_delay(openSearch_Warehouse),clickToElement('[data-action="toggle-search"]')},openMenu_Focal=function(){return callbackPublicFunc_delay(openMenu_Focal),clickToElement('[aria-controls="mobile-menu-drawer"]')},openCart_Focal=function(){return callbackPublicFunc_delay(openCart_Focal),clickToElement('[aria-controls="mini-cart"]')},openSearch_Focal=function(){return callbackPublicFunc_delay(openSearch_Focal),clickToElement('[aria-controls="search-drawer"]')},openMenu_Xclusive=function(){return callbackPublicFunc_delay(openMenu_Xclusive),clickToElement('[aria-controls="nav"]')},openCart_Xclusive=function(){return callbackPublicFunc_delay(openCart_Xclusive),clickToElement('[aria-controls="cart"]')},openSearch_Xclusive=function(){return callbackPublicFunc_delay(openSearch_Xclusive),clickToElement(".search-compact")},openMenu_PaloAlto=function(){return callbackPublicFunc_delay(openMenu_PaloAlto),clickToElement('[aria-controls="nav-drawer"]')},openCart_PaloAlto=function(){return callbackPublicFunc_delay(openCart_PaloAlto),clickToElement('[aria-controls="cart-drawer"]')},openSearch_PaloAlto=function(){return callbackPublicFunc_delay(openSearch_PaloAlto),clickToElement(".mobile-menu .search-popdown__toggle")},openMenu_Borders=function(){return callbackPublicFunc_delay(openMenu_Borders),clickToElement(".mobile-menu-button")},openCart_Borders=function(){return callbackPublicFunc_delay(openCart_Borders),clickToElement('[aria-controls="site-cart-sidebar"]')},openSearch_Borders=function(){return callbackPublicFunc_delay(openSearch_Borders),clickToElement('[aria-controls="site-search-sidebar"]')},openMenu_Impact=function(){callbackPublicFunc_delay(openMenu_Impact),clickToElement('[aria-controls="header-sidebar-menu"]')},openCart_Impact=function(){callbackPublicFunc_delay(openCart_Impact),clickToElement('[aria-controls="cart-drawer"]')},openSearch_Impact=function(){callbackPublicFunc_delay(openSearch_Impact),clickToElement('[aria-controls="search-drawer"]')},openMenu_Broadcast=function(){return callbackPublicFunc_delay(openMenu_Broadcast),clickToElement(".header__mobile__hamburger")},openCart_Broadcast=function(){return callbackPublicFunc_delay(openCart_Broadcast),clickToElement(".navlink--cart")},openSearch_Broadcast=function(){return callbackPublicFunc_delay(openSearch_Broadcast),clickToElement(".navlink--search")},openMenu_Expanse=function(){return callbackPublicFunc_delay(openMenu_Expanse),clickToElement(".mobile-nav-trigger")},openCart_Expanse=function(){return callbackPublicFunc_delay(openCart_Expanse),clickToElement("#HeaderCartTrigger")},openSearch_Expanse=function(){return callbackPublicFunc_delay(openSearch_Expanse),clickToElement(".js-search-header")},openMenu_ShowTime=function(){return callbackPublicFunc_delay(openMenu_ShowTime),clickToElement('[class="#main-navigation-mobile-icon"]')},openCart_ShowTime=function(){return callbackPublicFunc_delay(openCart_ShowTime),clickToElement("cart-drawer-trigger")},openSearch_ShowTime=function(){callbackPublicFunc_delay(openSearch_ShowTime);var e=document.querySelector('[class="#header-searchbar-input"]');e.addEventListener("touchstart",(function(){e.focus()})),e.addEventListener("click",(function(){e.focus()})),setTimeout((()=>{e.focus()}),500)},openMenu_Local=function(){return callbackPublicFunc_delay(openMenu_Local),clickToElement(".mobile-menu-button")},openCart_Local=function(){return callbackPublicFunc_delay(openCart_Local),focusToElement(".mobile-search input")},openSearch_Local=function(){return callbackPublicFunc_delay(openSearch_Local),clickToElement(".mobile-cart-button")},openMenu_Avenue=function(){return callbackPublicFunc_delay(openMenu_Avenue),clickToElement(".toggleMenu")},openCart_Avenue=function(){return callbackPublicFunc_delay(openCart_Avenue),clickToElement("#cart-count-mobile .cart-count-mobile")},openMenu_Parallax=function(){return callbackPublicFunc_delay(openMenu_Parallax),clickToElement(".icon-menu")},openCart_Parallax=function(){return callbackPublicFunc_delay(openCart_Parallax),clickToElement(".icon-cart")},openSearch_Parallax=function(){window.scrollTo({top:0,behavior:"smooth"});var e=document.querySelector(".mobile-search-bar .search-form__input");return e.addEventListener("touchstart",(function(){e.focus()})),e.addEventListener("click",(function(){e.focus()})),setTimeout((()=>{e.focus()}),500),callbackPublicFunc(openSearch_Parallax),!1},callPublicFunction=function(e,t){for(var n=Array.prototype.slice.call(arguments,2),i=e.split("."),o=i.pop(),a=0;a<i.length;a++)t=t[i[a]];if("function"==typeof t[o])return t[o].apply(t,n)},scrollToHide=function(e,t){t=t.trim();let n=!1;"mobile"==e?isMobileMode()&&(n=!0):isMobileMode()||(n=!0);let i=document.getElementsByClassName(t.substr(1))[0];n&&window.addEventListener("scroll",(function(e){document.documentElement.scrollTop>SCROLL_TO_HIDE?"none"!=i.style.display&&(i.style.display="none",callPublicFunction("naviApp_scrollToHide_Hide",this),callbackPublicFunc(scrollToHide)):"block"!=i.style.display&&(i.style.display="block",callPublicFunction("naviApp_scrollToHide_Show",this),callbackPublicFunc(scrollToHide))}))},openInbox_loopHideChat=function(){var e=!0;"false"==document.querySelector("#ShopifyChat").getAttribute("is-open")&&"visible"==document.querySelector("#ShopifyChat").style.visibility&&(document.querySelector("#ShopifyChat").style.visibility="hidden",e=!1),callbackPublicFunc(openInbox_loopHideChat),e&&setTimeout((function(){openInbox_loopHideChat()}),200)},openInbox_loopHideFAB=function(){var e=!0;null!=document.querySelector("#ShopifyChat")&&(document.querySelector("#ShopifyChat").style.visibility="hidden",e=!1),e&&setTimeout((function(){openInbox_loopHideFAB()}),200)},openInbox=function(){null==document.querySelector("#ShopifyChat")&&console.log("Navi+: Shopify inbox is not installed. Read document <a target='_blank' href='https://help.shopifas.com/manual/faqs/open-chat-box-by-shopify-inbox'>here</a>");var e=document.querySelector("#ShopifyChat").shadowRoot.querySelector(".chat-toggle");document.querySelector("#ShopifyChat").style.visibility="visible",e.addEventListener("click",(()=>{})),e.click(),callbackPublicFunc(openInbox),setTimeout((function(){openInbox_loopHideChat()}),200)},openInboxWithoutReplace=function(){null==document.querySelector("#ShopifyChat")&&console.log("Navi+: Shopify inbox is not installed. Read document <a target='_blank' href='https://help.shopifas.com/manual/faqs/open-chat-box-by-shopify-inbox'>here</a>");var e=document.querySelector("#ShopifyChat").shadowRoot.querySelector(".chat-toggle");document.querySelector("#ShopifyChat").style.visibility="visible",e.addEventListener("click",(()=>{})),e.click(),callbackPublicFunc(openInboxWithoutReplace)},openShareMe=function(){navigator.share?navigator.share({title:document.title,text:"Navi+ share",url:window.location.href}).then((()=>console.log("Successful share"))).catch((e=>console.log("Error sharing:",e))):console.log("This device does not support share directly!"),callbackPublicFunc(openShareMe)},callbackPublicFunc=function(func,embedID=""){let callbackName=`Navi.${func.name}_Callback`;window.Navi?"function"==typeof eval(callbackName)&&(eval(callbackName+'("'+embedID+'")'),console.log(`Executed: ${callbackName}("`+embedID+'") ')):console.log(`The function ${callbackName} is not defined.`)},callbackPublicFunc_delay=function(e,t=""){setTimeout((()=>{callbackPublicFunc(e,t)}),500)},asyncGetCart=async function(){const e=await fetch(window.Shopify.routes.root+"cart.json");if(200===e.status)return e.json();throw new Error(`Failed to get request, Shopify returned ${e.status} ${e.statusText}`)},updateCartCount=function(e){for(var t=!1,n=document.querySelectorAll("li.item_badge_withcount span.cart_count"),i=0;i<n.length;i++)n[i].textContent=e,0==e?(n[i].style.display="none",t=!0):n[i].style.display="initial";for(n=document.querySelectorAll("li.child_badge_withcount span.cart_count"),i=0;i<n.length;i++)n[i].textContent=e,0==e?(n[i].style.display="none",t=!0):n[i].style.display="initial";const o=document.querySelector(":root");t?o.style.setProperty("--cart-count-text",'""'):o.style.setProperty("--cart-count-text",'"●"'),callbackPublicFunc(updateCartCount)},checkAndUpdateCartCount=function(){asyncGetCart().then((function(e){updateCartCount(e.item_count)}))},setCartCount=function(e){cartCount=e};function trimChar(e,t){for(var n=0,i=e.length;n<i&&e[n]===t;)++n;for(;i>n&&e[i-1]===t;)--i;return n>0||i<e.length?e.substring(n,i):e}function topContain(e,t){return e=e.toLowerCase().trim(),t=t.toLowerCase().trim(),""==e.trim()&&""==t.trim()||(""==e.trim()||""!=t.trim())&&(!(e.length<t.length)&&!!e.substring(0,t.length).includes(t))}!function(){if(!window||!window.Shopify)return;const e="SCE:add",t="SCE:update",n="SCE:change",i="SCE:clear",o="SCE:mutate",a=["/cart/add","/cart/update","/cart/change","/cart/clear","/cart/add.js","/cart/update.js","/cart/change.js","/cart/clear.js"];function l(e){if(!e)return!1;if("string"==typeof e||e instanceof String){const t=e.split("/").pop();return a.includes(`/cart/${t}`)}return!1}function r(a,l){if("string"==typeof l)try{l=JSON.parse(l),console.log(l)}catch(e){}window.dispatchEvent(new CustomEvent(o,{detail:l}));const r=function(e){return!!e&&(e.includes("cart/add")?"add":e.includes("cart/update")?"update":e.includes("cart/change")?"change":!!e.includes("cart/clear")&&"clear")}(a);switch(r){case"add":window.dispatchEvent(new CustomEvent(e,{detail:l}));break;case"update":window.dispatchEvent(new CustomEvent(t,{detail:l}));break;case"change":window.dispatchEvent(new CustomEvent(n,{detail:l}));break;case"clear":window.dispatchEvent(new CustomEvent(i,{detail:l}))}}!function(){if(!window.fetch||"function"!=typeof window.fetch)return;const e=window.fetch;window.fetch=function(){const t=e.apply(this,arguments);return l(arguments[0])&&t.then((e=>{e.clone().json().then((t=>r(e.url,t)))})),t}}(),function(){if(!window.XMLHttpRequest)return;const e=window.XMLHttpRequest.prototype.open;window.XMLHttpRequest.prototype.open=function(){const t=arguments[1];return this.addEventListener("load",(function(){l(t)&&r(t,this.response)})),e.apply(this,arguments)}}()}();var generateActiveItems=function(){var e=trimChar(window.location.pathname,"/"),t=document.querySelectorAll(".naviItem");for(navi_item=0;navi_item<t.length;navi_item++){const o=t[navi_item].querySelectorAll("li");for(let t=0;t<o.length;t++){var n=o[t].getAttribute("linkto");if(""!=(n=trimChar(n.replace(/^.*\/\/[^\/]+/,""),"/"))&&topContain(e,n)){o[t].classList.add("navi-active");var i=o[t];for(parent_index=0;parent_index<10&&("LI"==(i=i.parentElement).tagName&&i.classList.add("navi-active"),!i.className.includes("naviItem"));parent_index++);}}}},checkAndRelayout=function(){null!=window.ShopifyAnalytics&&window.ShopifyAnalytics.meta.page.customerId};function setLocalStorage(e,t,n=15e3){const i={value:t,expiry:(new Date).getTime()+n};localStorage.setItem(e,JSON.stringify(i))}function getLocalStorage(e){const t=localStorage.getItem(e);if(!t)return null;const n=JSON.parse(t);return(new Date).getTime()>n.expiry?(localStorage.removeItem(e),null):n.value}var isDisplayTrigger=function(e){var t=e.data;return void 0!==t.setting.displayTrigger&&(1==t.setting.displayTrigger||"1"==t.setting.displayTrigger)};function splitTriggerFunction(e){const t=e.match(/(\w+)\((.+)\)/);if(t){return{functionName:t[1],variableName:t[2]}}return null}var openNaviMenu=function(e){const t=document.querySelector("#"+e);t&&("visible"!=t.style.visibility?(showNaviOverlayGlobal(),t.style.visibility="visible"):(hideNaviOverlayGlobal(),t.style.visibility="hidden")),callbackPublicFunc(openNaviMenu)};return{Name:"Naviman Libraries",drawBottomNav:drawBottomNav,init:init,gotoUrl:gotoUrl,backToLevel1:backToLevel1,clickToElement:clickToElement,focusToElement:focusToElement,openNaviMenu:openNaviMenu,openMobileMenu:openMobileMenu,openCart:openCart,openSearch:openSearch,scrollTop:scrollTop,scrollBottom:scrollBottom,scrollOnPage:scrollOnPage,shareCopyUrl:shareCopyUrl,shareFacebook:shareFacebook,shareTweet:shareTweet,openMenu_Tailor:openMenu_Tailor,openSearch_Tailor:openSearch_Tailor,openCart_Tailor:openCart_Tailor,openMenu_Symmetry:openMenu_Symmetry,openSearch_Symmetry:openSearch_Symmetry,openCart_Symmetry:openCart_Symmetry,openMenu_Enterprise:openMenu_Enterprise,openCart_Enterprise:openCart_Enterprise,openMenu_Pipeline:openMenu_Pipeline,openSearch_Pipeline:openSearch_Pipeline,openCart_Pipeline:openCart_Pipeline,openMenu_Empire:openMenu_Empire,openSearch_Empire:openSearch_Empire,openMenu_Impulse:openMenu_Impulse,openSearch_Impulse:openSearch_Impulse,openCart_Impulse:openCart_Impulse,openMenu_Warehouse:openMenu_Warehouse,openCart_Warehouse:openCart_Warehouse,openSearch_Warehouse:openSearch_Warehouse,openMenu_Focal:openMenu_Focal,openCart_Focal:openCart_Focal,openSearch_Focal:openSearch_Focal,openMenu_Xclusive:openMenu_Xclusive,openCart_Xclusive:openCart_Xclusive,openSearch_Xclusive:openSearch_Xclusive,openMenu_PaloAlto:openMenu_PaloAlto,openCart_PaloAlto:openCart_PaloAlto,openSearch_PaloAlto:openSearch_PaloAlto,openMenu_Borders:openMenu_Borders,openCart_Borders:openCart_Borders,openSearch_Borders:openSearch_Borders,openMenu_Impact:openMenu_Impact,openCart_Impact:openCart_Impact,openSearch_Impact:openSearch_Impact,openMenu_Broadcast:openMenu_Broadcast,openCart_Broadcast:openCart_Broadcast,openSearch_Broadcast:openSearch_Broadcast,openMenu_Expanse:openMenu_Expanse,openCart_Expanse:openCart_Expanse,openSearch_Expanse:openSearch_Expanse,openMenu_ShowTime:openMenu_ShowTime,openCart_ShowTime:openCart_ShowTime,openSearch_ShowTime:openSearch_ShowTime,openMenu_Local:openMenu_Local,openCart_Local:openCart_Local,openSearch_Local:openSearch_Local,openMenu_Avenue:openMenu_Avenue,openCart_Avenue:openCart_Avenue,openMenu_Parallax:openMenu_Parallax,openCart_Parallax:openCart_Parallax,openSearch_Parallax:openSearch_Parallax,openInbox:openInbox,openInboxWithoutReplace:openInboxWithoutReplace,openShareMe:openShareMe,isHadValue:isHadValue,setCartCount:setCartCount,asyncGetCart:asyncGetCart,checkAndUpdateCartCount:checkAndUpdateCartCount,updateCartCount:updateCartCount,generateActiveItems:generateActiveItems,checkAndRelayout:checkAndRelayout,showNaviOverlay:showNaviOverlay,hideNaviOverlay:hideNaviOverlay,showNaviOverlayGlobal:showNaviOverlayGlobal,hideNaviOverlayGlobal:hideNaviOverlayGlobal,isMobileMode:isMobileMode,setLocalStorage:setLocalStorage,getLocalStorage:getLocalStorage,callbackPublicFunc:callbackPublicFunc}}(),Navi=Navi||{};document.onclick=function(e){void 0!==e.target.closest&&null==e.target.closest(".naviman_app ul li ul.children")&&null==e.target.closest(".naviman_app .naviItem")&&(document.querySelectorAll(".naviman_app ul li ul.children").forEach((e=>{e.style.display="none"})),naviman.hideNaviOverlay())},naviman.isMobileMode()||setTimeout((()=>{for(var e=document.getElementsByClassName("navi-hover"),t=0;t<e.length;t++)e[t].addEventListener("mouseover",(function(){this.classList.contains("navi-hover-active")||(this.classList.add("navi-hover-active"),this.click())})),e[t].addEventListener("mouseout",(function(){this.classList.contains("navi-hover-active")&&(this.classList.remove("navi-hover-active"),this.click())}))}),"1000"),setTimeout((()=>{var e=document.querySelector(".naviman_app_overlay_global");e&&e.addEventListener("click",(function(t){e.style.display="none",document.querySelectorAll(".STICKY_HAMBURGER").forEach((e=>{e.style.visibility="hidden",document.body.style.overflow="initial"})),t.preventDefault()})),document.querySelectorAll(".hamburger_close").forEach((e=>{e.addEventListener("click",(function(){var e=document.querySelector(".naviman_app_overlay_global");e&&e.click()}))}))}),"3000");var naviLanguage=function(){var e={ab:"Abkhazian",aa:"Afar",af:"Afrikaans",ak:"Akan",sq:"Albanian",am:"Amharic",ar:"Arabic",an:"Aragonese",hy:"Armenian",as:"Assamese",av:"Avaric",ae:"Avestan",ay:"Aymara",az:"Azerbaijani",bm:"Bambara",ba:"Bashkir",eu:"Basque",be:"Belarusian",bn:"Bengali",bh:"Bihari languages",bi:"Bislama",bs:"Bosnian",br:"Breton",bg:"Bulgarian",my:"Burmese",ca:"Catalan, Valencian",km:"Central Khmer",ch:"Chamorro",ce:"Chechen",ny:"Chichewa, Chewa, Nyanja",zh:"Chinese",cu:"Church Slavonic, Old Bulgarian, Old Church Slavonic",cv:"Chuvash",kw:"Cornish",co:"Corsican",cr:"Cree",hr:"Croatian",cs:"Czech",da:"Danish",dv:"Divehi, Dhivehi, Maldivian",nl:"Dutch, Flemish",dz:"Dzongkha",en:"English",eo:"Esperanto",et:"Estonian",ee:"Ewe",fo:"Faroese",fj:"Fijian",fi:"Finnish",fr:"French",ff:"Fulah",gd:"Gaelic, Scottish Gaelic",gl:"Galician",lg:"Ganda",ka:"Georgian",de:"German",ki:"Gikuyu, Kikuyu",el:"Greek (Modern)",kl:"Greenlandic, Kalaallisut",gn:"Guarani",gu:"Gujarati",ht:"Haitian, Haitian Creole",ha:"Hausa",he:"Hebrew",hz:"Herero",hi:"Hindi",ho:"Hiri Motu",hu:"Hungarian",is:"Icelandic",io:"Ido",ig:"Igbo",id:"Indonesian",ia:"Interlingua (International Auxiliary Language Association)",ie:"Interlingue",iu:"Inuktitut",ik:"Inupiaq",ga:"Irish",it:"Italian",ja:"Japanese",jv:"Javanese",kn:"Kannada",kr:"Kanuri",ks:"Kashmiri",kk:"Kazakh",rw:"Kinyarwanda",kv:"Komi",kg:"Kongo",ko:"Korean",kj:"Kwanyama, Kuanyama",ku:"Kurdish",ky:"Kyrgyz",lo:"Lao",la:"Latin",lv:"Latvian",lb:"Letzeburgesch, Luxembourgish",li:"Limburgish, Limburgan, Limburger",ln:"Lingala",lt:"Lithuanian",lu:"Luba-Katanga",mk:"Macedonian",mg:"Malagasy",ms:"Malay",ml:"Malayalam",mt:"Maltese",gv:"Manx",mi:"Maori",mr:"Marathi",mh:"Marshallese",ro:"Moldovan, Moldavian, Romanian",mn:"Mongolian",na:"Nauru",nv:"Navajo, Navaho",nd:"Northern Ndebele",ng:"Ndonga",ne:"Nepali",se:"Northern Sami",no:"Norwegian",nb:"Norwegian Bokmål",nn:"Norwegian Nynorsk",ii:"Nuosu, Sichuan Yi",oc:"Occitan (post 1500)",oj:"Ojibwa",or:"Oriya",om:"Oromo",os:"Ossetian, Ossetic",pi:"Pali",pa:"Panjabi, Punjabi",ps:"Pashto, Pushto",fa:"Persian",pl:"Polish",pt:"Portuguese",qu:"Quechua",rm:"Romansh",rn:"Rundi",ru:"Russian",sm:"Samoan",sg:"Sango",sa:"Sanskrit",sc:"Sardinian",sr:"Serbian",sn:"Shona",sd:"Sindhi",si:"Sinhala, Sinhalese",sk:"Slovak",sl:"Slovenian",so:"Somali",st:"Sotho, Southern",nr:"South Ndebele",es:"Spanish, Castilian",su:"Sundanese",sw:"Swahili",ss:"Swati",sv:"Swedish",tl:"Tagalog",ty:"Tahitian",tg:"Tajik",ta:"Tamil",tt:"Tatar",te:"Telugu",th:"Thai",bo:"Tibetan",ti:"Tigrinya",to:"Tonga (Tonga Islands)",ts:"Tsonga",tn:"Tswana",tr:"Turkish",tk:"Turkmen",tw:"Twi",ug:"Uighur, Uyghur",uk:"Ukrainian",ur:"Urdu",uz:"Uzbek",ve:"Venda",vi:"Vietnamese",vo:"Volap_k",wa:"Walloon",cy:"Welsh",fy:"Western Frisian",wo:"Wolof",xh:"Xhosa",yi:"Yiddish",yo:"Yoruba",za:"Zhuang, Chuang",zu:"Zulu"};function t(){let t=document.location.pathname;if(t.length<3)return"localize";for(var n in e){var i="/"+n;if(t.substring(0,3).toLowerCase()==i.toLowerCase()){if(3==t.length)return n;if(t.length>3&&("/"==t[3]||"&"==t[3]||"#"==t[3]||"?"==t[3]||"%"==t[3]))return n}}return"localize"}return{Name:"Naviman Language",stringByLanguage:function(e){if(null==e)return"";let n=(e=(e=String(e)).trim()).match(/<.*?>/g);if(null==n)return e;if(0==n.length)return e;let i=e;n.forEach((e=>{i=i.replace(e,"")})),i=i.trim(),langStr=[],langStr.push(["localize",i]),n.forEach((e=>{let t=e.replace("<","").replace("/>","").replace(">","");var n=t.indexOf(":");if(n>-1){var i=[t.slice(0,n).trim(),t.slice(n+1).trim()];2==i.length&&""!=i[0]&&langStr.push([i[0],i[1]])}}));let o=t();var a=i;return langStr.forEach((e=>{e[0]!=o||(a=e[1])})),a},currentLanguage:t}}(),naviman_runApp=function(e){function t(e){if(!document.querySelector(`link[href="${e}"]`)){const t=document.createElement("link");t.href=e,t.type="text/css",t.rel="stylesheet",t.onload=function(){console.log(`CSS file ${e} loaded successfully.`)},document.head.appendChild(t)}}t(naviman_css),t("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"),t("https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.min.css");var n=document.currentScript.getAttribute("shop"),i="";null!=document.currentScript.getAttribute("embed_id")&&(i=document.currentScript.getAttribute("embed_id"));var o=[];if(o.embed_id="",o.not_sticky=!1,o.embed_title="",o.embed_is_full=!1,o.embed_margin="0 0 0 0",""!=i){var a=!1,l="",r=!1,u="0 0 0 0";null!=document.currentScript.getAttribute("not_sticky")&&(a=document.currentScript.getAttribute("not_sticky")),""!=i&&null!=document.currentScript.getAttribute("embed_title")&&(l=document.currentScript.getAttribute("embed_title")),""!=i&&null!=document.currentScript.getAttribute("embed_is_full")&&(r=document.currentScript.getAttribute("embed_is_full")),""!=i&&null!=document.currentScript.getAttribute("embed_margin")&&(u=document.currentScript.getAttribute("embed_margin")),o.embed_id=i.trim(),o.not_sticky=a,o.embed_title=l.trim(),o.embed_is_full=r,o.embed_margin=u}function c(e,t){naviman.init(),!function(e){var t=!1;return e.forEach((e=>{m(e.data.dragdrop)&&(t=!0)})),t}(e)?(naviman.drawBottomNav(e,naviman_domain,n,i,o),naviman.generateActiveItems(),naviman.checkAndRelayout()):naviman.asyncGetCart().then((function(t){window.addEventListener("SCE:mutate",(e=>{naviman.checkAndUpdateCartCount()})),naviman.setCartCount(t.item_count),naviman.drawBottomNav(e,naviman_domain,n,i,o),naviman.generateActiveItems(),naviman.checkAndRelayout(),0==t.item_count&&naviman.updateCartCount(t.item_count)}))}var s=naviman_json_cdn+"/"+n.replace(".myshopify.com","")+".all.json";""!=i&&(s=naviman_json_cdn+"/"+n.replace(".myshopify.com","")+"."+i+".json");var d=naviman_json_cdn+"/"+n.replace(".myshopify.com","")+".info.json";function p(e,t,n){console.log(e+": "+t),console.log(n)}function h(e){var t=naviman.getLocalStorage(s),n=0;null!=naviman.getLocalStorage("jsonUpdateVersion")&&(n=naviman.getLocalStorage("jsonUpdateVersion"));var i=!1;null==t&&(i=!0),e.update_version!=n&&(console.log("There is a new version of Navi+ data! Deleted!"),function(){for(let e=0;e<localStorage.length;e++){const t=localStorage.key(e);t.includes("naviplus")&&(localStorage.removeItem(t),e--)}}(),i=!0),i?fetch(s+"?v="+Math.random()).then((e=>e.json())).then((t=>{p("[Server]",s,t),naviman.setLocalStorage(s,t,naviman_cache_miniseconds),naviman.setLocalStorage("jsonUpdateVersion",e.update_version,naviman_cache_miniseconds),c(t)})):c(t)}function m(e){for(let t=0;t<e.length;t++){const n=e[t];if(naviman.isHadValue(n.badgeiscart)&&(1==n.badgeiscart||"1"==n.badgeiscart))return!0;if(Array.isArray(n.children)&&n.children.length>0&&m(n.children))return!0}return!1}d+="?v="+Math.random(),window.naviman_shopinfo=naviman.getLocalStorage("naviman_shopinfo"),null==window.naviman_shopinfo?fetch(d).then((e=>e.json())).then((e=>{window.naviman_shopinfo=e,naviman.setLocalStorage("naviman_shopinfo",window.naviman_shopinfo,5e3),window.isShopinfoServerLogged||(p("[Server]","naviman_shopinfo",window.naviman_shopinfo),window.isShopinfoServerLogged=!0),h(window.naviman_shopinfo)})):(window.isShopinfoLocalLogged||(p("[Local]","naviman_shopinfo",window.naviman_shopinfo),window.isShopinfoLocalLogged=!0),h(window.naviman_shopinfo))};naviman_runApp();
+var naviman_domain = 'https://naviman.shopifas.com/';
+var naviman_css = 'https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify@latest/v1/uigen-min.css';
+var UIGEN_ENV = "DEPLOYMENT";
+
+
+
+var naviman_json_cdn = "https://naviplus.b-cdn.net/naviplus/data/json";
+var naviman_json_files = "https://naviplus.b-cdn.net/naviplus/data/";
+var naviman_cache_miniseconds = 3600000; // 10 minutes
+
+if (typeof naviman === 'undefined') {
+    if (!window.isWelcomeLogged) {
+        console.log("%cNavi+ is Menu Builder for Mobile + Desktop: Sticky Navbar, Tab bar, Mega Menu, Slide Menu & Grid Menu.. | Website: https://apps.shopify.com/pronavi-navigation-design", "color:green; font-size: 16px");
+        window.isWelcomeLogged = true;
+    }
+}
+
+/**********************************************************************************************************************
+ Functions.
+ **********************************************************************************************************************/
+var naviman = (function(){
+
+    var VERTICAL_CHILDREN_WIDTH = 200;
+    var DESKTOP_MAX_WIDTH = 400;
+    var SCROLL_TO_HIDE = 58;
+    var BOX_SHADOW = 'box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10);';
+    var shop = '';
+    var embed_id = '';
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+    var cartCount = 0;
+
+    var BADGE_HIDE = 0;
+    var BADGE_DOT = 1;
+    var BADGE_ISCART_WITHCOUNT = 2;
+    // Gom toàn bộ những SF-1234567 data vào 1 biến để dùng
+    var navimanData = [];
+
+    /** Khởi tạo các biến dùng chung **************************/
+    /** uigen/init.js ****************************************/
+if (typeof NAVIGLOBAL === 'undefined') {
+    NAVIGLOBAL = [];
+    NAVIGLOBAL['ITEM_KINDS'] = [];
+    NAVIGLOBAL['MENU_KINDS'] = [];
+
+    NAVIGLOBAL['ITEM_KINDS'] = {
+        ICON_IMAGE_TEXT: 1,
+        GROUP_TITLE: 2,
+        BLANK_SPACE: 3,
+        BIG_IMAGE_TEXT: 4,
+        CUSTOM_HTML: 5,
+        BUTTON: 6
+
+    };
+
+    // TODO
+    NAVIGLOBAL['ITEM_DISPLAY_LAYOUT'] = {
+        TOP_DOWN: 1,
+        LEFT_RIGHT: 2,
+        ICON_IMAGE_ONLY: 3,
+        TEXT_ONLY: 4,
+        EMPTY: 5,
+    };
+
+    NAVIGLOBAL['MENU_KINDS'] = {
+        STICKY_MOBILE_TABBAR: 1,
+        STICKY_MOBILE_HEADER: 2,
+        STICKY_FAB_SUPPORT: 11,
+        SECTION_MOBILE_HEADER: 20,
+        SECTION_MOBILE_MEGAMENU: 31,
+        SECTION_MOBILE_GRID: 41,
+        SECTION_MOBILE_BANNER: 42,
+        /*******************************/
+        SECTION_MEGAMENU: 131,
+        /*******************************/
+        STICKY_HAMBURGER: 141,
+        CONTEXT_DROPDOWN: 151
+    }
+
+    NAVIGLOBAL['MOBILE_POSITION'] = {
+        BOTTOM: 1,
+        TOP: 2,
+        RIGHT_CENTER: 3,
+        LEFT_CENTER: 4,
+        RIGHT_BOTTOM: 5,
+        LEFT_BOTTOM: 6
+    }
+
+    NAVIGLOBAL['DESKTOP_POSITION'] = {
+        BOTTOM_CENTER_FLOAT: 0,
+        BOTTOM_CENTER: 1,
+        BOTTOM_RIGHT: 2,
+        BOTTOM_LEFT: 3,
+        BOTTOM_FULL: 4,
+        RIGHT_TOP: 5,
+        LEFT_TOP: 6,
+        LEFT_FULL_TOP: 7,
+        LEFT_FULL_CENTER: 8,
+        RIGHT_FULL_TOP: 9,
+        RIGHT_FULL_CENTER: 10,
+        TOP_FULL: 11
+    }
+
+    NAVIGLOBAL['LAYOUT'] = {
+        DEFAULT: 1,
+        HIGHLIGHT: 2,
+        FLOATING: 3,
+        FAB: 4
+    }
+}
+/** uigen/init.js END ****************************************/
+
+
+    /** Khởi tạo các hàm dùng chung **************************/
+    /** uigen/libs.js ****************************************/
+
+var clearCSS_JS =  function (css) {
+    if (typeof css == 'undefined')
+        return "";
+    css = css.trim();
+    css = css.strReplace('<script>', '');
+    css = css.strReplace('</script>', '');
+    css = css.strReplace('<style>', '');
+    css = css.strReplace('</style>', '');
+    return css;
+};
+
+var addStyleToHeader = function(styles) {
+    var css = document.createElement('style');
+    css.type = 'text/css';
+    if (css.styleSheet)
+        css.styleSheet.cssText = styles;
+    else
+        css.appendChild(document.createTextNode(styles));
+    document.getElementsByTagName("head")[0].appendChild(css);
+}
+
+var isHadValue = function(checkVar) {
+    if (typeof (checkVar) == 'undefined')
+        return false;
+
+    if (checkVar.toString().trim() == "")
+        return false;
+
+    return true;
+};
+
+var defaultValue = function( str, defaultValue ) {
+    if (typeof str == 'undefined')
+        return defaultValue;
+    if( str.toString().trim() == "" )
+        return defaultValue;
+    return platformValue(str);
+};
+
+var isElitePlan = function( naviman_shopinfo ) {
+    if (typeof naviman_shopinfo != 'undefined') {
+        if (typeof naviman_shopinfo["plan"] != "undefined") {
+            if( naviman_shopinfo['plan'] == 'Elite' )
+                return true;
+        }
+    }
+    return false;
+};
+
+var standardizeCSS = function(rules, className){
+    if( rules == "" ) return rules;
+
+
+    rules = rules.replace(/\/\*[\s\S]*?\*\//g, '');
+
+    // Remove extra whitespace, newlines, tabs, and spaces
+    rules = rules.replace(/\s{2,}/g, ' '); // Collapses multiple spaces into one
+    rules = rules.replace(/\s*({|}|,|;|:)\s*/g, '$1'); // Remove spaces around special characters
+
+    // Remove non-breaking spaces (&nbsp;)
+    rules = rules.replace(/&nbsp;/g, ' ');
+
+    // Optionally trim leading and trailing whitespace
+    rules = rules.trim();
+
+
+    if( rules.length >= className.length + 1 )
+        if( rules.substring(0, className.length + 1) == '.' + className )
+            return rules;
+
+    var classLen = className.length,
+        char, nextChar, isAt, isIn;
+
+    // makes sure the className will not concatenate the selector
+    className = ' #' + className + ' ';
+
+    // removes comments
+    rules = rules.replace( /\/\*(?:(?!\*\/)[\s\S])*\*\/|[\r\n\t]+/g, '' );
+
+    // makes sure nextChar will not target a space
+    rules = rules.replace( /}(\s*)@/g, '}@' );
+    rules = rules.replace( /}(\s*)}/g, '}}' );
+
+    for (var i = 0; i < rules.length-2; i++) {
+        char = rules[i];
+        nextChar = rules[i+1];
+
+        if (char === '@' && nextChar !== 'f') isAt = true;
+        if (!isAt && char === '{') isIn = true;
+        if (isIn && char === '}') isIn = false;
+
+        if (
+            !isIn &&
+            nextChar !== '@' &&
+            nextChar !== '}' &&
+            (
+                char === '}' ||
+                char === ',' ||
+                ((char === '{' || char === ';') && isAt)
+            )
+        ) {
+            rules = rules.slice(0, i+1) + className + rules.slice(i+1);
+            i += classLen;
+            isAt = false;
+        }
+
+    };
+
+    // prefix the first select if it is not `@media` and if it is not yet prefixed
+    if (rules.indexOf(className) !== 0 && rules.indexOf('@') !== 0) rules = ' ' + className+rules;
+
+
+    return rules;
+};
+
+var isMobileMode = function () {
+    if (windowWidth <= 768)
+        return true;
+    return false;
+};
+
+var getCurrentTemplate = function () {
+    let path = window.location.pathname.toUpperCase().trim();
+    if (path == '/' || path == '')
+        return "index";
+    if (path.includes('PRODUCTS'))
+        return "products";
+    if (path.includes('COLLECTIONS'))
+        return "collections";
+    if (path.includes('PAGES'))
+        return "pages";
+    if (path.includes('BLOGS'))
+        return "blogs";
+
+    return "others";
+};
+
+
+var jsonp = function(uri) {
+    return new Promise(function(resolve, reject) {
+        var id = '_' + Math.round(10000 * Math.random());
+        var callbackName = 'jsonp_callback_' + id;
+        window[callbackName] = function(data) {
+            delete window[callbackName];
+            var ele = document.getElementById(id);
+            ele.parentNode.removeChild(ele);
+            resolve(data);
+        }
+
+        var src = uri + '&callback=' + callbackName;
+        var script = document.createElement('script');
+        script.src = src;
+        script.id = id;
+        script.addEventListener('error', reject);
+        (document.getElementsByTagName('head')[0] || document.body || document.documentElement).appendChild(script)
+    });
+};
+
+var displayElement = function( el, display, displayKind = "block" ) {
+
+    if( isNull(el)) return;
+    if( isNull(el.style)) return;
+
+    if( display )
+        el.style.display = displayKind;
+    else
+        el.style.display = "none";
+};
+
+var isNull = function( object ) {
+
+    if ( object == null ) return true;
+    if ( typeof object == "undefined" ) return true;
+
+    return false;
+};
+
+String.prototype.strReplace = function(strR, strWith) {
+    var esc = strR.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    var reg = new RegExp(esc, 'ig');
+    return this.replace(reg, strWith);
+};
+
+var debugConsole = function ( object ) {
+    if( UIGEN_ENV == "DEVELOPMENT" )
+        console.log( object );
+};
+
+
+// Kiểm tra xem nếu là icon thì trả về icon, nếu có ảnh thì chỉ hiện thị ảnh thôi
+var itemMedia =  function(icon, image, naviman_domain, style='', iconboxpadding, /*iconBoxPaddingTop = 0, */itemExtIconSize = '', itemExtAlign = '', seoUrl = '')
+{
+    let isHadImage = true;
+
+    if (typeof (image) === 'undefined')
+        isHadImage = false;
+    else if (image.trim() == "")
+        isHadImage = false;
+
+    var iconStyle = "";
+    /*if( iconBoxPaddingTop != 0 ) {
+        iconStyle += 'margin-bottom:' + ( iconBoxPaddingTop - 2 ) + 'px; padding-top: ' + iconBoxPaddingTop + 'px;';
+    }*/
+
+    /* Chỗ này kiểm tra xem nếu có colorbox thì: 1. đặt span.icon là height:fitcontent và i.ri là display;inline-block,
+    điều này làm chiều cao của span.icon bằng với chiều cao của cả cụm icon. */
+    if( iconboxpadding != "" && iconboxpadding != "0" ) {
+        iconStyle += ' height: fit-content; ';
+    }
+
+    var styleImageHeight = '';
+    if( itemExtIconSize != '' )
+        styleImageHeight += ' style="height:'+ itemExtIconSize +'px" ';
+
+    if (!isHadImage) {
+        var output = '<span class="icon" style="'+ iconStyle +'" >' + '<i class="' + icon + '" '+ style +'></i>' + '</span>';
+        if( seoUrl != '' ) output = seoUrl + output + '</a>';
+        return output;
+    } else {
+        var output = '<div class="image-border" ' + itemExtAlign + ' ><span class="image-box" ' + style + '><span class="image">' + '<img ' + styleImageHeight + ' src="' + naviman_json_files + image + '">' + '</span></span></div>';
+        if (seoUrl != '') output = seoUrl + output + '</a>';
+        return output;
+    }
+};
+
+var defaultMarginPadding = function( marginPadding ) {
+    if( marginPadding == null ) marginPadding = {
+        'top' : 0, 'right' : 0, 'bottom' : 0, 'left' : 0
+    };
+
+    marginPadding['top'] = platformValue( marginPadding['top'] );
+    marginPadding['right'] = platformValue( marginPadding['right'] );
+    marginPadding['bottom'] = platformValue( marginPadding['bottom'] );
+    marginPadding['left'] = platformValue( marginPadding['left'] );
+
+    if(marginPadding['top'] == '') marginPadding['top'] = 0;
+    if(marginPadding['right'] == '') marginPadding['right'] = 0;
+    if(marginPadding['bottom'] == '') marginPadding['bottom'] = 0;
+    if(marginPadding['left'] == '') marginPadding['left'] = 0;
+
+    return marginPadding;
+};
+
+
+function encodeBody( url ) {
+    var output = url;
+    const words = output.split('body=');
+    if( words.length == 2 ) {
+        //console.log( words );
+        var body = encodeURIComponent(words[1]);
+        output = words[0] + 'body=' + body;
+    }
+    return output;
+}
+
+function isUrlContain(keywordsSetting) {
+    var url = window.location.pathname + window.location.search; //window.location.href.toLowerCase();
+    url = url.toLowerCase()
+    var keywords = keywordsSetting.split(',');
+    for (let i = 0; i < keywords.length; i++) {
+        keywords[i] = keywords[i].trim().toLowerCase();
+        if( keywords[i] != '' ) {
+            if( url.includes( keywords[i] ) )
+                return true;
+        }
+    }
+    return false;
+}
+
+function isUserLoggedIn() {
+    try {
+        if (window.ShopifyAnalytics.meta.page.customerId == null)
+            return false;
+    }catch({ name, message }) {
+        return false;
+    }
+    return true;
+}
+
+var hexToRgba = function(hex, alpha = 1) {
+    // Remove the leading #
+    hex = hex.replace('#', '');
+
+    // Parse the red, green, and blue values
+    let red = parseInt(hex.substring(0, 2), 16);
+    let green = parseInt(hex.substring(2, 4), 16);
+    let blue = parseInt(hex.substring(4, 6), 16);
+
+    // Return the rgba string
+    return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+var isSettingBeTrue = function( checkVar, defaultValue = false ) {
+    if (isHadValue(checkVar))
+        if( checkVar == true || checkVar == "true" )
+            return true;
+        else
+            return false;
+    return defaultValue;
+}
+
+var removeExtraSpaces = function(str) {
+    // Sử dụng biểu thức chính quy để thay thế nhiều khoảng trắng bằng một khoảng trắng duy nhất
+    return str.replace(/\s+/g, ' ').trim();
+}
+
+var menuPositionClass = function ( data ) {
+    var menuPosition = '';
+
+    switch (parseInt(data["setting"]["mobilePosition"])) {
+        case NAVIGLOBAL['MOBILE_POSITION']['BOTTOM']:
+            menuPosition += " mobile-" + "bottom ";
+            break;
+        case NAVIGLOBAL['MOBILE_POSITION']['TOP']:
+            menuPosition += " mobile-" + "top ";
+            break;
+        case NAVIGLOBAL['MOBILE_POSITION']['RIGHT_CENTER']:
+            menuPosition += " mobile-" + "right-center ";
+            break;
+        case NAVIGLOBAL['MOBILE_POSITION']['LEFT_CENTER']:
+            menuPosition += " mobile-" + "left-center ";
+            break;
+        case NAVIGLOBAL['MOBILE_POSITION']['RIGHT_BOTTOM']:
+            menuPosition += " mobile-" + "right-bottom ";
+            break;
+        case NAVIGLOBAL['MOBILE_POSITION']['LEFT_BOTTOM']:
+            menuPosition += " mobile-" + "left-button ";
+            break;
+    }
+
+    switch (parseInt(data["setting"]["desktopPosition"])) {
+        case NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_CENTER_FLOAT']:
+            menuPosition += " desktop-" + "bottom-center-float ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_CENTER']:
+            menuPosition += " desktop-" + "bottom-center ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_RIGHT']:
+            menuPosition += " desktop-" + "bottom-right ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_RIGHT']:
+            menuPosition += " desktop-" + "bottom-right ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_LEFT']:
+            menuPosition += " desktop-" + "bottom-left ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_FULL']:
+            menuPosition += " desktop-" + "bottom-full ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_TOP']:
+            menuPosition += " desktop-" + "right-top ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['LEFT_TOP']:
+            menuPosition += " desktop-" + "left-top ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_TOP']:
+            menuPosition += " desktop-" + "left-full-top ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_CENTER']:
+            menuPosition += " desktop-" + "left-full-center ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_TOP']:
+            menuPosition += " desktop-" + "right-full-top ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_CENTER']:
+            menuPosition += " desktop-" + "right-full-center ";
+            break;
+        case NAVIGLOBAL['DESKTOP_POSITION']['TOP_FULL']:
+            menuPosition += " desktop-" + "top-full ";
+            break;
+    }
+
+    return menuPosition;
+}
+
+var showNaviOverlay = function () {
+    if( document.getElementsByClassName("naviman_app_overlay") == null )
+        return;
+    if( document.getElementsByClassName("naviman_app_overlay").length == 0 )
+        return;
+    document.getElementsByClassName("naviman_app_overlay")[0].style.display = 'block';
+
+/*    var body = document.getElementsByTagName('body')[0];
+    body.style.overflow = 'hidden';
+*/
+}
+
+var hideNaviOverlay = function () {
+    if( document.getElementsByClassName("naviman_app_overlay") == null )
+        return;
+    if( document.getElementsByClassName("naviman_app_overlay").length == 0 )
+        return;
+    document.getElementsByClassName("naviman_app_overlay")[0].style.display = 'none';
+}
+
+var showNaviOverlayGlobal = function () {
+    if( document.getElementsByClassName("naviman_app_overlay_global") == null )
+        return;
+    if( document.getElementsByClassName("naviman_app_overlay_global").length == 0 )
+        return;
+    document.getElementsByClassName("naviman_app_overlay_global")[0].style.display = 'block';
+    document.body.style.overflow = "hidden";
+}
+
+var hideNaviOverlayGlobal = function () {
+    if( document.getElementsByClassName("naviman_app_overlay_global") == null )
+        return;
+    if( document.getElementsByClassName("naviman_app_overlay_global").length == 0 )
+        return;
+    document.getElementsByClassName("naviman_app_overlay_global")[0].style.display = 'none';
+    document.body.style.overflow = "initial";
+}
+
+var isBackendMode = function () {
+    if (typeof DEPLOY_ENVIROIMENT != 'undefined')
+        if (DEPLOY_ENVIROIMENT == "DESIGNING") {
+            return true;
+        }
+    return false;
+}
+
+var getSEOUrl = function ( itemUrl ) {
+    var currentDomain = window.location.origin;
+    itemUrl = itemUrl.trim();
+    if( itemUrl == "" )
+        return currentDomain;
+    if( itemUrl == "#" )
+        return itemUrl;
+    if( itemUrl.includes("html") )
+        return  itemUrl;
+    if( itemUrl.includes("open:") )
+        return "";
+    if( itemUrl.includes("scroll:") )
+        return "";
+    if( itemUrl.includes("javascript:") )
+        return "";
+    if( itemUrl.includes("tel:") )
+        return "";
+    if( itemUrl.includes("sms:") )
+        return "";
+    if( itemUrl.includes("mailto:") )
+        return "";
+    if( itemUrl.includes("share:") )
+        return "";
+    return currentDomain + "/" + itemUrl;
+}
+
+var getMenuKind = function( naviman_shopinfo, embed_id ) {
+
+    if( isBackendMode() ) {
+        if( typeof fakeMenuKind != "undefined" )
+            return fakeMenuKind;
+        return "1";
+    }
+
+    if( typeof naviman_shopinfo != "undefined" ) {
+        if (typeof naviman_shopinfo["bottombars"] != "undefined") {
+            if (typeof naviman_shopinfo["bottombars"][embed_id] != "undefined") {
+                return naviman_shopinfo["bottombars"][embed_id];
+            }
+        }
+    }
+    return -1;
+}
+
+var getClassOfMenuKind = function( naviman_shopinfo, embed_id ) {
+    var menuKind = getMenuKind( naviman_shopinfo, embed_id);
+    switch (menuKind) {
+        case NAVIGLOBAL['MENU_KINDS']['STICKY_MOBILE_TABBAR']:
+            return "STICKY_MOBILE_TABBAR";
+        case NAVIGLOBAL['MENU_KINDS']['STICKY_MOBILE_HEADER']:
+            return "STICKY_MOBILE_HEADER";
+        case NAVIGLOBAL['MENU_KINDS']['STICKY_FAB_SUPPORT']:
+            return "STICKY_FAB_SUPPORT";
+        case NAVIGLOBAL['MENU_KINDS']['STICKY_MOBILE_TABBAR']:
+            return "STICKY_MOBILE_TABBAR";
+        case NAVIGLOBAL['MENU_KINDS']['SECTION_MOBILE_HEADER']:
+            return "SECTION_MOBILE_HEADER";
+        case NAVIGLOBAL['MENU_KINDS']['SECTION_MOBILE_MEGAMENU']:
+            return "SECTION_MOBILE_MEGAMENU";
+        case NAVIGLOBAL['MENU_KINDS']['SECTION_MOBILE_GRID']:
+            return "SECTION_MOBILE_GRID";
+        case NAVIGLOBAL['MENU_KINDS']['SECTION_MOBILE_BANNER']:
+            return "SECTION_MOBILE_BANNER";
+
+        case NAVIGLOBAL['MENU_KINDS']['SECTION_MEGAMENU']:
+            return "SECTION_MEGAMENU";
+        case NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER']:
+            return "STICKY_HAMBURGER";
+        case NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN']:
+            return "CONTEXT_DROPDOWN";
+
+    }
+}
+
+function stringToArray(inputString) {
+    return inputString
+        .split(/[,;]/)         // Tách chuỗi theo dấu , hoặc ;
+        .map(item => item.trim()) // Loại bỏ khoảng trắng thừa ở đầu và cuối mỗi item
+        .filter(item => item !== ""); // Loại bỏ các item rỗng
+}
+
+function removeAllEventListeners(element) {
+    const newElement = element.cloneNode(true); // Tạo bản sao
+    element.parentNode.replaceChild(newElement, element); // Thay thế phần tử gốc bằng bản sao
+    return newElement; // Trả về phần tử mới
+}
+
+function encodeQuery(query) {
+    let encoded = btoa(query); // Encode to Base64
+    encoded = encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    return encoded;
+}
+
+function decodeQuery(encoded) {
+    encoded = encoded.replace(/-/g, '+').replace(/_/g, '/');
+    return atob(encoded); // Decode from Base64
+}
+
+function parseAttributes(input) {
+    // Split by ; and , delimiters
+    let parts = input.split(/[,;]+/);
+
+    // Filter and clean valid attributes (attr=value)
+    let validAttributes = parts
+        .map(part => part.trim()) // Trim spaces around
+        .filter(part => {
+            // Only keep parts that have an = sign and no space in the attribute name
+            return /^[a-zA-Z0-9_-]+\s*=\s*[^\s]+/.test(part);
+        });
+
+    return validAttributes;
+}
+
+function formatAttributes(attrArray) {
+    return attrArray.map(attrPair => {
+        let [attribute, value] = attrPair.split('=');
+
+        // Replace spaces in the attribute name with hyphens
+        attribute = attribute.trim().replace(/\s+/g, '-');
+
+        // Return the formatted string with value in double quotes
+        return `${attribute}="${value.trim()}"`;
+    }).join(' ');
+}
+
+function standardizeFunctionString(funcString) {
+    // Regular Expression để bắt các hàm dạng 'function tenHam(...) {...}'
+    const functionDeclarationPattern = /function\s+([a-zA-Z_$][\w$]*)\s*\(([^)]*)\)\s*\{/g;
+
+    // Regular Expression để bắt các hàm dạng 'var tenHam = function(...) {...}'
+    const functionExpressionPattern = /var\s+([a-zA-Z_$][\w$]*)\s*=\s*function\s*\(([^)]*)\)\s*\{/g;
+
+    // Thay thế các hàm dạng 'function tenHam(...) {...}' thành 'Navi.tenHam = function(...) {...}'
+    var output = funcString.replace(functionDeclarationPattern, 'Navi.$1 = function($2) {');
+
+    // Thay thế các hàm dạng 'var tenHam = function(...) {...}' thành 'Navi.tenHam = function(...) {...}'
+    output = output.replace(functionExpressionPattern, 'Navi.$1 = function($2) {');
+
+    return output;
+}
+
+var platformValue = function( val ) {
+    if( val != "" )
+    {
+        if( typeof val !== 'string' )
+            return val;
+
+        // Bước 0: Cắt bỏ ký tự '|' ở đầu và cuối nếu có
+        if (val.startsWith('|')) val = val.slice(1);
+        if (val.endsWith('|')) val = val.slice(0, -1);
+
+        // Bước 1: Kiểm tra nếu không chứa ký tự '|', trả về chính nó
+        if (!val.includes('|')) return val;
+
+        // Bước 2: Split thành array
+        const parts = val.split('|');
+
+        // Kiểm tra kích thước và lấy phần tử tương ứng
+        if (window.innerWidth <= 768) {
+            return parts[0] !== '' ? parts[0].trim() : parts[1].trim() || '';
+        } else {
+            return parts[1] !== '' ? parts[1].trim() : parts[0].trim() || '';
+        }
+    }
+    return val;
+}
+
+/** uigen/libs.js END ****************************************/
+
+    var generateCSS_init = function ( setting ) {
+    //debugConsole("1.generateCSS_init");
+
+    setting['submenuWidth'] = defaultValue(setting['submenuWidth'], 200);
+    setting['textSize'] = defaultValue( setting['textSize'], 10);
+    setting['spaceTextIcon'] = defaultValue(setting['spaceTextIcon'], 2);
+    setting['iconSize'] = defaultValue(setting['iconSize'], 22);
+    setting['height'] = defaultValue(setting['height'], 54);
+    setting['borderRadius'] = defaultValue(setting['borderRadius'], 0);
+    setting['opacity'] = defaultValue(setting['opacity'], 100);
+    setting['bottomMargin'] = defaultValue(setting['bottomMargin'], "");
+    setting['settingMargin'] = defaultMarginPadding( setting['settingMargin'] );
+    setting['settingPadding'] = defaultMarginPadding( setting['settingPadding'] );
+
+};
+
+var generateCSS_paddingMargin = function ( setting, cssNaviPrefix, section_setting ) {
+    //debugConsole("4.generateCSS_paddingMargin");
+
+    var addHtml = "";
+    addHtml += cssNaviPrefix + ' { margin: ' +
+        setting['settingMargin']['top'] + 'px ' +
+        setting['settingMargin']['right'] + 'px ' +
+        setting['settingMargin']['bottom'] + 'px ' +
+        setting['settingMargin']['left'] + 'px ' +
+        ' } ';
+    addHtml += cssNaviPrefix + ' { padding: ' +
+        setting['settingPadding']['top'] + 'px ' +
+        setting['settingPadding']['right'] + 'px ' +
+        setting['settingPadding']['bottom'] + 'px ' +
+        setting['settingPadding']['left'] + 'px ' +
+        ' } ';
+    return addHtml;
+};
+
+var generateCSS_UI_Level1_Menuitems = function ( setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting ) {
+    //debugConsole("2.generateCSS_UI_Level1_Menuitems");
+
+    var addHtml = "";
+
+    if (isHadValue(setting['textColor'])) {
+        addHtml += cssNaviPrefix + ' ul li.item .name { color: ' + setting['textColor'] + '; } ';
+        addHtml += cssNaviPrefix + ' ul li.item .description { color: ' + setting['textColor'] + '; } ';
+    }
+
+    // TODO: Cho chọn không chọn font và một font tự chọn tên.
+    if (isHadValue(setting['fontFamily'])) {
+        let fontFamily_css = '<style> @import url("https://fonts.googleapis.com/css2?family=' + setting['fontFamily'] + '&display=swap"); </style>';
+        naviman_appItem.insertAdjacentHTML('beforebegin', fontFamily_css);
+
+        addHtml += cssNaviPrefix + ' {font-family: "' + setting['fontFamily'].strReplace('+', ' ') + '", "Roboto"} ';
+    }
+
+    if (isHadValue(setting['textSize'])) {
+        addHtml += cssNaviPrefix + ' ul li.item > .inner .name { font-size: ' + setting['textSize'] + 'px; } ';
+        addHtml += cssNaviPrefix + ' ul li.item > .inner .name > { font-size: ' + setting['textSize'] + 'px; } '; // Sửa chỗ này để overwrite các ông khác.
+    }
+
+/*    if (isHadValue(setting['spaceTextIcon']))*/
+/*        addHtml += cssNaviPrefix + ' ul li.item .icon, ' + cssNaviPrefix + ' ul li.item .image { height: ' + (21 + (setting['spaceTextIcon'] - 2)) + 'px; } ';*/
+
+    if (isHadValue(setting['dividerColor']))
+        addHtml += cssNaviPrefix + ' ul li.item_divider { border-color: ' + setting['dividerColor'] + '; } ';
+
+    if (isHadValue(setting['badgeColor']))
+        addHtml += cssNaviPrefix + 'ul li.item_badge .inner .icon::before, ' + cssNaviPrefix + ' ul li.item_badge .inner .image::before { color: ' + setting['badgeColor'] + '; } ';
+
+    if (isHadValue(setting['iconColor']))
+        addHtml += cssNaviPrefix + 'ul li.item .icon i { color: ' + setting['iconColor'] + '; } ';
+
+    if (isHadValue(setting['iconSize'])) {
+        /*
+        Login của đoạn này như sau (Chỉ áp dụng cho icon/Small image):
+        1. Nếu setting chung icon size thì áp dụng cho cả icon và image
+        2. Đối với level 2: Thì đặt chiều cao của icon và image bằng nhau và bằng iconSize + 4
+         */
+        addHtml += cssNaviPrefix + 'ul li.item .icon i { font-size: ' + setting['iconSize'] + 'px; } ';
+        addHtml += cssNaviPrefix + 'ul li.item ul li.child .icon i { font-size: ' + setting['iconSize'] + 'px; } ';
+        addHtml += cssNaviPrefix + 'ul li.item ul li.child .icon { height: ' + ( parseInt(setting['iconSize']) + 4) + 'px; } ';
+        addHtml += cssNaviPrefix + 'ul li.item ul li.child .info { width: calc(100% -   ' + parseInt(setting['iconSize']) + 'px); } ';
+
+        addHtml += cssNaviPrefix + 'ul li.item .image img { height: ' + setting['iconSize'] + 'px; } ';
+        addHtml += cssNaviPrefix + 'ul li.item ul li.child .image img { height: ' + setting['iconSize'] + 'px; } ';
+        addHtml += cssNaviPrefix + 'ul li.item ul li.child .image { height: ' + ( parseInt(setting['iconSize']) + 4) + 'px; } ';
+
+        if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+            addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { left: calc(50% - 26px); position: absolute; padding-top: ' + (16 - (setting['iconSize'] - 12) / 2) + 'px; } ';
+    }
+
+    // Don't display text ---------------------------------------------------------
+    if (setting['textHide'] == "true" || setting['textHide'] == true) {
+        addHtml += cssNaviPrefix + ' ul li.item > .inner .name { display:none; } ';
+        addHtml += cssNaviPrefix + ' ul li.item > .inner .description { display:none; } ';
+        /* if (setting['layout'] !=  NAVIGLOBAL['LAYOUT']['FAB'])
+            addHtml += cssNaviPrefix + 'ul li.item .inner { padding-top: ' + ((setting['height'] - 50) / 2 + 8 + (setting['textSize'] / 2)) + 'px } ';
+
+         */
+
+        if (setting['layout'] != NAVIGLOBAL['LAYOUT']['FAB']) {
+            let isVertical = false;
+            if (isMobileMode())
+                if (setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['RIGHT_CENTER']
+                    || setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['LEFT_CENTER']
+                    || setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['RIGHT_BOTTOM']
+                    || setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['LEFT_BOTTOM']
+                )
+                    isVertical = true;
+
+            if (!isMobileMode()) // Desktop mode
+                if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_TOP']
+                    || setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_TOP']
+                    || setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_TOP']
+                    || setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_CENTER']
+                )
+                    isVertical = true;
+
+            if (isVertical) {
+                let itemHeight = (parseInt(setting['height']) - setting['textSize']);
+
+                /* TODO: Cần chỉnh chỗ này, nếu như có padding thì phải phình to ra chứ? */
+
+                addHtml += cssNaviPrefix + ' ul li.item { height: ' + itemHeight + 'px } ';
+                addHtml += cssNaviPrefix + '{ height: ' + itemHeight * dragdrop.length + 'px } ';
+
+            }
+        }
+    }
+
+
+    return addHtml;
+}
+
+
+var generateCSS_UI_Level1_Background = function ( setting, cssNaviPrefix, section_setting ) {
+    //debugConsole("3.generateCSS_UI_Level1_Background");
+
+    var addHtml = "";
+
+    // Background ---------------------------------------------------------------
+    if (isSettingBeTrue(setting['level1BackgroundHide'])) { // Nếu không có nền thì bỏ nền và bỏ bóng.
+        addHtml += cssNaviPrefix + '{ background: initial; } ';
+        addHtml += cssNaviPrefix + '{ box-shadow: none !important; } ';
+    }else {
+        if (isHadValue(setting['backgroundImage'])) {
+            if (setting['backgroundImage'].includes("?")) {
+                // Xử lý duy nhất trường hợp có opacity cho background Image
+                var bg = setting['backgroundImage'].split("?");
+                var bgImage = bg[0];
+                var bgOpacity = parseInt(bg[1]);
+                if (bgOpacity != 0) {
+                    addHtml += cssNaviPrefix + '{ background-image: url("' + bgImage + '"); background-size: cover; } ';
+                    addHtml += cssNaviPrefix + '{ background-color: ' + hexToRgba(setting['backgroundColor'], 1 - (bgOpacity / 100)) + '; background-blend-mode: hue; } ';
+                } else {
+                    addHtml += cssNaviPrefix + '{ background: ' + setting['backgroundColor'] + ' } ';
+                    addHtml += cssNaviPrefix + '{ background-image: url("' + bgImage + '"); background-size: cover; } ';
+                }
+            } else {
+                addHtml += cssNaviPrefix + '{ background: ' + setting['backgroundColor'] + ' } ';
+            }
+        } else { // Nếu ko có background thì dùng màu bình thường.
+            if (isHadValue(setting['backgroundColor']))
+                addHtml += cssNaviPrefix + '{ background: ' + setting['backgroundColor'] + ' } ';
+        }
+    }
+
+    if (! isSettingBeTrue(setting['level1Dropshadow'], true)) { // Nếu không có nền thì bỏ nền và bỏ bóng.
+        addHtml += cssNaviPrefix + ' { box-shadow: none !important; } ';
+    }
+
+    // Height
+    addHtml += cssNaviPrefix + 'ul li.item { height: ' + setting['height'] + 'px } ';
+
+    // Curve (Border-radius)
+    if (isHadValue(setting['layout'])) {
+        if (setting['layout'] == NAVIGLOBAL['LAYOUT']['DEFAULT'] || setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) {
+            addHtml += cssNaviPrefix + '{ border-radius: ' + setting['borderRadius'] + 'px ' + setting['borderRadius'] + 'px 0px 0px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { border-radius: ' + setting['borderRadius'] + 'px; } ';
+        }
+        else
+            addHtml += cssNaviPrefix + '{ border-radius: ' + setting['borderRadius'] + 'px } ';
+
+        if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING'])
+                addHtml += cssNaviPrefix + ' ul li ul.children { border-radius: ' + setting['borderRadius'] + 'px; } ';
+
+        if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FAB']) {
+            addHtml += cssNaviPrefix + ' ul li.item { border-radius: ' + setting['borderRadius'] + 'px; } ';
+            // Nếu là float button thì level có border-radius: 1/2
+            addHtml += cssNaviPrefix + ' ul li ul.children { border-radius: ' + (setting['borderRadius'] / 2) + 'px;} ';
+        }
+
+    }
+
+    if (isHadValue(setting['opacity']))
+        addHtml += cssNaviPrefix + '{ opacity: ' + (setting['opacity'] / 100) + ' } ';
+
+    return addHtml;
+};
+
+var generateCSS_UI_Level2 = function ( setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting ) {
+    //debugConsole("5.generateCSS_UI_Level2");
+
+    var addHtml = "";
+
+    if (isHadValue(setting['submenuTextColor'])) {
+        addHtml += cssNaviPrefix + ' ul li.item ul li.child .name { color: ' + setting['submenuTextColor'] + '; } ';
+        addHtml += cssNaviPrefix + ' ul li.item a { color: ' + setting['submenuTextColor'] + '; } ';
+        addHtml += cssNaviPrefix + ' ul li.item ul li.child .description { color: ' + setting['submenuTextColor'] + '; } ';
+    }
+
+    if (isHadValue(setting['submenuIconColor']))
+        addHtml += cssNaviPrefix + ' ul li.item ul li.child .icon i { color: ' + setting['submenuIconColor'] + '; } ';
+
+    if (isSettingBeTrue(setting['level2BackgroundHide'])) { // Nếu không có nền thì bỏ nền và bỏ bóng.
+        addHtml += cssNaviPrefix + ' ul li ul.children { background: initial; } ';
+        addHtml += cssNaviPrefix + ' ul li ul.children { box-shadow: none !important; } ';
+    }else {
+        if (isHadValue(setting['submenuBackgroundColor']))
+            addHtml += cssNaviPrefix + ' ul li ul.children { background: ' + setting['submenuBackgroundColor'] + ' } ';
+    }
+
+    if (! isSettingBeTrue(setting['level2Dropshadow'], true)) { // Nếu không có nền thì bỏ nền và bỏ bóng.
+        addHtml += cssNaviPrefix + ' ul li ul.children { box-shadow: none !important; } ';
+    }
+
+    if (isHadValue(setting['submenuDividerColor']))
+        addHtml += cssNaviPrefix + ' ul li.child_divider { border-color: ' + setting['submenuDividerColor'] + '; } ';
+
+    return addHtml;
+};
+
+var generateCSS_Publish = function (setting, cssNaviPrefix, section_setting) {
+    //debugConsole("7.generateCSS_Publish");
+
+    var addHtml = "";
+
+    addHtml += ' @media only screen and (max-width: 768px) { ';
+        if (setting['mobileDisplay'] == "false" || setting['mobileDisplay'] == false)
+            addHtml += cssNaviPrefix + ' { display: none !important; } ';
+        if( !isMobileMode() )
+            addHtml += cssNaviPrefix + ' { display: none !important; } ';
+    addHtml += ' } ';
+
+    addHtml += ' @media only screen and (min-width: 769px) { ';
+        if (setting['desktopDisplay'] == "false" || setting['desktopDisplay'] == false) {
+            addHtml += cssNaviPrefix + ' { display: none !important; } ';
+        }
+        if( isMobileMode() )
+            addHtml += cssNaviPrefix + ' { display: none !important; } ';
+    addHtml += ' } ';
+
+    return addHtml;
+};
+
+var generateCSS_Position = function (setting, cssNaviPrefix, section_setting) {
+    //debugConsole("8.generateCSS_Position");
+
+    var addHtml = "";
+
+    addHtml += ' @media only screen and (max-width: 768px) {';
+
+    if (setting['mobileAutoHide'] == "true" || setting['mobileAutoHide'] == true) {
+        if (setting['mobileDisplay'] == "true" || setting['mobileDisplay'] == true)
+            scrollToHide("mobile", cssNaviPrefix);
+    }
+    addHtml += '} ';
+
+    addHtml += ' @media only screen and (min-width: 769px) {';
+
+    if (setting['desktopAutoHide'] == "true" || setting['desktopAutoHide'] == true) {
+        if( setting['desktopDisplay'] == "true" || setting['desktopDisplay'] == true )
+            if (setting['desktopPosition'] != NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_TOP']
+                && setting['desktopPosition'] != NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_CENTER']
+                && setting['desktopPosition'] != NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_TOP']
+                && setting['desktopPosition'] != NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_CENTER']
+            )
+                scrollToHide("desktop", cssNaviPrefix);
+    }
+
+    addHtml += '} ';
+
+    return addHtml;
+};
+
+var generateCSS_Advance = function (setting, cssNaviPrefix, naviman_appItem, embed_id, section_setting) {
+    //debugConsole("9.generateCSS_Advance");
+
+    var addHtml = "";
+
+    // Global JS / jQuery ---------------------------------------------------------
+    var jsScript = document.createElement('script');
+    jsScript.textContent = clearCSS_JS(setting['jsCode']);
+    document.body.appendChild(jsScript);
+
+    var jsNaviScript = document.createElement('script');
+    jsNaviScript.textContent = standardizeFunctionString( clearCSS_JS(setting['jsNaviCode']) );
+    document.body.appendChild(jsNaviScript);
+
+    // CSS ---------------------------------------------------------
+    naviman_appItem.insertAdjacentHTML('beforebegin', '<style>' + standardizeCSS(clearCSS_JS(setting['cssCode']), embed_id) + '</style>');
+    naviman_appItem.insertAdjacentHTML('beforebegin', '<style>' + clearCSS_JS(setting['cssCodeGlobal']) + '</style>');
+
+    // zIndex  ------------------------------------------------------
+    if (isHadValue(setting['zIndex']))
+        addHtml += cssNaviPrefix + ' { z-index: '+ setting['zIndex'] +'; } ';
+
+    return addHtml;
+};
+
+var generateCSS_FixByLayout = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+    //debugConsole("6.generateCSS_FixByLayout");
+
+    var addHtml = "";
+
+    if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) {
+
+        if (setting['highlightColor'].trim() != "")
+            addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { background: ' + setting['highlightColor'] + '; } ';
+        if (setting['highlightIconColor'].trim() != "")
+            addHtml += cssNaviPrefix + ' ul li.item_primary > .inner i { color: ' + setting['highlightIconColor'] + '; } ';
+    }
+
+    if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING']) {
+        if (setting['bottomMargin'] != "") {
+            addHtml += cssNaviPrefix + ' { bottom: ' + setting['bottomMargin'] + 'px; } ';
+        }
+    }
+
+    if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FAB']) {
+        addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; left: initial; right: 16px; height: ' + parseInt(setting['height']) + 'px; width: ' + (parseInt(setting['height']) * dragdrop.length) + 'px; } ';
+
+        //addHtml += cssNaviPrefix + ' ul li.item .inner { padding: 8px 0px 0px 0px; } ';
+        //addHtml += cssNaviPrefix + 'ul li.item .inner { padding-top: ' + ((setting['height'] - 50) / 2 + 8 + (setting['textSize'] / 2)) + 'px } ';
+
+        addHtml += cssNaviPrefix + ' ul li ul.children { left: initial; right: 0px; bottom: 4px; width: ' + setting['submenuWidth'] + 'px; } ';
+        addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ';} ';
+
+
+        if (setting['bottomMargin'] != "")
+            addHtml += cssNaviPrefix + ' { bottom: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+    }
+
+    return addHtml;
+}
+
+var generateCSS_UI_Common = function ( setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting ) {
+    var addHtml = "";
+
+    // Logic: Nếu set height và kiểu left-right thì sẽ đặt một cái padding-top để nó căn vào giữa cho nó đẹp.
+    //addHtml += cssNaviPrefix + ' ul > li.item .inner { padding-top: ' + ((setting['height'] - 50) / 2 + 7) + 'px } ';
+    //addHtml += cssNaviPrefix + ' ul > li.left-right .inner { padding-top: 0px } ';
+
+
+    // TODO: Chỗ này chưa ngon do nếu gap < 0 thì chỉ sống với top-down
+    if (isHadValue(setting['spaceTextIcon'])) {
+        if( setting['spaceTextIcon'] < 0 ) {
+            addHtml += cssNaviPrefix + ' ul li.item .inner { gap: 0px }';
+            addHtml += cssNaviPrefix + ' ul li.item .inner .info { margin-top: '+ setting['spaceTextIcon'] +'px }';
+        }else
+            addHtml += cssNaviPrefix + ' ul li.item .inner { gap: '+ setting['spaceTextIcon'] +'px }';
+    }
+
+    if( isUserLoggedIn() ) {
+        addHtml += cssNaviPrefix + ' ul li.publish-show-logined { display: initial }';
+        addHtml += cssNaviPrefix + ' ul li.publish-hide-logined { display: none }';
+    }else {
+        addHtml += cssNaviPrefix + ' ul li.publish-show-logined { display: none }';
+        addHtml += cssNaviPrefix + ' ul li.publish-hide-logined { display: initial }';
+    }
+
+
+    return addHtml;
+}
+
+var getItemValue = function( item, keyName, defaultVal ) {
+    if( item[keyName] != null )
+        return item[keyName];
+    return defaultVal;
+}
+
+var generateCSS_Level1_Width = function (setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting) {
+    var addHtml = "";
+
+    var fixPx = 0;
+    var fixPercent = 0;
+    var automationCount = 0;
+    var maxAutomationCount = 0;
+
+    dragdrop.forEach((item) => {
+        var itemIsPublished = getItemValue(item, "ispublished", 1);
+        var itemHideWhenLogined = getItemValue(item, "hidewhenlogined", 0);
+        var itemShowWhenLogined = getItemValue(item, "showwhenlogined", 0);
+        var itemWidthLayout = getItemValue(item, "widthlayout", 1);
+
+        if( itemIsPublished == 0 )
+            return;
+        if( itemHideWhenLogined == 1 ) {
+            if( isUserLoggedIn() )
+                return;
+        }
+
+        if( itemShowWhenLogined == 1 ) {
+            if( !(isUserLoggedIn()) )
+                return;
+        }
+
+        if( itemWidthLayout == 14 )
+            fixPx += parseInt( item["widthfix"] );
+
+        if( itemWidthLayout == 2 ) fixPercent += 8.3333333333;
+        if( itemWidthLayout == 3 ) fixPercent += 16.6666666666;
+        if( itemWidthLayout == 4 ) fixPercent += 25;
+        if( itemWidthLayout == 5 ) fixPercent += 33.3333333333;
+        if( itemWidthLayout == 6 ) fixPercent += 41.6666666666;
+        if( itemWidthLayout == 7 ) fixPercent += 50;
+        if( itemWidthLayout == 8 ) fixPercent += 58.3333333333;
+        if( itemWidthLayout == 9 ) fixPercent += 66.6666666666;
+        if( itemWidthLayout == 10 ) fixPercent += 75;
+        if( itemWidthLayout == 11 ) fixPercent += 83.3333333333;
+        if( itemWidthLayout == 12 ) fixPercent += 91.6666666666;
+        if( itemWidthLayout == 13 ) fixPercent += 100;
+
+        if( itemWidthLayout == 15 ) fixPercent += 10;
+        if( itemWidthLayout == 16 ) fixPercent += 20;
+        if( itemWidthLayout == 17 ) fixPercent += 50;
+        if( itemWidthLayout == 18 ) fixPercent += 100;
+
+        if( itemWidthLayout == 20 ) {
+            // Do nothing
+        }
+
+        if( itemWidthLayout == 1 )
+            automationCount ++;
+
+        if( fixPercent == 100 ) { // Nếu gặp một item tràn màn hình thì ngắt, lấy max để làm lưới cơ sở.
+            if( automationCount > maxAutomationCount) {
+                maxAutomationCount = automationCount;
+                automationCount = 0;
+            }
+        }
+    });
+
+    if( automationCount == 0 && maxAutomationCount == 0 ) return "";
+    if( maxAutomationCount > 0 ) automationCount = maxAutomationCount;
+
+    if( fixPercent >= 100 ) fixPercent = 0;
+    addHtml += cssNaviPrefix + ' ul li.item { width: calc( calc( '+ (100 - fixPercent ) +'% - '+ fixPx +'px) / '+ automationCount +') } ';
+    return addHtml;
+}
+
+var generateCSS = function(naviman_appItem, embed_id, setting, dragdrop, isNaviSection, section_setting) {
+
+    generateCSS_init(setting);
+
+    let html = '<style>';
+    let cssNaviPrefix = ' .' + embed_id + ' ';
+    let idCssNaviPrefix = ' #' + embed_id + ' ';
+    html += generateCSS_UI_Common( setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting );
+    html += generateCSS_UI_Level1_Menuitems( setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting );
+    html += generateCSS_UI_Level1_Background( setting, cssNaviPrefix, section_setting );
+    html += generateCSS_paddingMargin( setting, cssNaviPrefix, section_setting );
+
+    html += generateCSS_UI_Level2( setting, cssNaviPrefix, section_setting );
+    html += generateCSS_FixByLayout( setting, cssNaviPrefix, dragdrop, section_setting );
+
+    // Default is 100/item numbers
+    //html += cssNaviPrefix + ' ul li.item { width: ' + (100 / dragdrop.length) + '%; } ';
+    html += generateCSS_Level1_Width( setting, cssNaviPrefix, naviman_appItem, dragdrop, section_setting );
+
+    html += generateCSS_Publish( setting, cssNaviPrefix, section_setting );
+    html += generateCSS_Position( setting, cssNaviPrefix, section_setting );
+    html += generateCSS_Advance( setting, cssNaviPrefix, naviman_appItem, embed_id, section_setting );
+
+    if (setting['mobileDisplay'] == "true" || setting['mobileDisplay'] == true)
+        html += generateCSS_FixForMobile(cssNaviPrefix, setting, dragdrop, section_setting);
+
+    if (setting['desktopDisplay'] == "true" || setting['desktopDisplay'] == true)
+        html += generateCSS_FixForDesktop(cssNaviPrefix, setting, dragdrop, isNaviSection, section_setting);
+
+    html += generateCSS_FixForHambuger(idCssNaviPrefix, setting, dragdrop, isNaviSection, section_setting, embed_id, naviman_appItem);
+
+    html += '</style>';
+
+    naviman_appItem.insertAdjacentHTML('beforebegin', html);
+
+    /*debugConsole("R:Setting ----------------------------");
+    debugConsole(setting);*/
+};
+    var generateCSS_FixForMobile = function(cssNaviPrefix, setting, dragdrop, section_setting) {
+    if (setting['layout'] == NAVIGLOBAL['LAYOUT']['FAB'])
+        return "";
+    if (!isMobileMode())
+        return "";
+
+    var fixPositionBottom = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+        var addHtml = "";
+        if (setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['BOTTOM']) { // Thêm footer padding-bottom
+
+            // Fix: Thêm một khoảng trống ở dưới body, (nhưng nếu auto hide thì bỏ qua)
+            if (setting['mobileAutoHide'] != "true" && setting['mobileAutoHide'] != true) {
+                addHtml += ' body { padding-bottom: ' + (parseInt(setting['height']) + 0) + 'px; }';
+            }
+            // Fix: Hất bóng shadow lên.
+            addHtml += cssNaviPrefix + ' { box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.05); } ';
+
+            // Fix: Nếu padding-left, right được set, thì sub menu (level 2) vẫn phải full screen
+            if( parseInt(setting['settingPadding']['left']) + parseInt(setting['settingPadding']['right']) > 0 ) {
+                addHtml += cssNaviPrefix + 'ul li ul.children { width: calc( 100% + ' + (parseInt(setting['settingPadding']['left']) + parseInt(setting['settingPadding']['right'])) + 'px ); } ';
+                if (parseInt(setting['settingPadding']['left']) > 0)
+                    addHtml += cssNaviPrefix + 'ul li ul.children { left: -' + parseInt(setting['settingPadding']['left']) + 'px; } ';
+            }
+
+            // Fix: Nếu margin-left, right được set, set width của menu để không bị tràn
+            if (setting['settingMargin']['left'] != 0 || setting['settingMargin']['right'] != 0) {
+                addHtml += cssNaviPrefix + ' { width: calc( 100% - ' + (parseInt(setting['settingMargin']['left']) + parseInt(setting['settingMargin']['right'])) + 'px) }; ';
+            }
+        }
+        return addHtml;
+    };
+
+    var fixPositionTop = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+        var addHtml = "";
+        if (setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['TOP']) {
+            addHtml += cssNaviPrefix + ' { bottom: initial; top:0px; } ';
+
+            if(section_setting['not_sticky'] == false || section_setting['not_sticky'] == "false" ) // Nếu là loại sticky thì mới + thêm padding-top cho boddy
+                addHtml += ' body {padding-top: ' + setting['height'] + 'px;} ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { bottom: initial; top: ' + (parseInt(setting['height']) + 0) + 'px; ' + BOX_SHADOW + ' } ';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px 0px ' + setting['borderRadius'] + 'px ' + setting['borderRadius'] + 'px } ';
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px } ';
+
+            // Fix: Float là loại thứ 3, ko phải FAB
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != 0) {
+                    addHtml += cssNaviPrefix + ' { bottom: initial; top: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                    addHtml += ' body {padding-top: ' + (parseInt(setting['height']) + parseInt(setting['bottomMargin']) + 8) + 'px} ';
+                }
+            }
+
+            // Thêm cái line ở giữa level 1 và 2
+            addHtml += cssNaviPrefix + ' ul li ul.children { border-top: solid 1px rgba(0,0,0,0.05); border-bottom:0px; } ';
+
+            // Fix: Nếu padding-left, right được set, thì sub menu (level 2) vẫn phải full screen
+            if( parseInt(setting['settingPadding']['left']) + parseInt(setting['settingPadding']['right']) > 0 ) {
+                addHtml += cssNaviPrefix + 'ul li ul.children { width: calc( 100% + ' + (parseInt(setting['settingPadding']['left']) + parseInt(setting['settingPadding']['right'])) + 'px ); } ';
+                if (parseInt(setting['settingPadding']['left']) > 0)
+                    addHtml += cssNaviPrefix + 'ul li ul.children { left: -' + parseInt(setting['settingPadding']['left']) + 'px; } ';
+            }
+
+            // Fix: Nếu margin-left, right được set, set width của menu để không bị tràn
+            if (setting['settingMargin']['left'] != 0 || setting['settingMargin']['right'] != 0) {
+                addHtml += cssNaviPrefix + ' { width: calc( 100% - ' + (parseInt(setting['settingMargin']['left']) + parseInt(setting['settingMargin']['right'])) + 'px) }; ';
+            }
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionRightCenter = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+        var addHtml = "";
+        if (setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['RIGHT_CENTER']) {
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; left: initial; right: 0px; height: ' + ((parseInt(setting['height']) + 8) * dragdrop.length) + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { top: ' + ((windowHeight - ((parseInt(setting['height']) + 8) * dragdrop.length)) / 2) + 'px; }';
+            addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px 0px 0px ' + setting['borderRadius'] + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: -201px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ';
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px; margin-left: -8px } ';
+
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != "") {
+                    addHtml += cssNaviPrefix + ' { right: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                }
+            }
+
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {left: ' + (-(setting['submenuWidth']) - 1) + 'px; } ';
+
+            /*if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item .inner { padding: 8px 0px 0px 0px; } ';*/
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionRightBottom = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+        var addHtml = "";
+        if ( setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['RIGHT_BOTTOM'] )
+        {
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; left: initial; right: 0px; height: ' + ((parseInt(setting['height']) + 8) * dragdrop.length) + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { top: ' + ((windowHeight - ((parseInt(setting['height']) + 8) * dragdrop.length)) / 2) + 'px; }';
+            addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px 0px 0px ' + setting['borderRadius'] + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: -201px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ';
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px; margin-left: -8px } ';
+
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != "") {
+                    addHtml += cssNaviPrefix + ' { right: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                }
+            }
+
+            addHtml += cssNaviPrefix + ' { top: initial; bottom: 24px; } ';
+
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {left: ' + (-(setting['submenuWidth']) - 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { margin-top: initial; bottom: 0px; top: initial; } ';
+
+            /*if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item .inner { padding: 8px 0px 0px 0px; } ';*/
+
+
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionLeftCenter = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+        var addHtml = "";
+        if (setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['LEFT_CENTER']) {
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: initial; left: 0px; height: ' + ((parseInt(setting['height']) + 8) * dragdrop.length) + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { top: ' + ((windowHeight - ((parseInt(setting['height']) + 8) * dragdrop.length)) / 2) + 'px; }';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px ' + setting['borderRadius'] + 'px ' + setting['borderRadius'] + 'px 0px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ';
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px; margin-left: 1px } ';
+
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != "") {
+                    addHtml += cssNaviPrefix + ' { left: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                }
+            }
+
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+
+            /*if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item .inner { padding: 8px 0px 0px 0px; } ';*/
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionLeftBottom = function (setting, cssNaviPrefix, dragdrop, section_setting) {
+        var addHtml = "";
+        if (setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['LEFT_BOTTOM']) {
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: initial; left: 0px; height: ' + ((parseInt(setting['height']) + 8) * dragdrop.length) + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { top: ' + ((windowHeight - ((parseInt(setting['height']) + 8) * dragdrop.length)) / 2) + 'px; }';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px ' + setting['borderRadius'] + 'px ' + setting['borderRadius'] + 'px 0px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10); } ';
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px; margin-left: 1px } ';
+
+            if (setting['layout'] ==  NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != "") {
+                    addHtml += cssNaviPrefix + ' { left: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                }
+            }
+
+            addHtml += cssNaviPrefix + ' { top: initial; bottom: 24px; } ';
+
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item { position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { margin-top: initial; bottom: 0px; top: initial; } ';
+
+        }
+        return addHtml;
+    };
+
+    let html = ' @media only screen and (max-width: 768px) {';
+        html += fixPositionBottom(setting, cssNaviPrefix, dragdrop, section_setting);
+        html += fixPositionTop(setting, cssNaviPrefix, dragdrop, section_setting);
+        html += fixPositionRightCenter(setting, cssNaviPrefix, dragdrop, section_setting);
+        html += fixPositionRightBottom(setting, cssNaviPrefix, dragdrop, section_setting);
+        html += fixPositionLeftCenter(setting, cssNaviPrefix, dragdrop, section_setting);
+        html += fixPositionLeftBottom(setting, cssNaviPrefix, dragdrop, section_setting);
+    html += '}';
+    return html;
+};
+    var generateCSS_FixForDesktop = function (cssNaviPrefix, setting, dragdrop, isNaviSection, section_setting) {
+    if (setting['layout'] == NAVIGLOBAL['LAYOUT']['FAB'])
+        return "";
+    if (isMobileMode())
+        return "";
+
+    var fixPositionBottomCenterFloat = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_CENTER_FLOAT']) {
+            addHtml += cssNaviPrefix + ' { width: ' + (DESKTOP_MAX_WIDTH * 1.3) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { left: 50%; transform: translate(-50%, 0); } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item{ position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children{ left: initial; right: 0px; bottom: ' + (parseInt(setting['height']) + 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+            addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+        }
+        return addHtml;
+    };
+
+    var fixPositionBottomCenter = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_CENTER']) {
+            addHtml += cssNaviPrefix + ' { width: ' + (DESKTOP_MAX_WIDTH * 1.3) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { left: 50%; transform: translate(-50%, 0); } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item{ position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children{ left: initial; right: 0px; bottom: ' + (parseInt(setting['height']) + 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+        }
+        return addHtml;
+    };
+
+    var fixPositionBottomRight = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_RIGHT']) {
+            addHtml += cssNaviPrefix + ' { width: ' + DESKTOP_MAX_WIDTH + 'px; left: initial; right: 16px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item{ position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children{ left: initial; right: 0px; bottom: ' + (parseInt(setting['height']) + 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+        }
+        return addHtml;
+    };
+
+    var fixPositionBottomLeft = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_LEFT']) {
+            addHtml += cssNaviPrefix + ' { width: ' + DESKTOP_MAX_WIDTH + 'px; left: 16px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item{ position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children{ left: initial; right: 0px; bottom: ' + (parseInt(setting['height']) + 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+        }
+        return addHtml;
+    };
+
+    var fixPositionTopFull = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['TOP_FULL']) {
+            addHtml += cssNaviPrefix + ' .navigation { width: ' + (DESKTOP_MAX_WIDTH * 2) + 'px; } ';
+            addHtml += cssNaviPrefix + ' .navigation { left: initial; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item{ position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children{ left: initial; right: 0px; top: ' + (parseInt(setting['height']) + 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+
+            addHtml += ' body { padding-top: ' + (parseInt(setting['height']) + 0) + 'px; }';
+        }
+
+        return addHtml;
+    };
+
+    var fixPositionBottomFull = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_FULL']) {
+            addHtml += cssNaviPrefix + ' .navigation { width: ' + (DESKTOP_MAX_WIDTH * 2) + 'px; } ';
+            addHtml += cssNaviPrefix + ' .navigation { left: initial; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item{ position: relative; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children{ left: initial; right: 0px; bottom: ' + (parseInt(setting['height']) + 1) + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+        }
+
+        return addHtml;
+    };
+
+    var fixWindowResize = function (setting, cssNaviPrefix, dragdrop, isNaviSection) {
+        if (!isNaviSection) {
+            window.addEventListener('resize', function (event) {
+            });
+        }
+    }
+
+
+    var fixPositionRightTop = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_TOP']) {
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; left: initial; right: 0px; height: ' + ((parseInt(setting['height']) + 8) * dragdrop.length) + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { top: ' + ((windowHeight - ((parseInt(setting['height']) + 8) * dragdrop.length)) / 2) + 'px; }';
+            addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px 0px 0px ' + setting['borderRadius'] + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: -201px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ' } ';
+            if (setting['layout'] == NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px; margin-left: -8px } ';
+
+            if (setting['layout'] == NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != "") {
+                    addHtml += cssNaviPrefix + ' { right: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                }
+            }
+
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) // Nếu là layout 2 thì ko làm việc này.
+                addHtml += cssNaviPrefix + ' ul li.item .inner {width: initial; } ';
+
+            let submenuWidth = (-setting['submenuWidth'] - 1);
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; } ';
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionLeftTop = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_TOP']) {
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: initial; left: 0px; height: ' + ((parseInt(setting['height']) + 8) * dragdrop.length) + 'px } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { top: ' + ((windowHeight - ((parseInt(setting['height']) + 8) * dragdrop.length)) / 2) + 'px; }';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px ' + setting['borderRadius'] + 'px ' + setting['borderRadius'] + 'px 0px } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ' } ';
+            if (setting['layout'] == NAVIGLOBAL['LAYOUT']['HIGHLIGHT'])
+                addHtml += cssNaviPrefix + ' ul li.item_primary > .inner { margin-top: 0px; margin-left: 1px } ';
+
+            if (setting['layout'] == NAVIGLOBAL['LAYOUT']['FLOATING']) {
+                if (setting['bottomMargin'] != "") {
+                    addHtml += cssNaviPrefix + ' { left: ' + (parseInt(setting['bottomMargin'])) + 'px; } ';
+                    addHtml += cssNaviPrefix + ' { border-radius: ' + setting['borderRadius'] + 'px } ';
+                }
+            }
+
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) // Nếu là layout 2 thì ko làm việc này.
+                addHtml += cssNaviPrefix + ' ul li.item .inner {width: initial; } ';
+
+            let submenuWidth = (-setting['submenuWidth'] - 1);
+            submenuWidth = (parseInt(setting['height']) + 1);
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; } ';
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionLeftFullTop = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_TOP']) {
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) // Nếu là layout 2 thì ko làm việc này.
+                addHtml += cssNaviPrefix + ' ul li.item .inner {width: initial; } ';
+
+            let submenuWidth = (-setting['submenuWidth'] - 1);
+            //if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_TOP']) submenuWidth = (parseInt(setting['height']) + 1);
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; } ';
+
+
+            addHtml += ' body {width: calc(100% - ' + setting['height'] + 'px); margin-left: ' + setting['height'] + 'px; } ';
+
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: initial; left: 0px; top: 0px; height: 100vh; padding-top: 16px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ' } ';
+
+            addHtml += cssNaviPrefix + ' { padding-top: 16px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; min-width: 24px; } '; // Fix lỗi nếu padding quá lớn thì bị dồn cục
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionLeftFullCenter = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_CENTER']) {
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) // Nếu là layout 2 thì ko làm việc này.
+                addHtml += cssNaviPrefix + ' ul li.item .inner {width: initial; } ';
+
+            let submenuWidth = (-setting['submenuWidth'] - 1);
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; } ';
+
+            addHtml += ' body {width: calc(100% - ' + setting['height'] + 'px); margin-left: ' + setting['height'] + 'px; } ';
+
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: initial; left: 0px; top: 0px; height: 100vh; padding-top: 16px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { left: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ' } ';
+
+
+            let bodyPaddingTop = (window.innerHeight - (parseInt(setting['height']) + 8) * dragdrop.length) / 2;
+            addHtml += cssNaviPrefix + ' { padding-top: ' + bodyPaddingTop + 'px; } ';
+
+
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; min-width: 24px; } '; // Fix lỗi nếu padding quá lớn thì bị dồn cục
+
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionRightFullTop = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_TOP']) {
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) // Nếu là layout 2 thì ko làm việc này.
+                addHtml += cssNaviPrefix + ' ul li.item .inner {width: initial; } ';
+
+            let submenuWidth = (-setting['submenuWidth'] - 1);
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; } ';
+
+            addHtml += ' body {width: calc(100% - ' + setting['height'] + 'px); margin-right: ' + setting['height'] + 'px; } ';
+
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: 0; left: initial; top: 0px; height: 100vh; padding-top: 16px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { right: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ' } ';
+
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+
+            addHtml += cssNaviPrefix + ' { padding-top: 16px; } ';
+
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; min-width: 24px; } '; // Fix lỗi nếu padding quá lớn thì bị dồn cục
+
+        }
+        return addHtml;
+    };
+
+
+    var fixPositionRightFullCenter = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_CENTER']) {
+            if (isHadValue(setting['dividerColor']))
+                addHtml += cssNaviPrefix + ' ul li.item_divider { border-right: 0px; margin-right: 0px; border-bottom: solid 1px ' + setting['dividerColor'] + '; margin-bottom: -1px; } ';
+
+            if (setting['layout'] != NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) // Nếu là layout 2 thì ko làm việc này.
+                addHtml += cssNaviPrefix + ' ul li.item .inner {width: initial; } ';
+
+            let submenuWidth = (-setting['submenuWidth'] - 1);
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; } ';
+
+
+            addHtml += ' body {width: calc(100% - ' + setting['height'] + 'px); margin-right: ' + setting['height'] + 'px; } ';
+
+            addHtml += cssNaviPrefix + ' { width: ' + setting['height'] + 'px; right: 0; left: initial; top: 0px; height: 100vh; padding-top: 16px; } ';
+            addHtml += cssNaviPrefix + ' ul li.item { width: ' + setting['height'] + 'px; height: ' + (parseInt(setting['height']) + 8) + 'px; } ';
+            addHtml += cssNaviPrefix + ' { border-radius: 0px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { right: ' + (parseInt(setting['height']) + 1) + 'px; bottom: initial; margin-top: -' + (parseInt(setting['height']) + 8) + 'px; width: ' + VERTICAL_CHILDREN_WIDTH + 'px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { ' + BOX_SHADOW + ' } ';
+
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; left: ' + submenuWidth + 'px; } ';
+
+            if (setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_TOP'])
+                addHtml += cssNaviPrefix + ' { padding-top: 16px; } ';
+            else if (setting['desktopPosition'] == 10) {
+                let bodyPaddingTop = (window.innerHeight - (parseInt(setting['height']) + 8) * dragdrop.length) / 2;
+                addHtml += cssNaviPrefix + ' { padding-top: ' + bodyPaddingTop + 'px; } ';
+            }
+
+            addHtml += cssNaviPrefix + ' ul li.item { width: 100%; min-width: 24px; } '; // Fix lỗi nếu padding quá lớn thì bị dồn cục
+
+        }
+        return addHtml;
+    };
+
+    var fixPositionNaviSection = function (setting, cssNaviPrefix, dragdrop) {
+        var addHtml = "";
+        if (true) {
+            addHtml += cssNaviPrefix + ' { bottom: initial; top:0px; } ';
+
+            //if(section_setting['not_sticky'] == false || section_setting['not_sticky'] == "false" ) // Nếu là loại sticky thì mới + thêm padding-top cho boddy
+            //    addHtml += ' body {padding-top: ' + setting['height'] + 'px;} ';
+            addHtml += cssNaviPrefix + ' ul li ul.children { bottom: initial; top: ' + (parseInt(setting['height']) + 0) + 'px; ' + BOX_SHADOW + ' } ';
+            //addHtml += cssNaviPrefix + ' { border-radius: 0px 0px ' + setting['borderRadius'] + 'px ' + setting['borderRadius'] + 'px } ';
+
+            // Thêm cái line ở giữa level 1 và 2
+            addHtml += cssNaviPrefix + ' ul li ul.children { border-top: solid 1px rgba(0,0,0,0.05); border-bottom:0px; } ';
+            addHtml += cssNaviPrefix + ' ul li ul.children {width: ' + setting['submenuWidth'] + 'px; } ';
+
+        }
+        return addHtml;
+    };
+
+    let html = ' @media only screen and (min-width: 769px) {';
+    //--------------------------------------------------------
+
+    if (!isNaviSection) {
+        html += fixPositionBottomCenterFloat(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionBottomCenter(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionBottomRight(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionBottomLeft(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionBottomFull(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionRightTop(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionLeftTop(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionLeftFullTop(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionLeftFullCenter(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionRightFullTop(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionRightFullCenter(setting, cssNaviPrefix, dragdrop);
+        html += fixPositionTopFull(setting, cssNaviPrefix, dragdrop);
+    } else
+        html += fixPositionNaviSection(setting, cssNaviPrefix, dragdrop);
+
+    html += fixWindowResize(setting, cssNaviPrefix, dragdrop, isNaviSection);
+
+    //--------------------------------------------------------
+    html += '}';
+    return html;
+};
+    var generateCSS_FixForHambuger = function (idCssNaviPrefix, setting, dragdrop, isNaviSection, section_setting, embed_id, naviman_appItem) {
+    var addHtml = " ";
+    if( getMenuKind(window.naviman_shopinfo, embed_id) != NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] )
+        return;
+
+    if (isHadValue(setting['submenuBackgroundColor']))
+        addHtml += idCssNaviPrefix + ' ul.children { background: ' + setting['submenuBackgroundColor'] + '; } ';
+
+    if (isHadValue(setting['submenuDividerColor']))
+        addHtml += idCssNaviPrefix + ' ul.children ul.children { border-color: ' + setting['submenuDividerColor'] + '; } ';
+
+    // Fix arrow icons to center of menu item (dynamic -> fixing)
+    setTimeout(function(){
+        const div = document.querySelector(idCssNaviPrefix + ' ul > li.is-parent-top');
+        if( div != null ) {
+            var html = '<style>';
+            html += idCssNaviPrefix + ' ul > li.is-parent-top::after { top: '+ (div.clientHeight/2 - 10) +'px; } ';
+            html += '</style>';
+
+            naviman_appItem.insertAdjacentHTML('beforebegin', html);
+        }
+    }, 2000);
+
+    return addHtml;
+};
+
+    var init = function () {
+        // debugConsole(NAVIGLOBAL);
+    };
+
+    
+
+var fixNotStickyMenu = function (naviman_appItem, shop, embed_id, section_setting) {
+
+    if(section_setting.length === 0 ) return;
+    if(section_setting['embed_id'] == '') return;
+    if(section_setting['not_sticky'] == false || section_setting['not_sticky'] == "false" ) return;
+
+    let html = '<style>';
+
+    html += '#'+ embed_id +' { bottom: initial; top: initial;}';
+
+    html += '</style>';
+    naviman_appItem.insertAdjacentHTML('beforebegin', html);
+}
+
+var fixMegaMenu = function (naviman_appItem, shop, embed_id, section_setting) {
+
+    /* Fix cho phần header trên desktop *****/
+    if( getMenuKind(window.naviman_shopinfo, embed_id) != NAVIGLOBAL['MENU_KINDS']['SECTION_MEGAMENU'] )
+        return;
+
+    let html = '<style>';
+
+    html += '#'+ embed_id + ' ul li ul.children { max-height: initial;  } ';
+    html += '</style>';
+
+    naviman_appItem.insertAdjacentHTML('beforebegin', html);
+};
+
+var fixNotStickyParents = function (naviman_app, naviItem, embed_id, section_setting) {
+
+    var getSessionParent = function(session_parent) {
+        var limitCount = 0;
+        while( true ) {
+            limitCount ++;
+            if( limitCount >= 30 ) return null;
+            if( session_parent.nodeName == "SECTION" )
+                return session_parent;
+
+            if( session_parent.nodeName == "MAIN" )
+                return null;
+
+            if( session_parent == document.body)
+                return null;
+
+            session_parent = session_parent.parentElement;
+        }
+    }
+
+    var getBlockParent = function(session_parent) {
+        var limitCount = 0;
+        while( true ) {
+            limitCount ++;
+            if( limitCount >= 30 ) return null;
+            if( session_parent.className.includes("shopify-block") )
+                return session_parent;
+
+            if( session_parent.nodeName == "MAIN" )
+                return null;
+
+            if( session_parent == document.body)
+                return null;
+
+            session_parent = session_parent.parentElement;
+        }
+    }
+
+    var getPageWidthParent = function(session_parent) {
+        var limitCount = 0;
+        while( true ) {
+            limitCount ++;
+            if( limitCount >= 30 ) return null;
+            if( session_parent.className.includes("page-width") )
+                return session_parent;
+
+            if( session_parent.nodeName == "MAIN" )
+                return null;
+
+            if( session_parent == document.body)
+                return null;
+
+            session_parent = session_parent.parentElement;
+        }
+    }
+
+    var setting = naviItem["data"]["setting"];
+
+    var session = getSessionParent(naviman_app);
+    if( session != null ) {
+        session.style.position = "relative";
+
+        menuKind = getMenuKind(window.naviman_shopinfo, embed_id);
+
+        /* Fix cho phần header trên desktop *****/
+        if( menuKind == NAVIGLOBAL['MENU_KINDS']['SECTION_MEGAMENU'] ) {
+            session.style.backgroundColor = setting['backgroundColor'];
+
+            if( setting['level1BackgroundHide'] == false ) {
+                session.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.05)";
+                document.getElementById(embed_id).style.boxShadow = "initial";
+            }
+
+
+        }
+
+        /* Fix việc không bị đè các item này lên item khác *****/
+        var zIndex = (50 - 1);
+        if (isHadValue(setting['zIndex'])) zIndex = setting['zIndex'] - 1;
+        session.style.zIndex = zIndex;
+
+        if( setting['fixedTopScrolling'] == true || setting['fixedTopScrolling'] == "true" ) {
+            session.style.position = "sticky";
+            session.style.top = 0;
+
+            if( setting["level1Dropshadow"] == false || setting["level1Dropshadow"] == 'false' ) {
+                var stickyPageYOffset = session.offsetTop;
+                window.onscroll = function () {
+                    if (window.pageYOffset > stickyPageYOffset) {
+                        session.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.05)";
+                    } else {
+                        session.style.boxShadow = "initial";
+                    }
+                };
+            }
+        }
+    }
+
+    var shopify_block = getBlockParent(naviman_app);
+    if( shopify_block != null ) {
+        shopify_block.style.display = "flex";
+    }
+
+    // Nếu full width thì bỏ padding 2 bên đi
+    if( section_setting['embed_is_full'] == true || section_setting['embed_is_full'] == "true" ) {
+        var page_width = getPageWidthParent(naviman_app);
+        if (page_width != null) {
+            page_width.style.padding = "0px";
+        }
+    }
+}
+
+    var drawBottomNav = function (response, naviman_domain, var_shop, var_embed_id, section_setting = []) {
+
+        var shop = var_shop;
+        var embed_id = var_embed_id;
+
+        var naviman_app = document.getElementById("naviman_app");
+        if( embed_id != "" && (section_setting['not_sticky'] == true || section_setting['not_sticky'] == "true" ) ) {
+            naviman_app = document.getElementById(embed_id + "-container");
+        }
+
+
+        var generateMenu_Children = function(children, naviItem, data, extSubmenu, isNaviSection, section_setting) {
+    var index = 0;
+
+    var html = '<ul class="'+ collectClasses( [' children ', getSubmenuClasses(extSubmenu)] )  +' " '+ getSubmenuStyles(extSubmenu, data) +'>';
+
+    var desktopHover = isSettingBeTrue(naviItem["data"]["setting"]['desktopHover']);
+    if (window.innerWidth <= 768) desktopHover = false;
+
+    children.forEach((child) => {
+        index++;
+
+        var childKind = getItemKind(child);
+        var childIsParent = getItemIsParent( child );
+        var childDivider = getItemDivider( child );
+
+        var childDividerStyle = getDividerStyles( 2, childDivider, {
+            "dividercolor": getExtVariable(child, "dividercolor", ""),
+            "dividersize": getExtVariable(child, "dividersize", ""),
+            "dividertype": getExtVariable(child, "dividertype", "")
+        }, data["setting"] );
+
+        var childShowBadgeMode = getItemShowBadgeMode(child);
+
+        var childClass = "child ";
+        if (childDivider == 1) childClass += "child_divider ";
+        childClass += getChildExClassOfBadge( child );
+
+        var childUrl = naviLanguage.stringByLanguage(child["url"]);
+        var isTel = isItemTel( childUrl );
+        var isSMS = isItemSMS(childUrl);
+
+        /*** Một số cái sẽ dùng chung cho tất cả các menu item *************************************/
+        var childExtTextColor = getExtVariable(child, "textcolor", "");
+        var childExtTextSize = getExtVariable(child, "textsize", "");
+        var childExtIconColor = getExtVariable(child, "iconcolor", "");
+        var childExtIconSize = getExtVariable(child, "iconsize", "");
+        var childExtBackgroundColor = getExtVariable(child, "backgroundcolor", "");
+        var childExtBackgroundImage = getExtVariable(child, "backgroundimage", "");
+
+        var childExtWidth = getExtWidth(child);
+        var childExtPosition = getExtPosition(child);
+
+        var childExtAlign = getExtVariable(child, "align", "inherit");
+        var childExtClassname = getExtVariable(child, "classname", "");
+        var childExtAnimation = getExtVariable(child, "animation", "");
+        var childExtDisplayLayout = getExtVariable(child, "displaylayout", "");
+        if( childExtDisplayLayout == "" )
+            childExtDisplayLayout = "layout-automatic";
+        if( child["icon"] == "" && child["image"] == "" ) {
+            childExtDisplayLayout = "text-only";
+        }
+        if( child["name"] == "" ) {
+            if( child["icon"] == "" && child["image"] == "" )
+                childExtDisplayLayout = "empty";
+            else
+                childExtDisplayLayout = "icon-image-only";
+        }
+
+        var childExtAttr = getExtVariable(child, "attr", "");
+
+        /**** Dành riêng cho child ***********/
+        // Nếu layout == automatic thì sẽ đổi thành left-right
+        if( childExtDisplayLayout == "" ) childExtDisplayLayout = "left-right";
+        /*************************************/
+
+        var childExtIsPublished = getExtVariable(child, "ispublished", 1);
+        var childExtHideWhenLogined = getExtVariable(child, "hidewhenlogined", 0);
+        var childExtShowWhenLogined = getExtVariable(child, "showwhenlogined", 0);
+
+        // Search: update 4 - Apply
+        var childExtPadding = getPadding(parsePaddingMargin(getExtVariable(child, "padding", "")));
+        var childExtMargin = getMargin(parsePaddingMargin(getExtVariable(child, "margin", "")));
+
+        var childExtHeightFix = getExtHeight(getExtVariable(child, "heightfix", ""));
+
+        var childExtIconboxStyle = getIconboxStyle(
+            getExtVariable(child, "iconboxcolor", ""),
+            getExtVariable(child, "iconboxpadding", ""),
+            getExtVariable(child, "iconboxradius", "")
+        );
+
+        var childExtCSS = getExtVariable(child, "css", "");
+
+        /*** Bắt đầu đoạn mã để draw code tất tất cả kind of menu **********************************/
+
+        if( isOpenInbox( childUrl ) ) openInbox_loopHideFAB();
+
+        var onclickFunc = 'return naviman.gotoUrl(event, this, ' + childIsParent + ', \'' + childUrl + '\', \'' + naviItem["embed_id"] + '\', '+ isNaviSection +')';
+        var onhoverFunc = 'return naviman.gotoUrl(event, this, ' + childIsParent + ', \'#\', \'' + naviItem["embed_id"] + '\', '+ isNaviSection +')';
+        var childOnClick = 'onclick="'+ onclickFunc +'" ';
+        if( desktopHover )
+            if( childIsParent ) {
+                if( !(childExtClassname.includes('navi-nohover') || childExtClassname.includes('navi-hover') ) ) {
+                    childOnClick += ' onMouseEnter="' + onhoverFunc + '" ';
+                    //childOnClick += ' onMouseLeave="' + onhoverFunc + '" ';
+                }
+            }
+        if (isTel || isSMS) childOnClick = "";
+
+        var childStylePositive = "";
+        if( isTel || isSMS ) childStylePositive = ' style="position:relative" ';
+
+        var isParent = "";
+        if( childIsParent )
+            isParent = " is-parent ";
+
+        var seoUrl = '';
+        if(isElitePlan(window.naviman_shopinfo))
+            seoUrl = '<a href="'+ getSEOUrl( childUrl ) +'" onclick="return false;">';
+
+        html += '<li ' +
+            collectStyles([
+                getStyleExtBackground(childExtBackgroundColor, childExtBackgroundImage, data, 2),
+                getStyleExtAlign(childExtAlign),
+                childExtWidth['style'],
+                childExtPosition,
+                childStylePositive,
+                childExtPadding,
+                childExtCSS,
+                childDividerStyle,
+                childExtHeightFix
+            ]) +
+            getAttr( childExtAttr ) +
+            ' linkto="' + childUrl + '" class="' +
+            collectClasses([childClass,
+                childExtClassname,
+                childExtDisplayLayout,
+                getItemExClassOfKind( childKind ),
+                getPublishClassed(childExtIsPublished, childExtHideWhenLogined, childExtShowWhenLogined),
+                childExtWidth['class'],
+                getClassesExtAlign( childExtAlign),
+                isParent
+            ])
+            + '" ' + childOnClick + ' data-name="' + child["name"] + '" data-kind="' + childKind + '">';
+        html += '<div class="inner ' + getAnimationClass(childExtAnimation) + '"' + collectStyles([childExtMargin]) + '>';
+        html += '<span class="arrow"></span>';
+
+        if( childShowBadgeMode == BADGE_ISCART_WITHCOUNT )
+            html += '<span class="cart_count">'+ cartCount +'</span>';
+
+        //html += itemMedia(child['icon'], child['image'], naviman_domain, getStyleExtIcon(childExtIconColor, childExtIconSize));
+
+        html += itemMedia(
+            child['icon'],
+            child['image'],
+            naviman_domain,
+            getStyleExtIcon(childExtIconColor, childExtIconSize, childExtIconboxStyle, getIconBoxPaddingTop( getExtVariable(child, "iconboxpadding", "") )),
+            getIconBoxPaddingTop( getExtVariable(child, "iconboxpadding", "") ),
+            childExtIconSize,
+            getStyleExtAlign(childExtAlign),
+            seoUrl
+        );
+
+        var divInfo = '<div class="info">';
+        if( childExtDisplayLayout == "text-only" )
+            divInfo = '<div class="info" '+ collectStyles(childExtIconboxStyle, getIconBoxPaddingTop( getExtVariable(child, "iconboxpadding", "") )), +'>';
+
+        html += divInfo;
+        html += '<div class="flexcol">';
+
+        if( seoUrl != '' ) html += seoUrl;
+        html += '<span class="name"' + getStyleExtText(childExtTextColor, childExtTextSize) + '>' + naviLanguage.stringByLanguage(child["name"]) + '</span>';
+        if( seoUrl != '' ) html += '</a>';
+
+        if (child["description"] != "")
+            html += '<div class="description"'+ getStyleExtText(childExtTextColor, "") +'>' + naviLanguage.stringByLanguage(child["description"]) + '</div>';
+        html += '</div>'; // flexcol        
+
+        html += '</div>'; // info
+
+        html += getItemClickTelSMS(isTel, isSMS, childUrl);
+
+        html += '</div>'; // inner
+
+        if (childIsParent) html += generateMenu_Children(child["children"], naviItem, data, {
+            "Animation": getExtVariable(child, "submenuanimation", ""),
+            "Background": getExtVariable(child, "submenubackgroundcolor", ""),
+            "BackgroundImage": getExtVariable(child, "submenubackgroundimage", ""),
+        }, isNaviSection, section_setting
+        );
+
+        html += '</li>';
+        /*** ENDOF: Đoạn mã để draw code tất tất cả kind of menu **********************************/
+
+    });
+    html += '</ul>';
+
+    return html;
+}
+
+var generateMenu = function( data, naviItem, isNaviSection, section_setting ){
+    var index = 0;
+    var highLightItem = getItemHighlight(data);
+
+    var sectionTitle = '';
+    if( section_setting['embed_title'] != "")
+        sectionTitle += '<h2>'+ section_setting['embed_title'] +'</h2>';
+
+    var desktopHover = isSettingBeTrue(naviItem["data"]["setting"]['desktopHover']);
+    if (window.innerWidth <= 768) desktopHover = false;
+
+    var hamburgerClose = '<span class="hamburger_close" style="display: none"><i class="ri-close-line"></i></span>';
+
+    var html = sectionTitle + hamburgerClose + '<ul class="navigation">';
+    data["dragdrop"].forEach((item) => {
+        index++;
+
+        var itemKind = getItemKind(item);
+        var itemIsParent = getItemIsParent( item );
+        var itemDivider = getItemDivider( item );
+        var itemDividerStyle = getDividerStyles( 1, itemDivider, {
+            "dividercolor": getExtVariable(item, "dividercolor", ""),
+            "dividersize": getExtVariable(item, "dividersize", ""),
+            "dividertype": getExtVariable(item, "dividertype", "")
+        }, data["setting"] );
+
+        var itemShowBadgeMode = getItemShowBadgeMode(item);
+
+        var isParent = "";
+        if( itemIsParent )
+            isParent = " is-parent-top ";
+
+        var itemClass = "item ";
+        if (itemDivider == 1) itemClass += "item_divider ";
+
+        if (highLightItem == index) itemClass += "item_primary ";
+        itemClass += getItemExClassOfBadge( item );
+
+        var itemUrl = naviLanguage.stringByLanguage(item["url"]);
+        var isTel = isItemTel( itemUrl );
+        var isSMS = isItemSMS( itemUrl );
+
+        /*** Một số cái sẽ dùng chung cho tất cả các menu item *************************************/
+        var itemExtTextColor = getExtVariable(item, "textcolor", "");
+        var itemExtTextSize = getExtVariable(item, "textsize", "");
+        var itemExtIconColor = getExtVariable(item, "iconcolor", "");
+        var itemExtIconSize = getExtVariable(item, "iconsize", "");
+        var itemExtBackgroundColor = getExtVariable(item, "backgroundcolor", "");
+        var itemExtBackgroundImage = getExtVariable(item, "backgroundimage", "");
+
+        var itemExtWidth = getExtWidth(item);
+        var itemExtPosition = getExtPosition(item);
+
+        var itemExtAlign = getExtVariable(item, "align", "inherit");
+        var itemExtClassname = getExtVariable(item, "classname", "");
+        var itemExtAnimation = getExtVariable(item, "animation", "");
+        var itemExtDisplayLayout = getExtVariable(item, "displaylayout", "");
+        if( itemExtDisplayLayout == "" )
+            itemExtDisplayLayout = "layout-automatic";
+        if( item["icon"] == "" && item["image"] == "" ) {
+            itemExtDisplayLayout = "text-only";
+        }
+        if( item["name"] == "" ) {
+            if( item["icon"] == "" && item["image"] == "" )
+                itemExtDisplayLayout = "empty";
+            else
+                itemExtDisplayLayout = "icon-image-only";
+        }
+
+        var itemExtAttr = getExtVariable(item, "attr", "");
+
+        var itemExtIsPublished = getExtVariable(item, "ispublished", 1);
+        var itemExtHideWhenLogined = getExtVariable(item, "hidewhenlogined", 0);
+        var itemExtShowWhenLogined = getExtVariable(item, "showwhenlogined", 0);
+
+
+        var itemExtHeightFix = getExtHeight(getExtVariable(item, "heightfix", ""));
+
+        //console.log( item );
+        var itemExtCSS = getExtVariable(item, "css", "");
+
+        // Search: update 4 - Apply
+        var itemExtPadding = getPadding(parsePaddingMargin(getExtVariable(item, "padding", "")));
+        var itemExtMargin = getMargin(parsePaddingMargin(getExtVariable(item, "margin", "")));
+
+        var itemExtIconboxStyle = getIconboxStyle(
+            getExtVariable(item, "iconboxcolor", ""),
+            getExtVariable(item, "iconboxpadding", ""),
+            getExtVariable(item, "iconboxradius", "")
+        );
+
+        /*** Bắt đầu đoạn mã để draw code tất tất cả kind of menu **********************************/
+
+        if (isOpenInbox(itemUrl)) openInbox_loopHideFAB();
+
+        var onclickFunc = 'return naviman.gotoUrl(event, this, ' + itemIsParent + ', \'' + itemUrl + '\', \'' + naviItem["embed_id"] + '\', '+ isNaviSection +')';
+        var onhoverFunc = 'return naviman.gotoUrl(event, this, ' + itemIsParent + ', \'#\', \'' + naviItem["embed_id"] + '\', '+ isNaviSection +')';
+        var itemOnClick = 'onclick="'+ onclickFunc +'" ';
+        if( desktopHover )
+            if( itemIsParent ) {
+                if( !(itemExtClassname.includes('navi-nohover') || itemExtClassname.includes('navi-hover') ) ) {
+                    itemOnClick += 'onMouseEnter="' + onhoverFunc + '" ';
+                    itemOnClick += 'onMouseLeave="' + onhoverFunc + '" ';
+                }
+            }
+        if (isTel || isSMS) itemOnClick = "";
+
+        var itemStylePositive = "";
+        if (isTel || isSMS) itemStylePositive = ' style="position:relative" ';
+
+        var seoUrl = '';
+        if(isElitePlan(window.naviman_shopinfo))
+            seoUrl = '<a href="'+ getSEOUrl( itemUrl ) +'" onclick="return false;">';
+
+
+        html += '<li ' +
+            collectStyles([
+                getStyleExtBackground(itemExtBackgroundColor, itemExtBackgroundImage, data, 1),
+                getStyleExtAlign(itemExtAlign),
+                itemExtWidth['style'],
+                itemExtPosition,
+                itemStylePositive,
+                itemExtPadding,
+                itemExtCSS,
+                itemDividerStyle,
+                itemExtHeightFix
+            ]) +
+            getAttr( itemExtAttr ) +
+            ' linkto="' + itemUrl + '" class="' +
+            collectClasses([itemClass,
+                itemExtClassname,
+                itemExtDisplayLayout,
+                getItemExClassOfKind( itemKind ),
+                getPublishClassed(itemExtIsPublished, itemExtHideWhenLogined, itemExtShowWhenLogined),
+                itemExtWidth['class'],
+                getClassesExtAlign( itemExtAlign ),
+                isParent
+            ])
+            + '" ' + itemOnClick + ' data-name="' + item["name"] + '" data-kind="' + itemKind + '">';
+
+
+        html += '<div class="inner ' + getAnimationClass(itemExtAnimation) + '"' + collectStyles([itemExtMargin]) + '>';
+        html += '<span class="arrow"></span>';
+
+
+        if (itemShowBadgeMode == BADGE_ISCART_WITHCOUNT)
+            html += '<span class="cart_count">' + cartCount + '</span>';
+
+        html += itemMedia(
+            item['icon'],
+            item['image'],
+            naviman_domain,
+            getStyleExtIcon(itemExtIconColor, itemExtIconSize, itemExtIconboxStyle, getIconBoxPaddingTop( getExtVariable(item, "iconboxpadding", "") )),
+            //getIconBoxPaddingTop( getExtVariable(item, "iconboxpadding", "") ),
+            getExtVariable(item, "iconboxpadding", ""),
+            itemExtIconSize,
+            getStyleExtAlign(itemExtAlign),
+            seoUrl
+        );
+
+        var divInfo = '<div class="info">';
+        if( itemExtDisplayLayout == "text-only" )
+            divInfo = '<div class="info" '+ collectStyles(itemExtIconboxStyle, getIconBoxPaddingTop( getExtVariable(item, "iconboxpadding", "") )), +'>';
+
+        html += divInfo;
+        html += '<div class="flexcol">';
+        if( seoUrl != '' ) html += seoUrl;
+        html += '<span class="name"' + getStyleExtText(itemExtTextColor, itemExtTextSize) + '>' + naviLanguage.stringByLanguage(item["name"]) + '</span>';
+        if( seoUrl != '' ) html += '</a>';
+
+        if (item["description"] != "")
+            html += '<div class="description" '+ getStyleExtText(itemExtTextColor, "") +'>' + naviLanguage.stringByLanguage(item["description"]) + '</div>';
+        html += '</div>'; // flexcol        
+        html += '</div>'; // info
+
+        html += getItemClickTelSMS(isTel, isSMS, itemUrl);
+
+        html += '</div>'; // inner
+
+
+        if (itemIsParent) html += generateMenu_Children(item["children"], naviItem, data, {
+            "Animation": getExtVariable(item, "submenuanimation", ""),
+            "Background": getExtVariable(item, "submenubackgroundcolor", ""),
+            "BackgroundImage": getExtVariable(item, "submenubackgroundimage", ""),
+        }, isNaviSection, section_setting
+        );
+
+        html += '</li>';
+        /*** ENDOF: Đoạn mã để draw code tất tất cả kind of menu **********************************/
+
+    });
+    html += '</ul>';
+    return html;
+}
+
+/******************************************************************************************************************/
+var getAttr = function ( attr ) {
+    if( attr == "" )
+        return "";
+    var attrArray = parseAttributes(decodeQuery( attr ));
+    if( attrArray.length == 0 )
+        return "";
+
+    return formatAttributes( attrArray );
+}
+
+var getExtHeight = function ( heightfix ) {
+    if( heightfix == "" )
+        return "";
+    return ' height: ' + String(heightfix).strReplace("px", " ").strReplace("pt", " ") + 'px; ';
+}
+
+var getDividerStyles = function ( level = 1, itemDivider, itemExtDiver, setting ) {
+    if (itemDivider != 1)
+        return "";
+    var styles = ' style="';
+
+    var dividerDirection = "right-";
+    if( level == 1 ) { // Nếu là level 1 thì chia một số trường hợp
+        if (isMobileMode()) {
+            //console.log("Mobile mode");
+            if (
+                setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['RIGHT_CENTER'] ||
+                setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['LEFT_CENTER'] ||
+                setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['RIGHT_BOTTOM'] ||
+                setting['mobilePosition'] == NAVIGLOBAL['MOBILE_POSITION']['LEFT_BOTTOM']
+            ) dividerDirection = "bottom-";
+        }
+        else {
+            if (
+                setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_TOP'] ||
+                setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_TOP'] ||
+                setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_TOP'] ||
+                setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_CENTER'] ||
+                setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_TOP'] ||
+                setting['desktopPosition'] == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_CENTER']
+            ) dividerDirection = "bottom-";
+        }
+    } else // Nếu là level 2,3 thì chỉ có một trường hợp ngang thôi.
+        dividerDirection = "bottom-";
+
+    if( itemExtDiver["dividercolor"] != "" )
+        styles += 'border-'+ dividerDirection +'color:' + itemExtDiver["dividercolor"] + ';';
+    if( itemExtDiver["dividersize"] != "" )
+        styles += 'border-'+ dividerDirection +'width:' + String(itemExtDiver["dividersize"]).strReplace("px", "").strReplace("pt", "") + 'px;';
+    if( itemExtDiver["dividertype"] != "" )
+        styles += 'border-'+ dividerDirection +'style:' + itemExtDiver["dividertype"] + ';';
+
+    styles += '"';
+    return styles;
+}
+
+var getSubmenuClasses = function (itemExtSubmenu) {
+    if( itemExtSubmenu["Animation"] != "" )
+        return getAnimationClass( itemExtSubmenu["Animation"] );
+    return "";
+}
+
+var getSubmenuStyles = function (itemExtSubmenu, data) {
+    /*var styles = ' style="';
+    if( itemExtSubmenu["Background"] != "" )
+        styles += 'background-color:' + itemExtSubmenu["Background"] + ';';
+    if( itemExtSubmenu["BackgroundImage"] != "" )
+        styles += ' background-image: url('+ itemExtSubmenu["BackgroundImage"] +'); background-size: cover;';
+    styles += '"';
+    return styles;*/
+    return getStyleExtBackground(itemExtSubmenu["Background"], itemExtSubmenu["BackgroundImage"], data, 2);
+}
+
+var getIconBoxPaddingTop = function (iconBoxPadding) {
+    var itemExtIconBox = parsePaddingMargin(iconBoxPadding);
+    return itemExtIconBox.top;
+}
+
+var getIconboxStyle = function ( color, padding, radius ) {
+    if( color == "" )
+        return "";
+    var styleCSS = "";
+    styleCSS += 'background-color:' + color + ';';
+    if( padding != "") {
+        styleCSS += getPadding(parsePaddingMargin(padding));
+        styleCSS += ' display: inline-block; ';
+    }
+    if( radius != "")
+        styleCSS += 'border-radius:' + String(radius).strReplace("px", "").strReplace("pt", "") + 'px';
+    return styleCSS;
+}
+
+var getPadding = function( padding ) {
+    if( padding.top == 0 & padding.right == 0 & padding.bottom == 0 & padding.left == 0 )
+        return "";
+    return ' padding: '+ padding.top +'px '+ padding.right +'px '+ padding.bottom +'px '+ padding.left +'px; '
+}
+
+var getMargin = function( margin ) {
+    if( margin.top == 0 & margin.right == 0 & margin.bottom == 0 & margin.left == 0 )
+        return "";
+    return ' margin: '+ margin.top +'px '+ margin.right +'px '+ margin.bottom +'px '+ margin.left +'px; '
+}
+
+
+var parsePaddingMargin = function ( paddingVars ) {
+    var padding = {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0,
+    };
+    /*console.log( paddingVars );
+    if( paddingVars == null )
+        return padding;*/
+    if( paddingVars == "" )
+        return padding;
+
+    paddingVars = String(paddingVars).strReplace("px", " ").strReplace("pt", " ").strReplace(",", " ").strReplace("|", " ").strReplace(";", " ");
+
+    // Tách chuỗi padding thành mảng các giá trị
+    var values = paddingVars.split(' ').map(Number);
+
+    // Gán giá trị vào các thuộc tính của đối tượng padding
+    switch (values.length) {
+        case 1:
+            padding.top = values[0];
+            padding.right = values[0];
+            padding.bottom = values[0];
+            padding.left = values[0];
+            break;
+        case 2:
+            padding.top = values[0];
+            padding.right = values[1];
+            padding.bottom = values[0];
+            padding.left = values[1];
+            break;
+        case 3:
+            padding.top = values[0];
+            padding.right = values[1];
+            padding.bottom = values[2];
+            padding.left = values[1];
+            break;
+        case 4:
+            padding.top = values[0];
+            padding.right = values[1];
+            padding.bottom = values[2];
+            padding.left = values[3];
+            break;
+    }
+    return padding;
+}
+
+var getItemExClassOfKind = function ( itemKind ) {
+    if( itemKind == NAVIGLOBAL['ITEM_KINDS']['ICON_IMAGE_TEXT'] )
+        return " kind-icon-image-text ";
+    if( itemKind == NAVIGLOBAL['ITEM_KINDS']['GROUP_TITLE'] )
+        return " kind-group-title ";
+    if( itemKind == NAVIGLOBAL['ITEM_KINDS']['BLANK_SPACE'] )
+        return " kind-blank-space ";
+    if( itemKind == NAVIGLOBAL['ITEM_KINDS']['BIG_IMAGE_TEXT'] )
+        return " kind-big-image-text ";
+    if( itemKind == NAVIGLOBAL['ITEM_KINDS']['CUSTOM_HTML'] )
+        return " kind-custom-html ";
+    if( itemKind == NAVIGLOBAL['ITEM_KINDS']['BUTTON'] )
+        return " kind-button ";
+}
+
+var getPublishClassed = function ( itemExtIsPublished, itemExtHideWhenLogined, itemExtShowWhenLogined ) {
+    var combinedClass = " ";
+    if( itemExtIsPublished != 1 )
+        combinedClass += "publish-hide ";
+    if( itemExtHideWhenLogined == 1 )
+        combinedClass += "publish-hide-logined ";
+    if( itemExtShowWhenLogined == 1 )
+        combinedClass += "publish-show-logined ";
+
+    if( combinedClass.trim() == "" )
+        return "";
+    return combinedClass;
+}
+
+var getAnimationClass = function ( itemExtAnimation ) {
+    if( itemExtAnimation != "" )
+        return " animate__animated " + itemExtAnimation;
+    return "";
+}
+
+var collectStyles = function ( styleArray ) {
+    let combinedStyle = ' style="';
+
+    for(var i = 0; i < styleArray.length; i ++ ) {
+        let styles = styleArray[i].replace(/style="|"/g, '');
+        combinedStyle += styles;
+    }
+
+    combinedStyle += '"';
+    return removeExtraSpaces(combinedStyle);
+}
+
+var collectClasses = function ( classesArray ) {
+    let combinedClasses = '';
+
+    for(var i = 0; i < classesArray.length; i ++ ) {
+        combinedClasses += classesArray[i] + ' ';
+    }
+    return removeExtraSpaces(combinedClasses);
+}
+
+var getStyleExtAlign = function (itemExtAlign) {
+    var style = ' style="';
+    if( itemExtAlign != "inherit") style += ' text-align: '+ itemExtAlign +'; ';
+    style += '" ';
+    if( style.trim() == 'style=""' )
+        return '';
+    return style;
+}
+
+var getClassesExtAlign = function (itemExtAlign) {
+    var style = ' ';
+    if( itemExtAlign != "inherit") style += ' align-' + itemExtAlign + ' ';
+    if( style.trim() == 'style=""' )
+        return '';
+    return style;
+}
+
+var getStyleExtBackground = function (itemExtBackgroundColor, itemExtBackgroundImage, data, menuLevel = 1) {
+    var style = ' style="';
+
+    if (itemExtBackgroundImage != "") {
+        if( itemExtBackgroundImage.includes("?") ) {
+            // Xử lý duy nhất trường hợp có opacity cho background Image
+            var bg = itemExtBackgroundImage.split("?");
+            var bgImage = bg[0];
+            var bgOpacity = parseInt( bg[1] );
+
+            if( bgOpacity != 0 ) {
+                if( itemExtBackgroundColor == "") {
+                    if(menuLevel == 1)
+                        itemExtBackgroundColor = data["setting"]['backgroundColor'];
+                    else
+                        itemExtBackgroundColor = data["setting"]['submenuBackgroundColor'];
+                }
+                style += ' background-image: url(\'' + bgImage + '\'); background-size: cover; ';
+                style += ' background-color: ' + hexToRgba(itemExtBackgroundColor, 1 - (bgOpacity / 100)) + '; background-blend-mode: hue; ';
+            }else {
+                style += ' background-color: '+ itemExtBackgroundColor +'; ';
+            }
+        }else {
+            style += ' background-color: '+ itemExtBackgroundColor +'; ';
+            style += ' background-image: url('+ itemExtBackgroundImage +'); background-size: cover;';
+        }
+    }else
+    { // Nếu ko có background thì dùng màu bình thường.
+        if (itemExtBackgroundColor != "")
+            style += ' background-color: '+ itemExtBackgroundColor +'; ';
+    }
+
+
+/*
+    if( itemExtBackgroundColor != "") style += ' background-color: '+ itemExtBackgroundColor +'; ';
+    if( itemExtBackgroundImage != "") style += ' background-image: url('+ itemExtBackgroundImage +'); background-size: cover;';
+
+*/
+
+
+    style += '" ';
+    if( style.trim() == 'style=""' )
+        return '';
+    return style;
+}
+
+var getStyleExtText = function (itemExtTextColor, itemExtTextSize) {
+    var style = ' style="';
+    if( itemExtTextColor != "") style += ' color: '+ itemExtTextColor +'; ';
+    if( itemExtTextSize != "") style += ' font-size: '+ itemExtTextSize +'px; ';
+    style += '" ';
+    if( style.trim() == 'style=""' )
+        return '';
+    return style;
+}
+
+var getStyleExtIcon = function (itemExtIconColor, itemExtIconSize, itemExtIconboxStyle = "", itemExtIconBoxPaddingTop = 0) {
+    var style = ' style="';
+    if( itemExtIconColor != "") style += ' color: '+ itemExtIconColor +'; ';
+    if( itemExtIconSize != "") {
+        style += ' font-size: ' + itemExtIconSize + 'px;';
+
+        // Logic: Nếu có iconBox thì sẽ ko fix cái chiều cao của icon
+        if( itemExtIconBoxPaddingTop == 0 )
+            style += ' height: ' + itemExtIconSize + 'px; ';
+        /*if( itemExtIconBoxPaddingTop != 0 )
+            style += ' z-index:10; ';*/
+    }
+
+    if( itemExtIconboxStyle != "" ) style += itemExtIconboxStyle;
+    style += '" ';
+    if( style.trim() == 'style=""' )
+        return '';
+    return style;
+}
+
+var getExtPosition = function (item) {
+    var position = getExtVariable(item, "position", 1);
+    var style = ' style="';
+
+    if (position == 2)
+        style += "position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center;z-index: 0; ";
+    if (position == 3)
+        style += "position: absolute; right: 0; text-align: right; ";
+    if (position == 4)
+        style += "position: absolute; left: 0; text-align: left; ";
+
+    style += '" ';
+    if (style.trim() == 'style=""')
+        return '';
+    return style;
+}
+
+var getExtWidth = function( item ) {
+    var widthLayout = getExtVariable(item, "widthlayout", 1);
+    var itemExtWidth = "";
+
+    if( widthLayout == 1 ) itemExtWidth = "";
+    if( widthLayout == 2 ) itemExtWidth = "8.3333333333%";
+    if( widthLayout == 3 ) itemExtWidth = "16.6666666666%";
+    if( widthLayout == 4 ) itemExtWidth = "25%";
+    if( widthLayout == 5 ) itemExtWidth = "33.3333333333%";
+    if( widthLayout == 6 ) itemExtWidth = "41.6666666666%";
+    if( widthLayout == 7 ) itemExtWidth = "50%";
+    if( widthLayout == 8 ) itemExtWidth = "58.3333333333%";
+    if( widthLayout == 9 ) itemExtWidth = "66.6666666666%";
+    if( widthLayout == 10 ) itemExtWidth = "75%";
+    if( widthLayout == 11 ) itemExtWidth = "83.3333333333%";
+    if( widthLayout == 12 ) itemExtWidth = "91.6666666666%";
+    if( widthLayout == 13 ) itemExtWidth = "100%";
+
+    if( widthLayout == 15 ) itemExtWidth = "10%";
+    if( widthLayout == 16 ) itemExtWidth = "20%";
+    if( widthLayout == 17 ) itemExtWidth = "50%";
+    if( widthLayout == 18 ) itemExtWidth = "100%";
+
+
+    if( widthLayout == 14 ) {
+        var widthfix = getExtVariable(item, "widthfix", "");
+        if (widthfix != "")
+            itemExtWidth = String(widthfix).replace("pt", "").replace("px", "") + "px";
+    }
+
+    if( widthLayout == 20 ) itemExtWidth = "auto";
+
+    var itemExtWidthStyle = "";
+    var itemExtWidthClass = "";
+    if( itemExtWidth != "" ) {
+        itemExtWidthStyle = ' width: ' + itemExtWidth + ';';
+        itemExtWidthClass = ' widthfix ';
+    }
+
+    return {
+        'width': itemExtWidth,
+        'style' : itemExtWidthStyle,
+        'class' : itemExtWidthClass
+    };
+
+}
+
+function isString(value) {
+    return typeof value === 'string' || value instanceof String
+}
+
+var getExtVariable = function( item, varName, defaultValue  ) {
+    if( item[varName] != null ) {
+        var val = item[varName];
+        if( isString(val) )
+            val = val.trim();
+
+        val = platformValue( val );
+
+        return val;
+    }
+    return defaultValue;
+}
+
+var getItemHighlight = function(data) { // Chỉ phục vụ cho loại highlight
+    var highLightItem = 0;
+
+    if (data["setting"]['layout'] == NAVIGLOBAL['LAYOUT']['HIGHLIGHT']) {
+        if (data["dragdrop"].length == 7 || data["dragdrop"].length == 5 || data["dragdrop"].length == 3)
+            highLightItem = (data["dragdrop"].length + 1) / 2;
+    }
+    return highLightItem;
+}
+
+var getItemKind = function (item) {
+    var itemKind = 1;
+    if(  item["kind"] != null )
+        itemKind = item["kind"];
+    return itemKind;
+}
+
+var getItemDivider = function (item) {
+    var divider = 0;
+    if(  item["divider"] != null )
+        divider = item["divider"];
+    return divider;
+}
+
+var getItemIsParent = function( item ) {
+    var itemIsParent = false;
+    if (typeof (item["children"]) !== 'undefined')
+        if (item["children"].length > 0)
+            itemIsParent = true;
+    return itemIsParent;
+}
+
+var getItemShowBadgeMode = function (item) {
+    var itemShowBadgeMode = BADGE_HIDE;
+    if (item["badge"] == 1) {
+        if( isHadValue (item["badgeiscart"]) ) {
+            if (item["badgeiscart"] == 0)
+                itemShowBadgeMode = BADGE_HIDE;
+            else {
+                itemShowBadgeMode = BADGE_ISCART_WITHCOUNT;
+            }
+        }else
+            itemShowBadgeMode = BADGE_DOT;
+    }
+    return itemShowBadgeMode;
+}
+
+var getItemClickTelSMS = function (isTel, isSMS, item_url) {
+    var html = " ";
+    if( isTel || isSMS ) {
+        html += '<a href="' + encodeBody(item_url.strReplace('[url]', window.location.href)) + '">';
+        html += '<span class="telsms-click-spaces"></span>'
+        html += '</a>';
+    }
+    return html;
+}
+
+var getItemExClassOfBadge = function (item) {
+    var item_css = " ";
+    if (item["badge"] == 1) {
+        item_css += " item_badge";
+        if( isHadValue (item["badgeiscart"]) ) {
+            if (item["badgeiscart"] == 1) {
+                item_css += " item_badge_withcount ";
+                if (item["badgecartcount"] == 1)
+                    item_css += "";
+                else
+                    item_css += " item_badge_withcount item_badge_withcount_hide";
+            }
+        }
+    }
+    else
+        item_css += ""; // Do nothing
+    return item_css;
+};
+
+var getChildExClassOfBadge = function (child) {
+    var child_css = " ";
+    if (child["badge"] == 1) {
+        child_css += " child_badge";
+        if( isHadValue (child["badgeiscart"]) ) {
+            if (child["badgeiscart"] == 1) {
+                child_css += " child_badge_withcount ";
+                if (child["badgecartcount"] == 1)
+                    child_css += "";
+                else
+                    child_css += " child_badge_withcount child_badge_withcount_hide";
+            }
+        }
+    }
+    else
+        child_css += ""; // Do nothing
+    return child_css;
+};
+
+var isOpenInbox = function ( item_url ) {
+    if( item_url.length == 10 ) // open:Inbox
+        if( item_url.substring(0, 10).toLowerCase() == "open:inbox" )
+            return true;
+    return false;
+};
+
+var isItemTel = function ( item_url ) {
+    if( item_url.length >= 4 ) // tel
+        if( item_url.substring(0, 4).toLowerCase() == "tel:" )
+            return true;
+    return false;
+};
+
+var isItemSMS = function ( item_url ) {
+    if( item_url.length >= 4 ) // sms
+        if( item_url.substring(0, 4).toLowerCase() == "sms:" )
+            return true;
+    return  false;
+}
+
+        var isNaviSection = (embed_id != '' )
+        response.forEach((naviItem) => {
+
+            navimanData.push( naviItem );
+
+            var isDisplayed = true;
+
+                if (!isBackendMode())
+                if (naviItem["data"]["setting"]["displayGlobal"] == null || naviItem["data"]["setting"]["displayGlobal"] == "0") {
+                    // Logic: Nếu nhưng ko bật nhưng là block thì vẫn hiển thị bình thường.
+                    isDisplayed = false;
+                    if( isNaviSection ) isDisplayed = true;
+                }else {
+                    let displayGlobalPages = naviItem["data"]["setting"]["displayGlobalPages"];
+                    let currentTemplate = getCurrentTemplate();
+                    if (!displayGlobalPages.includes(currentTemplate))
+                        isDisplayed = false;
+                }
+
+            // Publish contain/ Don't contain Keyword  ------------------------------------------------------
+            if (isHadValue(naviItem["data"]["setting"]['publishContainKeyword'])) {
+                if( isUrlContain( naviItem["data"]["setting"]['publishContainKeyword'] ) )
+                    isDisplayed = true;
+                else
+                    isDisplayed = false;
+            }
+            if (isHadValue(naviItem["data"]["setting"]['publishDontContainKeyword'])) {
+                if( isUrlContain( naviItem["data"]["setting"]['publishDontContainKeyword'] ) )
+                    isDisplayed = false;
+                else
+                    isDisplayed = true;
+            }
+
+            if (isHadValue(naviItem["data"]["setting"]['publishTriggerIDClass'])) {
+
+                var elsArray = stringToArray( naviItem["data"]["setting"]['publishTriggerIDClass'] );
+                elsArray.forEach(function(elsIdClass, index) {
+                    console.log("Add trigger event to: " + elsIdClass);
+                    var els = document.querySelectorAll(elsIdClass);
+                    els.forEach(function(el) {
+                        const newEl = removeAllEventListeners(el);
+                        newEl.addEventListener("click", function() {
+                            openNaviMenu(naviItem["embed_id"]);
+                        }, false);
+                    });
+                });
+            }
+
+            if( isMobileMode() )
+                if( naviItem["data"]["setting"]["mobileDisplay"] == false || naviItem["data"]["setting"]["mobileDisplay"] == 'false' )
+                    isDisplayed = false;
+            if( !isMobileMode() )
+                if( naviItem["data"]["setting"]["desktopDisplay"] == false || naviItem["data"]["setting"]["desktopDisplay"] == 'false' )
+                    isDisplayed = false;
+
+            // console.log( naviItem["embed_id"] + " is displayed: " + isDisplayed );
+
+            if (isDisplayed) {
+
+                let data = naviItem["data"];
+
+                if( document.getElementsByClassName("naviman_app_overlay").length == 0 )
+                    naviman_app.insertAdjacentHTML('afterend', '<div class="naviman_app_overlay"> </div>');
+                if( document.getElementsByClassName("naviman_app_overlay_global").length == 0 )
+                    document.body.insertAdjacentHTML('afterend', '<div class="naviman_app_overlay_global"> </div>');
+
+                var embedMarginStyle = "";
+
+                if( section_setting["embed_margin"] != '0 0 0 0' && section_setting["embed_margin"].trim() != '' ) {
+                    var margin = parsePaddingMargin(section_setting["embed_margin"]);
+                    embedMarginStyle += ' margin: '
+                        + margin.top + 'px '
+                        + margin.right + 'px '
+                        + margin.bottom + 'px '
+                        + margin.left + 'px '
+                    ;
+                    //console.log(embedMarginStyle);
+                }
+
+                var attribute = "";
+                if( naviItem["data"]["setting"]["attribute"] != null )
+                    attribute = formatAttributes(parseAttributes( naviItem["data"]["setting"]["attribute"] ));
+
+                var divNaviItem = '<div style="visibility: hidden;'+ embedMarginStyle +'" '+ attribute +' name="' + naviItem["name"] + '" id="'+ naviItem["embed_id"] +
+                    '" class="naviItem ' + naviItem["embed_id"] + menuPositionClass( data ) + ' ' + getClassOfMenuKind(window.naviman_shopinfo, naviItem["embed_id"])  + '"></div>';
+                naviman_app.insertAdjacentHTML('beforeend', divNaviItem);
+
+                var naviman_appItem = document.getElementById(naviItem["embed_id"]);
+
+                naviman_appItem.classList.add('naviman_layout' + data["setting"]['layout']);
+                generateCSS(naviman_appItem, naviItem["embed_id"], data["setting"], data["dragdrop"], isNaviSection, section_setting);
+
+                // Add visit call to server by increasing the file count
+                if (!isBackendMode())
+                    jsonp(naviman_domain + 'ajax-main.php?action=updateVisit' + '&shop=' + shop).then(function(data){});
+
+                    naviman_appItem.insertAdjacentHTML('beforeend',
+                    generateMenu(data, naviItem, isNaviSection, section_setting)
+                );
+
+
+                if( embed_id != "" && (section_setting['not_sticky'] == true || section_setting['not_sticky'] == "true" ) ) {
+                    fixNotStickyMenu( naviman_appItem, shop, naviItem["embed_id"], section_setting );
+                    fixMegaMenu( naviman_appItem, shop, naviItem["embed_id"], section_setting );
+
+                    // Logic: Tìm đến section class gần nhất trên Shopify để đổi style -> Có thể có rủi ro nếu ko tìm thấy
+                    fixNotStickyParents( naviman_app, response[0], embed_id, section_setting );
+                }
+
+                /* Chậm lại để cho CSS ổn định rồi thì mới hiện ra */
+                setTimeout(() => {
+                    var isStartVisibility = true;
+                    if( isDisplayTrigger(naviItem) ) {
+                        // console.log("This is only displayed when trigger : " + naviItem["embed_id"] );
+                        isStartVisibility = false;
+                    }
+
+                    if( isBackendMode() )
+                        isStartVisibility = true;
+
+                    if( isStartVisibility )
+                        addStyleToHeader( '#' + naviItem["embed_id"] + ' { visibility: visible !important }');
+                }, 250);
+
+                callbackPublicFunc_delay(drawBottomNav, naviItem["embed_id"]);
+
+            } // isDisplayed
+        });
+    };
+
+    var saveLog = function(logShop, logToUrl, logFromUrl, logItemName, logEmbedId, logPlatform ) {
+
+    let tranferData = {
+        shop: logShop,
+        to_url: logToUrl,
+        from_url: logFromUrl,
+        item_name: logItemName,
+        embed_id: logEmbedId,
+        platform: logPlatform
+    };
+
+    const params = new URLSearchParams(tranferData);
+
+    jsonp(naviman_domain + 'ajax-main.php?action=saveLog' + '&' + params.toString()).then(function(data){
+    });
+};
+    var standalizeFuncWillVar = function (str) {
+
+    str = str.strReplace('"', '');
+    str = str.strReplace("'", "");
+
+    // 1. Add "" for var
+    let result = '';
+    let parenthesesStack = [];
+
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] === '(' && (i === 0 || str[i - 1] !== '"')) {
+            result += str[i] + '"';
+            parenthesesStack.push('(');
+        } else if (str[i] === ')' && (i === str.length - 1 || str[i + 1] !== '"')) {
+            result += '"' + str[i];
+            if (parenthesesStack.length > 0 && parenthesesStack[parenthesesStack.length - 1] === '(') {
+                parenthesesStack.pop();
+            } else {
+                // Unbalanced parentheses
+                return null;
+            }
+        } else {
+            result += str[i];
+        }
+    }
+
+    // Check for unbalanced parentheses
+    if (parenthesesStack.length > 0) {
+        return null;
+    }
+
+    return result;
+}
+
+var gotoUrl = function (event, item, is_parent, url, embed_id, isNaviSection) {
+
+    var menuKind = getMenuKind(window.naviman_shopinfo, embed_id);
+
+    if (!is_parent) {
+        if (isBackendMode()) {
+            if (url != "")
+                showSnackbar("Link to: <u>" + url + "</u>");
+            return false;
+        }
+
+        let logShop = naviman_shopinfo["shop"];
+        let logFromUrl = window.location.href;
+        let logItemName = item.dataset.name;
+        let logEmbedId = embed_id; // Lỗi ở đây rồi
+        let logPlatform = "M";
+        if (window.innerWidth > 768)
+            logPlatform = "D";
+        let openNewTab = false;
+
+        if (url.toLowerCase().includes("@new")) {
+            openNewTab = true;
+            url = url.replace(/@new/gi, '');
+        }
+
+        if (url.substring(0, 13).toLowerCase() == "https://m.me/")
+            openNewTab = true;
+        if (url.substring(0, 14).toLowerCase() == "https://wa.me/")
+            openNewTab = true;
+
+        let logDomain = "https://" + window.location.hostname;
+
+        url = url.trim();
+
+        if (url == "") { // Home page
+            saveLog(logShop, logDomain, logFromUrl, logItemName, logEmbedId, logPlatform);
+            if (openNewTab)
+                window.open(logDomain);
+            else
+                window.location.href = logDomain;
+        }
+
+        if (url == "#") { // Do nothing
+            saveLog(logShop, url, logFromUrl, logItemName, logEmbedId, logPlatform);
+            return false;
+        }
+
+        if (url.length > 1) {
+            if (url.charAt(0) == "#") { // #gotoAnchor
+                let logTo = logFromUrl + url;
+                saveLog(logShop, logTo, logFromUrl, logItemName, logEmbedId, logPlatform);
+                window.location.href = logTo;
+            }
+
+            if (url.length >= 4) // tel
+                if (url.substring(0, 4).toLowerCase() == "tel:") {
+                    //window.open( url );
+                    //window.location.href = url;
+                    return false;
+                }
+
+            if (url.length >= 4) // sms
+                if (url.substring(0, 4).toLowerCase() == "sms:") {
+                    //window.open( url );
+                    //window.location.href = url;
+                    return false;
+                }
+
+            if (url.length >= 5) // open
+                if (url.substring(0, 5).toLowerCase() == "open:") {
+
+                    jsFunction = url.strReplace(':', '');
+                    saveLog(logShop, url, logFromUrl, logItemName, logEmbedId, logPlatform);
+
+                    // Open NaviMenu
+                    if (url.length >= 13)
+                        if (url.substring(0, 13).toLowerCase() == "open:navimenu") {
+                            const func = splitTriggerFunction(jsFunction);
+                            eval('naviman.' + func["functionName"] + '("' + func["variableName"] + '")');
+                            return false;
+                        }
+
+                    // Open other functions such as: openMobileMenu
+                    eval("naviman." + jsFunction)();
+                    return false;
+                }
+
+            if (url.length >= 6) // share
+                if (url.substring(0, 6).toLowerCase() == "share:") {
+                    jsFunction = url.strReplace(':', '');
+                    saveLog(logShop, url, logFromUrl, logItemName, logEmbedId, logPlatform);
+                    eval("naviman." + jsFunction)();
+                    return false;
+                }
+
+            if (url.length >= 7) // scroll
+                if (url.substring(0, 7).toLowerCase() == "scroll:") {
+                    jsFunction = url.strReplace(':', '');
+
+                    var isScrollOnPage = true;
+                    if (url.length >= 10) if (url.substring(0, 10).toLowerCase() == "scroll:top")
+                        isScrollOnPage = false;
+                    if (url.length >= 13) if (url.substring(0, 13).toLowerCase() == "scroll:bottom")
+                        isScrollOnPage = false;
+
+                    if (isScrollOnPage)
+                        jsFunction = standalizeFuncWillVar(jsFunction);
+
+                    saveLog(logShop, url, logFromUrl, logItemName, logEmbedId, logPlatform);
+
+                    if (jsFunction.includes('(')) // Có biến
+                        eval("naviman." + jsFunction);
+                    else
+                        eval("naviman." + jsFunction)();
+
+                    return false;
+                }
+
+            if (url.length >= 7) // mailto
+                if (url.substring(0, 7).toLowerCase() == "mailto:") {
+                    window.open(url);
+                    return false;
+                }
+
+            if (url.length >= 11) // javascript
+                if (url.substring(0, 11).toLowerCase() == "javascript:") {
+                    let jsFunction = url.substring(11, url.length);
+                    jsFunction = jsFunction.strReplace('(', '').strReplace(')', '');
+
+                    saveLog(logShop, 'js/' + jsFunction, logFromUrl, logItemName, logEmbedId, logPlatform);
+                    console.log("Call function: " + jsFunction);
+
+                    eval(jsFunction)();
+
+                    event.preventDefault(); // Ko có tác dụng mấy
+                    return false;
+                }
+
+            let isHadDomain = false;
+            if (url.length >= 4)
+                if (url.substring(0, 4).toLowerCase() == "http")
+                    isHadDomain = true;
+
+            if (!isHadDomain) {
+                if (url.charAt(0) != "/")
+                    url = "/" + url;
+                url = logDomain + url;
+            }
+
+            saveLog(logShop, url, logFromUrl, logItemName, logEmbedId, logPlatform);
+            if (openNewTab) {
+                if (url.substring(0, 14).toLowerCase() == "https://wa.me/") {
+                    // TODO: Need to optimize
+                    console.log("Fixed for Whats App");
+                    window.open(url, "WhatsApp", "width=200,height=100");
+                } else
+                    window.open(url);
+            } else
+                // Todo 19/6: Chỗ này cần kiểm tra xem với loại goto onpage thì sao.
+            {
+                window.location.href = url;
+                if (url.includes('#')) {
+                    setTimeout(function () {
+                        location.reload();
+                    }, 500);
+                }
+            }
+        }
+    } else {
+        if (item.classList.contains("child"))
+            showLevel3Items(item, isNaviSection, menuKind);
+        else
+            showLevel2Items(item, menuKind);
+    }
+
+    // Tránh việc gọi ông con thì lại gọi thêm ông bố
+    event.stopPropagation();
+};
+
+var hideAllLevel3Items = function () {
+    document.querySelectorAll('.naviman_app ul.children ul.children').forEach((item) => {
+        item.style.display = "none";
+    });
+    document.querySelectorAll('.naviman_app ul.children ul.children').forEach((item) => {
+        item.style.display = "none";
+    });
+};
+
+var findIDofMenuItem = function (menuItem) {
+    if (menuItem == null)
+        return null;
+    if (menuItem.parentElement == null)
+        return null;
+    if (menuItem.classList.contains("naviItem"))
+        return menuItem.id;
+    return findIDofMenuItem(menuItem.parentElement);
+}
+
+var showLevel3Items = function (menuItem, isNaviSection, menuKind) {
+
+    var isMobileMode = (window.innerWidth <= 768);
+
+    // Hide menu level 3 ======================
+    if (!isMobileMode) {
+        var is_showing = true;
+        if (menuItem != null)
+            is_showing = (menuItem.querySelector('ul.children').style.display === "block");
+        if (is_showing) {
+            menuItem.querySelector('ul.children').style.display = "none";
+            return;
+        }
+    }
+    // Hide menu level 3 ======================
+
+    // Fix cho việc expand nội bộ từ level 3
+    var isInnerExpand = false;
+    if (isMobileMode)
+        isInnerExpand = true;
+
+    if (menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN'])
+        isInnerExpand = false;
+
+    var ulParent = menuItem.parentElement;
+    let ulChildrent = menuItem.querySelector('ul.children');
+
+    // Nếu trên mobile thì sẽ có 1 cái overlay màu xám
+    if (!(menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN']))
+        if (isInnerExpand) {
+            var liTitle = document.createElement("li");
+            liTitle.setAttribute("class", "overlay-container");
+            liTitle.innerHTML = '<span class="overlay" onclick="return naviman.backToLevel1(event, this)"></span>';
+            ulParent.appendChild(liTitle);
+        }
+
+
+    if (ulChildrent.style.display == "none" || ulChildrent.style.display == "" || ulChildrent.style.display == "initial") {
+        hideAllLevel3Items();
+        if (menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN'])
+            displayElement(ulChildrent, true, "inline-block");
+        else
+            displayElement(ulChildrent, true, "block");
+        menuItem.classList.add("menu-expand");
+        menuItem.classList.add("menu-expand-level2");
+    } else {
+        hideAllLevel3Items();
+        menuItem.classList.remove("menu-expand");
+        menuItem.classList.remove("menu-expand-level2");
+        ulChildrent.style.display = "none";
+    }
+
+    if (isInnerExpand) {
+
+        /*
+        Phương án giải quyết: Tính một lần chiều cao của ulLength và lưu vào attribute.
+         */
+        var ulLength = 0;
+        if (ulChildrent.getAttribute('ulLength'))
+            ulLength = ulChildrent.getAttribute('ulLength');
+        else {
+            ulLength = 8;
+            let liChildrent = ulChildrent.querySelectorAll("li.child");
+            for (i = 0; i < liChildrent.length; i++)
+                ulLength += liChildrent[i].offsetHeight;
+            ulChildrent.setAttribute('ulLength', ulLength);
+        }
+
+
+        // Expand menu height
+        menuItem.parentElement.style.height = ulLength + "px"; //(8 + ulChildrent.querySelector( 'li.child' ).offsetHeight * ulChildrent.querySelectorAll("li.child").length) + "px";
+        menuItem.parentElement.scrollTop = 0;
+        menuItem.parentElement.style.overflow = "hidden";
+
+        if (!isFromNotSkickyMenu(menuItem))
+            showNaviOverlay();
+
+
+        // 1. Cập nhật chiều cao của level 3 bằng level 2
+        ulChildrent.style.height = ulLength + "px";
+
+        /*
+        Phương án giải quyết: Nếu chưa fix chiều cao của ulChildrentTopFixed để sao cho top của level 3 bằng
+        top của level 2 thì tính toán và lưu vào attribute.
+         */
+        if (ulChildrent.getAttribute('ulChildrentTopFixed'))
+            ulChildrentTopFixed = ulChildrent.getAttribute('ulChildrentTopFixed');
+        else {
+            // 2. Cập nhật top của level 3 bằng 0/level 2
+            ulChildrentTopFixed = ulChildrent.getBoundingClientRect().top - ulChildrent.parentElement.parentElement.getBoundingClientRect().top;
+            ulChildrent.setAttribute('ulChildrentTopFixed', ulChildrentTopFixed);
+        }
+
+        // TODO IMPORTANT: Việc này xoá đi không biết có đúng không vì test lại thì thế này mới đúng.
+        /*if (isNaviSection == true || isNaviSection == "true")
+            ulChildrentTopFixed = 0;*/
+        if (isNaviSection == true || isNaviSection == "true")
+            ulChildrentTopFixed = ulChildrentTopFixed - 10;
+
+        ulChildrent.style.top = (-ulChildrentTopFixed) + "px";
+
+        // 3. Đánh dấu là đã cập nhật rồi, ko cần update lại
+        ulChildrent.style.zIndex = 3;
+
+        // 4. Đôi khi ulChildrent.style.left cần update lại vì parent của nó có thể ở giữa màn hình.
+        if (isMobileMode) { // Việc này chỉ xảy ra trên mobile mà thôi.    
+            ulChildrent.style.left = (48 - ulChildrent.parentElement.getBoundingClientRect().left) + "px";
+        }
+
+    }
+
+    // Nếu trên desktop thì sẽ expand ra và set width con=bố
+    if (!isMobileMode) {
+
+        var navimanId = findIDofMenuItem(menuItem);
+        var navimanObj = null;
+        for (var i = 0; i < navimanData.length; i++)
+            if (navimanData[i]["embed_id"] == navimanId) {
+                navimanObj = navimanData[i];
+                break;
+            }
+        var setting = navimanObj["data"]["setting"];
+
+        ulChildrent.parentElement.parentElement.style.overflow = "visible";
+
+        if (!(menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN']))
+            ulChildrent.style.width = ulChildrent.parentElement.parentElement.offsetWidth + "px";
+
+        // ở dưới
+        if (setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_CENTER'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_RIGHT'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_LEFT'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_FULL'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['TOP_FULL'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['BOTTOM_CENTER_FLOAT']) {
+            if (setting.subDirection == false || setting.subDirection == "false")
+                ulChildrent.style.left = "-" + ulChildrent.parentElement.parentElement.offsetWidth + "px";
+            else
+                ulChildrent.style.left = ulChildrent.parentElement.parentElement.offsetWidth + "px";
+            ulChildrent.style.overflow = "visible";
+            ulChildrent.style.height = "fit-content";
+            ulChildrent.style.top = "initial";
+            ulChildrent.style.bottom = "0px";
+
+            if (isNaviSection) {
+                ulChildrent.style.top = "0px";
+                ulChildrent.style.bottom = "initial";
+            }
+        }
+
+        // bên phải
+        if (setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_TOP'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_TOP'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['RIGHT_FULL_CENTER']) {
+            ulChildrent.style.left = "-" + ulChildrent.parentElement.parentElement.offsetWidth + "px";
+        }
+
+        // bên trái
+        if (setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_TOP'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_TOP'] || setting.desktopPosition == NAVIGLOBAL['DESKTOP_POSITION']['LEFT_FULL_CENTER']) {
+            ulChildrent.style.left = (ulChildrent.parentElement.parentElement.offsetWidth + 2) + "px";
+        }
+
+    }
+
+}
+
+var backToLevel1 = function (event, item) {
+
+    // Hide all level 2
+    var level1Childrens = item.parentElement.parentElement.getElementsByClassName("children");
+    for (var i = 0; i < level1Childrens.length; i++) {
+        displayElement(level1Childrens[i], false);
+    }
+
+    var parrent = item.parentElement.parentElement;
+    parrent.style.height = "initial";
+    parrent.style.overflow = "auto";
+
+    // Remove overlay
+    var overlay = item.parentElement;
+    overlay.remove();
+    event.stopPropagation();
+}
+
+var resetAllItems = function () {
+    document.querySelectorAll('.naviman_app ul.children').forEach((item) => {
+        item.style.display = "none";
+    });
+    document.querySelectorAll('.naviman_app span.arrow').forEach((item) => {
+        item.style.display = "none";
+    });
+
+    document.querySelectorAll('.naviman_app ul.children').forEach((item) => {
+        item.style.height = "initial";
+    });
+
+    document.querySelectorAll('.naviman_app li.overlay-container').forEach((item) => {
+        item.remove();
+    });
+
+    hideNaviOverlay();
+
+}
+
+var isFromNotSkickyMenu = function (menuItem) {
+    var limitCount = 0;
+    while (true) {
+        limitCount++;
+        if (limitCount >= 30) return false;
+
+        if (menuItem.className.includes("section_naviman_app"))
+            return true;
+
+        if (menuItem == document.body)
+            return false;
+
+        menuItem = menuItem.parentElement;
+    }
+}
+
+var showLevel2Items = function (menuItem, menuKind) {
+
+    // 1. Kiểm tra xem có những menu item nào đang được hiện không
+    var is_showing = true;
+    if (menuItem != null)
+        is_showing = (menuItem.querySelector('ul.children').style.display === "block");
+
+    // 2. Xoá sạch trạng thái hiện tại đi
+    if (!(menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN']))
+        resetAllItems();
+
+    // 3. Kiểm tra nếu chưa hiện thì hiện các ông con
+    if (menuItem != null) {
+        if (!is_showing) {
+            displayElement(menuItem.querySelector('ul.children'), true);
+            displayElement(menuItem.querySelector('span.arrow'), true);
+            menuItem.querySelector('ul.children').style.overflow = "auto";
+            menuItem.classList.add("menu-expand");
+            menuItem.classList.add("menu-expand-level1");
+
+            if (!isFromNotSkickyMenu(menuItem))
+                showNaviOverlay();
+
+        } else {
+            displayElement(menuItem.querySelector('ul.children'), false);
+            displayElement(menuItem.querySelector('span.arrow'), false);
+            menuItem.classList.remove("menu-expand");
+            menuItem.classList.remove("menu-expand-level1");
+        }
+    }
+};
+
+
+    var openMobileMenu = function() {
+    const divMenu = document.querySelector('.header__icon--menu');
+
+    callbackPublicFunc_delay(openMobileMenu);
+
+    divMenu.addEventListener('click', () => {}); // Xem lai cho false nay
+    divMenu.click();
+};
+
+var openCart = function() {
+    const divMenu = document.querySelector('.header__icon--cart');
+
+    callbackPublicFunc_delay(openCart);
+
+    divMenu.addEventListener('click', () => {});
+    divMenu.click();
+};
+
+var openSearch = function() {
+    var isDawnFamily = true;
+    if(document.querySelector('details-modal.header__search') == null)
+        isDawnFamily = false;
+    if(document.querySelector('details-modal.header__search').querySelector("details") == null)
+        isDawnFamily = false;
+
+    callbackPublicFunc_delay(openSearch);
+
+    // Dawn & Craft
+    if( isDawnFamily ) {
+        const divMenuAll = document.querySelectorAll('details-modal.header__search details');
+        divMenuAll.forEach((divMenu) => {
+            // console.log(divMenu);
+            divMenu.setAttribute("open", "true");
+            divMenu.querySelector("input").focus();
+        });
+    }else {
+        const divMenu = document.querySelector('.header__icon--search');
+        divMenu.addEventListener('click', () => {});
+        divMenu.click();
+    }
+};
+
+var clickToElement = function ( cssClass ) {
+    if( document.querySelector(cssClass) != null ) {
+        setTimeout(() => {
+            document.querySelector(cssClass).click();
+            return false;
+        }, "200");
+    }else
+        console.log("This theme is invalid. Can find: " + cssClass);
+    return false;
+};
+
+var focusToElement = function ( cssClass ) {
+    if( document.querySelector(cssClass) != null ) {
+        setTimeout(() => {
+            document.querySelector(cssClass).focus();
+            return false;
+        }, "200");
+    }else
+        console.log("This theme is invalid. Can find: " + cssClass);
+    return false;
+};
+
+/***** Scroll to Up/OnPage ******************************************************************/
+
+var scrollTop = function (topMargin = 0) {
+    callbackPublicFunc_delay(scrollTop);
+    window.scrollTo({ top: topMargin, behavior: "smooth" });
+    return false;
+};
+
+var scrollOnPage = function ( cssOrID ) {
+    var element = document.querySelector( cssOrID );
+    if( element != null )
+        element.scrollIntoView( {behavior: "smooth"});
+    callbackPublicFunc_delay(scrollOnPage);
+};
+
+var scrollBottom = function (bottomMargin = 0) {
+    callbackPublicFunc_delay(scrollBottom);
+    window.scrollTo({ top: (document.body.scrollHeight - screen.height - bottomMargin), behavior: "smooth" });
+    return false;
+};
+
+/***** Share/copy url ******************************************************************/
+var shareCopyUrl = function () {
+    navigator.clipboard.writeText(window.location.href);
+    callbackPublicFunc_delay(shareCopyUrl);
+    return false;
+};
+
+var shareFacebook = function () {
+    var url = window.location.href;
+    callbackPublicFunc_delay(shareFacebook);
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+    return false;
+};
+
+var shareTweet = function () {
+    var url = window.location.href;
+    callbackPublicFunc_delay(shareTweet);
+    window.open('https://twitter.com/share?url=' + url, '_blank');
+    return false;
+};
+
+
+/***** Theme: Tailor https://themes.shopify.com/themes/tailor/styles/cotton ******************/
+var openMenu_Tailor = function() {
+    callbackPublicFunc_delay(openMenu_Tailor);
+    return clickToElement('.header__controls .header__menu-button');
+};
+var openSearch_Tailor = function() {
+    callbackPublicFunc_delay(openSearch_Tailor);
+    return clickToElement('.header__controls .header__search-button');
+};
+var openCart_Tailor = function() {
+    callbackPublicFunc_delay(openCart_Tailor);
+    return clickToElement('.header__controls .header__cart-button');
+};
+
+/***** Theme: Symmetry https://themes.shopify.com/themes/symmetry/styles/beatnik ******************/
+var openMenu_Symmetry = function() {
+    callbackPublicFunc_delay(openMenu_Symmetry);
+    return clickToElement(".mobile-nav-toggle");
+};
+var openSearch_Symmetry = function() {
+    callbackPublicFunc_delay(openSearch_Symmetry);
+    return clickToElement(".show-search-link");
+};
+var openCart_Symmetry = function() {
+    callbackPublicFunc_delay(openCart_Symmetry);
+    return clickToElement(".cart-link");
+};
+
+/***** Theme: Pipeline https://themes.shopify.com/themes/pipeline/styles/bright ******************/
+var openMenu_Pipeline = function() {
+    callbackPublicFunc_delay(openMenu_Pipeline);
+    return clickToElement('[data-drawer-toggle="hamburger"]');
+};
+var openCart_Pipeline = function() {
+    callbackPublicFunc_delay(openCart_Pipeline);
+    return clickToElement('[data-drawer-toggle="drawer-cart"]');
+};
+var openSearch_Pipeline = function() {
+    openMenu_Pipeline();
+    setTimeout(() => {
+        focusToElement('[type="search"]');
+    }, "300");
+    callbackPublicFunc_delay(openSearch_Pipeline);
+    return;
+};
+
+/***** Theme: Empire https://themes.shopify.com/themes/empire/styles/supply ******************/
+var openMenu_Empire = function() {
+    callbackPublicFunc_delay(openMenu_Empire);
+    return clickToElement('.site-header-menu-toggle--button');
+};
+var openSearch_Empire = function() {
+    callbackPublicFunc_delay(openSearch_Empire);
+    return clickToElement('.site-header-mobile-search-button--button');
+};
+
+/***** Theme: Impulse https://themes.shopify.com/themes/impulse/styles/modern ******************/
+var openMenu_Impulse = function() {
+    if(!document.documentElement.classList.contains("js-drawer-open")) {
+        setTimeout(() => {
+            document.querySelector('.js-drawer-open-nav').click();
+        }, "200");
+        callbackPublicFunc_delay(openMenu_Impulse);
+    }
+    return false;
+};
+var openSearch_Impulse = function() {
+    callbackPublicFunc_delay(openSearch_Impulse);
+    return clickToElement('.js-search-header');
+};
+var openCart_Impulse = function() {
+    if(!document.documentElement.classList.contains("js-drawer-open")) {
+        setTimeout(() => {
+            document.querySelector('.js-drawer-open-cart').click();
+        }, "200");
+
+        callbackPublicFunc_delay(openCart_Impulse);
+    }
+    return false;
+};
+
+/***** Theme: Enterprise https://themes.shopify.com/themes/enterprise/styles/active ******************/
+var openMenu_Enterprise = function() {
+    callbackPublicFunc_delay(openMenu_Enterprise);
+    return clickToElement('.main-menu__toggle');
+};
+var openCart_Enterprise = function() {
+    callbackPublicFunc_delay(openCart_Enterprise);
+    return clickToElement('#cart-icon');
+};
+
+/***** Theme: Warehouse https://themes.shopify.com/themes/warehouse/styles/metal ******************/
+var openMenu_Warehouse = function() {
+    callbackPublicFunc_delay(openMenu_Warehouse);
+    return clickToElement('[data-action="toggle-menu"]');
+};
+var openCart_Warehouse = function() {
+    callbackPublicFunc_delay(openCart_Warehouse);
+    return clickToElement('[data-action="toggle-mini-cart"]');
+};
+var openSearch_Warehouse = function() {
+    callbackPublicFunc_delay(openSearch_Warehouse);
+    return clickToElement('[data-action="toggle-search"]');
+};
+
+/***** Theme: Focal https://themes.shopify.com/themes/focal/styles/carbon ******************/
+var openMenu_Focal = function() {
+    callbackPublicFunc_delay(openMenu_Focal);
+    return clickToElement('[aria-controls="mobile-menu-drawer"]');
+};
+var openCart_Focal = function() {
+    callbackPublicFunc_delay(openCart_Focal);
+    return clickToElement('[aria-controls="mini-cart"]');
+};
+var openSearch_Focal = function() {
+    callbackPublicFunc_delay(openSearch_Focal);
+    return clickToElement('[aria-controls="search-drawer"]');
+};
+
+/***** Theme: Xclusive https://themes.shopify.com/themes/xclusive/styles/shoes ******************/
+var openMenu_Xclusive = function() {
+    callbackPublicFunc_delay(openMenu_Xclusive);
+    return clickToElement('[aria-controls="nav"]');
+};
+var openCart_Xclusive = function() {
+    callbackPublicFunc_delay(openCart_Xclusive);
+    return clickToElement('[aria-controls="cart"]');
+};
+var openSearch_Xclusive = function() {
+    callbackPublicFunc_delay(openSearch_Xclusive);
+    return clickToElement('.search-compact');
+};
+
+/***** Theme: Palo Alto https://themes.shopify.com/themes/palo-alto/styles/vibrant ******************/
+var openMenu_PaloAlto = function() {
+    callbackPublicFunc_delay(openMenu_PaloAlto);
+    return clickToElement('[aria-controls="nav-drawer"]');
+};
+var openCart_PaloAlto = function() {
+    callbackPublicFunc_delay(openCart_PaloAlto);
+    return clickToElement('[aria-controls="cart-drawer"]');
+};
+var openSearch_PaloAlto = function() {
+    callbackPublicFunc_delay(openSearch_PaloAlto);
+    return clickToElement('.mobile-menu .search-popdown__toggle');
+};
+
+/***** Theme: Borders https://themes.shopify.com/themes/borders/styles/raw ******************/
+var openMenu_Borders = function() {
+    callbackPublicFunc_delay(openMenu_Borders);
+    return clickToElement( ".mobile-menu-button" );
+};
+var openCart_Borders = function() {
+    callbackPublicFunc_delay(openCart_Borders);
+    return clickToElement('[aria-controls="site-cart-sidebar"]');
+};
+var openSearch_Borders = function() {
+    callbackPublicFunc_delay(openSearch_Borders);
+    return clickToElement('[aria-controls="site-search-sidebar"]');
+};
+
+/***** Theme: Impact https://themes.shopify.com/themes/impact/styles/sound ******************/
+var openMenu_Impact = function() {
+    callbackPublicFunc_delay(openMenu_Impact);
+    clickToElement('[aria-controls="header-sidebar-menu"]');
+};
+var openCart_Impact = function() {
+    callbackPublicFunc_delay(openCart_Impact);
+    clickToElement('[aria-controls="cart-drawer"]');
+};
+var openSearch_Impact = function() {
+    callbackPublicFunc_delay(openSearch_Impact);
+    clickToElement('[aria-controls="search-drawer"]');
+};
+
+/***** Theme: Broadcast https://themes.shopify.com/themes/broadcast/styles/clean ******************/
+var openMenu_Broadcast = function() {
+    callbackPublicFunc_delay(openMenu_Broadcast);
+    return clickToElement('.header__mobile__hamburger');
+};
+var openCart_Broadcast = function() {
+    callbackPublicFunc_delay(openCart_Broadcast);
+    return clickToElement('.navlink--cart');
+};
+var openSearch_Broadcast = function() {
+    callbackPublicFunc_delay(openSearch_Broadcast);
+    return clickToElement('.navlink--search');
+};
+
+/***** Theme: Expanse https://themes.shopify.com/themes/expanse/styles/classic ******************/
+var openMenu_Expanse = function() {
+    callbackPublicFunc_delay(openMenu_Expanse);
+    return clickToElement('.mobile-nav-trigger');
+};
+var openCart_Expanse = function() {
+    callbackPublicFunc_delay(openCart_Expanse);
+    return clickToElement('#HeaderCartTrigger');
+};
+var openSearch_Expanse = function() {
+    callbackPublicFunc_delay(openSearch_Expanse);
+    return clickToElement('.js-search-header');
+};
+
+/***** Theme: ShowTime https://themes.shopify.com/themes/showtime/styles/cooktime ******************/
+var openMenu_ShowTime = function() {
+    callbackPublicFunc_delay(openMenu_ShowTime);
+    return clickToElement('[class="#main-navigation-mobile-icon"]');
+};
+var openCart_ShowTime = function() {
+    callbackPublicFunc_delay(openCart_ShowTime);
+    return clickToElement('cart-drawer-trigger');
+};
+var openSearch_ShowTime = function() {
+    callbackPublicFunc_delay(openSearch_ShowTime);
+    var input = document.querySelector('[class="#header-searchbar-input"]');
+
+    input.addEventListener('touchstart', function() { input.focus(); });
+    input.addEventListener('click', function() { input.focus(); });
+    setTimeout(() => {
+        input.focus();
+    }, 500);
+};
+
+
+/***** Theme: Local https://themes.shopify.com/themes/local/styles/light ******************/
+var openMenu_Local = function() {
+    callbackPublicFunc_delay(openMenu_Local);
+    return clickToElement('.mobile-menu-button');
+};
+var openCart_Local = function() {
+    callbackPublicFunc_delay(openCart_Local);
+    return focusToElement('.mobile-search input');
+};
+var openSearch_Local = function() {
+    callbackPublicFunc_delay(openSearch_Local);
+    return clickToElement('.mobile-cart-button');
+};
+
+/***** Theme: Avenue https://themes.shopify.com/themes/avenue/styles/casual ******************/
+var openMenu_Avenue = function() {
+    callbackPublicFunc_delay(openMenu_Avenue);
+    return clickToElement('.toggleMenu');
+};
+var openCart_Avenue = function() {
+    callbackPublicFunc_delay(openCart_Avenue);
+    return clickToElement('#cart-count-mobile .cart-count-mobile');
+};
+/*var openSearch_Avenue = function() {
+    return clickToElement('.mobile-cart-button');
+};*/
+
+/***** Theme: Parallax https://themes.shopify.com/themes/parallax/styles/aspen ******************/
+var openMenu_Parallax = function() {
+    callbackPublicFunc_delay(openMenu_Parallax);
+    return clickToElement('.icon-menu');
+};
+var openCart_Parallax = function() {
+    callbackPublicFunc_delay(openCart_Parallax);
+    return clickToElement('.icon-cart');
+};
+var openSearch_Parallax = function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    var input = document.querySelector('.mobile-search-bar .search-form__input');
+
+    input.addEventListener('touchstart', function() { input.focus(); });
+    input.addEventListener('click', function() { input.focus(); });
+    setTimeout(() => {
+        input.focus(); // Focus vào textbox sau khi sự kiện đã được xử lý
+    }, 500);
+
+    callbackPublicFunc(openSearch_Parallax);
+
+    return false;
+};
+
+/******************************************************************************************/
+
+var callPublicFunction = function (functionName, context /*, args */) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    var namespaces = functionName.split(".");
+    var func = namespaces.pop();
+    for(var i = 0; i < namespaces.length; i++) {
+        context = context[namespaces[i]];
+    }
+    if(typeof context[func] === "function") {
+        return context[func].apply(context, args);
+    } else {
+        //console.log("Function not found: " + functionName);
+    }
+}
+
+var scrollToHide = function (screen, cssNaviPrefix) {
+    cssNaviPrefix = cssNaviPrefix.trim();
+    let autoHide = false;
+    if (screen == "mobile") {
+        if (isMobileMode())
+            autoHide = true;
+    } else {
+        if (!isMobileMode())
+            autoHide = true;
+    }
+
+    let obj = document.getElementsByClassName(cssNaviPrefix.substr(1) )[0]; // SF-1234567890
+
+    if (autoHide) {
+        window.addEventListener('scroll',
+            function (e) {
+                var scrollTop = document.documentElement.scrollTop;
+                if (scrollTop > SCROLL_TO_HIDE) {
+                    if( obj.style.display != 'none' ) {
+                        obj.style.display = 'none';
+                        callPublicFunction("naviApp_scrollToHide_Hide", this);
+                        callbackPublicFunc(scrollToHide);
+                    }
+
+                } else {
+                    if( obj.style.display != 'block' ) {
+                        obj.style.display = 'block';
+                        callPublicFunction("naviApp_scrollToHide_Show", this);
+                        callbackPublicFunc(scrollToHide);
+                    }
+                }
+            });
+    }
+
+};
+
+var openInbox_loopHideChat = function () {
+    var isLoop = true;
+    //console.log("loopHideChat");
+    if( document.querySelector('#ShopifyChat').getAttribute("is-open") == "false" )
+        if( document.querySelector('#ShopifyChat').style.visibility == "visible" ) {
+            document.querySelector('#ShopifyChat').style.visibility = "hidden";
+            isLoop = false;
+        }
+
+    callbackPublicFunc(openInbox_loopHideChat);
+
+    if( isLoop ) {
+        setTimeout(function () {
+            openInbox_loopHideChat();
+        }, 200);
+    }
+};
+
+var openInbox_loopHideFAB = function () {
+    var isLoop = true;
+
+    if (document.querySelector('#ShopifyChat') != null) {
+        document.querySelector('#ShopifyChat').style.visibility = "hidden";
+        isLoop = false;
+    }
+
+    if (isLoop) {
+        setTimeout(function () {
+            openInbox_loopHideFAB();
+        }, 200);
+    }
+};
+
+var openInbox = function() {
+    if( document.querySelector('#ShopifyChat') == null ) {
+        console.log("Navi+: Shopify inbox is not installed. Read document <a target='_blank' href='https://help.shopifas.com/manual/faqs/open-chat-box-by-shopify-inbox'>here</a>");
+    }
+
+    var divMenu = document.querySelector('#ShopifyChat').shadowRoot.querySelector('.chat-toggle');
+    document.querySelector('#ShopifyChat').style.visibility = "visible";
+    divMenu.addEventListener('click', () => {});
+    divMenu.click();
+
+    callbackPublicFunc(openInbox);
+
+    setTimeout(function() {
+        openInbox_loopHideChat();
+    }, 200);
+
+};
+
+var openInboxWithoutReplace = function() {
+    if( document.querySelector('#ShopifyChat') == null ) {
+        console.log("Navi+: Shopify inbox is not installed. Read document <a target='_blank' href='https://help.shopifas.com/manual/faqs/open-chat-box-by-shopify-inbox'>here</a>");
+    }
+
+    var divMenu = document.querySelector('#ShopifyChat').shadowRoot.querySelector('.chat-toggle');
+    document.querySelector('#ShopifyChat').style.visibility = "visible";
+    divMenu.addEventListener('click', () => {});
+    divMenu.click();
+
+    callbackPublicFunc(openInboxWithoutReplace);
+};
+
+var openShareMe = function(){
+    if (navigator.share) {
+        navigator.share({
+            title: document.title,
+            text: "Navi+ share",
+            url: window.location.href
+        })
+            .then(() => console.log('Successful share'))
+            .catch(error => console.log('Error sharing:', error));
+    }else
+        console.log("This device does not support share directly!");
+
+    callbackPublicFunc(openShareMe);
+}
+
+
+var callbackPublicFunc = function(func, embedID = "") {
+    let callbackName = `Navi.${func.name}_Callback`;
+
+    if (window.Navi)
+    {
+        if (typeof eval(callbackName) === 'function') {
+            eval(callbackName + '("'+ embedID +'")' );
+            console.log('Executed: '+ `${callbackName}` + '("'+ embedID +'") ');
+        } else {
+            // console.log(`${callbackName} is not found!`);
+        }
+    }else
+    console.log(`The function ${callbackName} is not defined.`);
+}
+
+var callbackPublicFunc_delay = function(func, embedID = "") {
+    setTimeout(() => { callbackPublicFunc(func, embedID); }, 500);
+}
+    
+var asyncGetCart =  async function() {
+    const result = await fetch(window.Shopify.routes.root + 'cart.json');
+
+    if (result.status === 200) {
+        return result.json();
+    }
+    throw new Error(`Failed to get request, Shopify returned ${result.status} ${result.statusText}`);
+};
+
+var updateCartCount = function( item_count ) {
+    // Todo 19/6: Chỗ này cần test kỹ càng, ko work rồi vì nếu trộn lẫn thì sẽ ko chạy
+    var isHideBadge = false;
+    var span = document.querySelectorAll('li.item_badge_withcount span.cart_count');
+    for (var i = 0; i < span.length; i++) {
+        span[i].textContent = item_count;
+        if( item_count == 0 ) {
+            span[i].style.display = "none";
+            isHideBadge = true;
+        }
+        else
+            span[i].style.display = "initial";
+    }
+
+    var span = document.querySelectorAll('li.child_badge_withcount span.cart_count');
+    for (var i = 0; i < span.length; i++) {
+        span[i].textContent = item_count;
+        if( item_count == 0 ) {
+            span[i].style.display = "none";
+            isHideBadge = true;
+        }
+        else
+            span[i].style.display = "initial";
+    }
+
+
+    const root = document.querySelector(":root");
+    if( isHideBadge )
+        root.style.setProperty("--cart-count-text", '""');
+    else
+        root.style.setProperty("--cart-count-text", '"●"');
+
+    callbackPublicFunc(updateCartCount);
+};
+
+var checkAndUpdateCartCount = function() {
+
+    asyncGetCart().then( function(result) {
+        updateCartCount(result.item_count);
+    });
+};
+
+var setCartCount =  function(count)
+{
+    cartCount = count;
+};
+
+/*window.addEventListener('SCE:mutate', (event) => {
+    updateCartCount();
+});*/
+
+/** Library for cart event listener ********************/
+(function () {
+    if (!window || !window.Shopify) return;
+
+    const CartEvents = {
+        add: "SCE:add",
+        update: "SCE:update",
+        change: "SCE:change",
+        clear: "SCE:clear",
+        mutate: "SCE:mutate",
+    };
+
+    const ShopifyCartURLs = [
+        "/cart/add",
+        "/cart/update",
+        "/cart/change",
+        "/cart/clear",
+        "/cart/add.js",
+        "/cart/update.js",
+        "/cart/change.js",
+        "/cart/clear.js",
+    ];
+
+    function isShopifyCartURL(url) {
+        if (!url) return false;
+        if (typeof url === 'string' || url instanceof String) {
+            const path = url.split("/").pop();
+            return ShopifyCartURLs.includes(`/cart/${path}`);
+        }
+        return false;
+    }
+
+    function updateType(url) {
+        if (!url) return false;
+        if (url.includes("cart/add")) {
+            return "add";
+        } else if (url.includes("cart/update")) {
+            return "update";
+        } else if (url.includes("cart/change")) {
+            return "change";
+        } else if (url.includes("cart/clear")) {
+            return "clear";
+        } else return false;
+    }
+
+    function dispatchEvent(url, detail) {
+        if (typeof detail === "string") {
+            try {
+                detail = JSON.parse(detail);
+                console.log( detail );
+            } catch (err) {
+
+            }
+        }
+
+        window.dispatchEvent(new CustomEvent(CartEvents.mutate, { detail }));
+        const type = updateType(url);
+        switch (type) {
+            case "add":
+                window.dispatchEvent(new CustomEvent(CartEvents.add, { detail }));
+                break;
+            case "update":
+                window.dispatchEvent(new CustomEvent(CartEvents.update, { detail }));
+                break;
+            case "change":
+                window.dispatchEvent(new CustomEvent(CartEvents.change, { detail }));
+                break;
+            case "clear":
+                window.dispatchEvent(new CustomEvent(CartEvents.clear, { detail }));
+                break;
+            default:
+                break;
+        }
+    }
+
+    function XHROverride() {
+        if (!window.XMLHttpRequest) return;
+
+        const originalOpen = window.XMLHttpRequest.prototype.open;
+        window.XMLHttpRequest.prototype.open = function () {
+            const url = arguments[1];
+            this.addEventListener("load", function () {
+                if (isShopifyCartURL(url)) {
+                    dispatchEvent(url, this.response);
+                }
+            });
+            return originalOpen.apply(this, arguments);
+        };
+    }
+
+    function fetchOverride() {
+        if (!window.fetch || typeof window.fetch !== "function") return;
+        const originalFetch = window.fetch;
+        window.fetch = function () {
+            const response = originalFetch.apply(this, arguments);
+            //console.log(arguments);
+
+            if (isShopifyCartURL(arguments[0])) {
+                response.then((res) => {
+                    res
+                        .clone()
+                        .json()
+                        .then((data) => dispatchEvent(res.url, data));
+                });
+            }
+
+            return response;
+        };
+    }
+
+    fetchOverride();
+    XHROverride();
+})();
+
+
+    /******** Active menu item: beg ***********/
+
+function trimChar(str, ch) {
+    var start = 0,
+        end = str.length;
+
+    while(start < end && str[start] === ch)
+        ++start;
+
+    while(end > start && str[end - 1] === ch)
+        --end;
+
+    return (start > 0 || end < str.length) ? str.substring(start, end) : str;
+}
+
+function topContain( str, compare ) {
+    str = str.toLowerCase().trim();
+    compare = compare.toLowerCase().trim();
+    // console.log(str + " | " + compare);
+
+    if( str.trim() == "" )
+        if( compare.trim() == "" )
+            return true;
+    if( str.trim() != "" )
+        if( compare.trim() == "" )
+            return false;
+
+    if( str.length < compare.length )
+        return false;
+
+    if (str.substring(0, compare.length).includes(compare)) {
+        return true;
+    }
+    return false;
+}
+
+/******** Active menu item: end ***********/
+
+var generateActiveItems = function() {
+
+    var pathName = trimChar(window.location.pathname, '/');
+
+    var naviItems = document.querySelectorAll(".naviItem");
+    for (navi_item = 0; navi_item < naviItems.length; navi_item++) { // Tìm tất cả các naviItem
+        const listItems = naviItems[navi_item].querySelectorAll('li');
+        //console.log(listItems);
+
+        for (let i = 0; i < listItems.length; i++) { // Tìm trong tất cả các li
+
+            /* Lọc ra url---------------------------------------------------------------*/
+            var url = listItems[i].getAttribute("linkto");
+            url = trimChar(url.replace(/^.*\/\/[^\/]+/, ''), '/');
+
+            if( url != "" )
+            if (topContain(pathName, url)) {
+                listItems[i].classList.add("navi-active");
+
+                var parent = listItems[i];
+                for (parent_index = 0; parent_index < 10; parent_index++) {
+                    parent = parent.parentElement;
+
+                    if (parent.tagName == "LI")
+                        parent.classList.add("navi-active");
+                    if (parent.className.includes('naviItem'))
+                        break;
+                }
+            }
+
+        }
+    }
+}
+
+var checkAndRelayout = function() {
+    if( window.ShopifyAnalytics == null )
+        return;
+
+    if( window.ShopifyAnalytics.meta.page.customerId == null ) {
+        // Do nothing
+        // console.log("User is not logged in");
+    }
+    else {
+        // console.log("User is logged in");
+    }
+}
+    function setLocalStorage(key, value, ttl = 15000) {
+    const now = new Date()
+
+    // `item` is an object which contains the original value
+    // as well as the time when it's supposed to expire
+    const item = {
+        value: value,
+        expiry: now.getTime() + ttl,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+}
+
+function getLocalStorage(key) {
+    const itemStr = localStorage.getItem(key)
+    // if the item doesn't exist, return null
+    if (!itemStr) {
+        return null
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+    // compare the expiry time of the item with the current time
+    if (now.getTime() > item.expiry) {
+        // If the item is expired, delete the item from storage
+        // and return null
+        localStorage.removeItem(key)
+        return null
+    }
+    return item.value
+}
+    
+var isDisplayTrigger = function (naviItem) {
+    var data = naviItem["data"];
+    if(typeof data["setting"]["displayTrigger"] == 'undefined')
+        return false;
+
+    if (data["setting"]["displayTrigger"] == 1 || data["setting"]["displayTrigger"] == "1" ) {
+        return true;
+    }
+
+    return false;
+}
+
+function splitTriggerFunction(str) {
+    // Sử dụng regex để tách tên hàm và biến
+    const regex = /(\w+)\((.+)\)/;
+    const match = str.match(regex);
+
+    if (match) {
+        const functionName = match[1]; // Tên hàm
+        const variableName = match[2]; // Tên biến
+        return {
+            functionName,
+            variableName
+        };
+    } else {
+        return null; // Nếu chuỗi không hợp lệ
+    }
+}
+
+var openNaviMenu = function( embedId ) {
+    const element = document.querySelector("#" + embedId);
+
+    if (element) {
+        if( element.style.visibility != "visible" ) {
+            showNaviOverlayGlobal();
+            element.style.visibility = "visible";
+        }
+        else {
+            hideNaviOverlayGlobal();
+            element.style.visibility = "hidden";
+        }
+    }
+
+    callbackPublicFunc(openNaviMenu);
+};
+
+    return {
+        Name: "Naviman Libraries",
+        drawBottomNav: drawBottomNav,
+        init: init,
+        gotoUrl: gotoUrl,
+        backToLevel1: backToLevel1,
+
+        clickToElement: clickToElement,
+        focusToElement: focusToElement,
+
+        // Trigger
+        openNaviMenu: openNaviMenu,
+
+        // public JS functions
+        openMobileMenu: openMobileMenu,
+        openCart: openCart,
+        openSearch: openSearch,
+
+        // Scroll
+        scrollTop:scrollTop,
+        scrollBottom:scrollBottom,
+        scrollOnPage:scrollOnPage,
+
+        // Share
+        shareCopyUrl:shareCopyUrl,
+        shareFacebook:shareFacebook,
+        shareTweet:shareTweet,
+
+        // Tailor - https://themes.shopify.com/themes/tailor/styles/cotton
+        openMenu_Tailor: openMenu_Tailor,
+        openSearch_Tailor: openSearch_Tailor,
+        openCart_Tailor: openCart_Tailor,
+
+        // Symmetry - https://themes.shopify.com/themes/symmetry/styles/beatnik
+        openMenu_Symmetry: openMenu_Symmetry,
+        openSearch_Symmetry: openSearch_Symmetry,
+        openCart_Symmetry: openCart_Symmetry,
+
+        // Enterprise - https://themes.shopify.com/themes/tailor/styles/cotton
+        openMenu_Enterprise: openMenu_Enterprise,
+        openCart_Enterprise: openCart_Enterprise,
+
+        // Pipeline https://themes.shopify.com/themes/pipeline/styles/bright
+        openMenu_Pipeline: openMenu_Pipeline,
+        openSearch_Pipeline: openSearch_Pipeline,
+        openCart_Pipeline: openCart_Pipeline,
+
+        // Empire - https://themes.shopify.com/themes/empire/styles/supply
+        openMenu_Empire: openMenu_Empire,
+        openSearch_Empire: openSearch_Empire,
+
+        // Impulse - https://themes.shopify.com/themes/impulse/styles/modern
+        openMenu_Impulse: openMenu_Impulse,
+        openSearch_Impulse: openSearch_Impulse,
+        openCart_Impulse: openCart_Impulse,
+
+        // Warehouse - https://themes.shopify.com/themes/impact/styles/sound
+        openMenu_Warehouse: openMenu_Warehouse,
+        openCart_Warehouse: openCart_Warehouse,
+        openSearch_Warehouse: openSearch_Warehouse,
+
+        // Focal - https://themes.shopify.com/themes/focal/styles/carbon
+        openMenu_Focal: openMenu_Focal,
+        openCart_Focal: openCart_Focal,
+        openSearch_Focal: openSearch_Focal,
+
+        // Xclusive - https://themes.shopify.com/themes/xclusive/styles/shoes
+        openMenu_Xclusive: openMenu_Xclusive,
+        openCart_Xclusive: openCart_Xclusive,
+        openSearch_Xclusive: openSearch_Xclusive,
+
+        // Palo Alto https://themes.shopify.com/themes/palo-alto/styles/vibrant
+        openMenu_PaloAlto: openMenu_PaloAlto,
+        openCart_PaloAlto: openCart_PaloAlto,
+        openSearch_PaloAlto: openSearch_PaloAlto,
+
+        // Borders https://themes.shopify.com/themes/borders/styles/raw
+        openMenu_Borders: openMenu_Borders,
+        openCart_Borders: openCart_Borders,
+        openSearch_Borders: openSearch_Borders,
+
+        // Impact - https://themes.shopify.com/themes/Impact/styles/metal
+        openMenu_Impact: openMenu_Impact,
+        openCart_Impact: openCart_Impact,
+        openSearch_Impact: openSearch_Impact,
+
+        // Broadcast - https://themes.shopify.com/themes/broadcast/styles/clean
+        openMenu_Broadcast: openMenu_Broadcast,
+        openCart_Broadcast: openCart_Broadcast,
+        openSearch_Broadcast: openSearch_Broadcast,
+
+        // Expanse - https://themes.shopify.com/themes/expanse/styles/classic
+        openMenu_Expanse: openMenu_Expanse,
+        openCart_Expanse: openCart_Expanse,
+        openSearch_Expanse: openSearch_Expanse,
+
+        // ShowTime - https://themes.shopify.com/themes/showtime/styles/cooktime
+        openMenu_ShowTime: openMenu_ShowTime,
+        openCart_ShowTime: openCart_ShowTime,
+        openSearch_ShowTime: openSearch_ShowTime,
+
+        // Local - https://themes.shopify.com/themes/local/styles/light
+        openMenu_Local: openMenu_Local,
+        openCart_Local: openCart_Local,
+        openSearch_Local: openSearch_Local,
+
+        // Avenue - https://themes.shopify.com/themes/avenue/styles/casual
+        openMenu_Avenue: openMenu_Avenue,
+        openCart_Avenue: openCart_Avenue,
+        // openSearch_Avenue: openSearch_Avenue,
+
+        // Parallax - https://themes.shopify.com/themes/parallax/styles/aspen
+        openMenu_Parallax: openMenu_Parallax,
+        openCart_Parallax: openCart_Parallax,
+        openSearch_Parallax: openSearch_Parallax,
+
+        // Work with other applications
+        openInbox: openInbox,
+        openInboxWithoutReplace: openInboxWithoutReplace,
+
+        openShareMe: openShareMe,
+
+        isHadValue: isHadValue, // TODO: No need publish this function
+
+        // Cart
+        setCartCount: setCartCount,
+        asyncGetCart:asyncGetCart,
+        checkAndUpdateCartCount:checkAndUpdateCartCount,
+        updateCartCount:updateCartCount,
+        generateActiveItems:generateActiveItems,
+        checkAndRelayout:checkAndRelayout,
+
+        showNaviOverlay:showNaviOverlay,
+        hideNaviOverlay:hideNaviOverlay,
+
+        showNaviOverlayGlobal:showNaviOverlayGlobal,
+        hideNaviOverlayGlobal:hideNaviOverlayGlobal,
+
+        isMobileMode: isMobileMode,
+        setLocalStorage: setLocalStorage,
+        getLocalStorage: getLocalStorage,
+
+        callbackPublicFunc: callbackPublicFunc
+
+    };
+
+})();
+
+var Navi = Navi || {};
+
+
+/** uigen/fix_by_cases.js ****************************************/
+/*
+Fix cho trường hợp click ra ngoài thì đóng toàn bộ menu, quay về trạng thái ban đầu mặc định
+ */
+
+document.onclick=function(event){
+
+    if( typeof event.target.closest == "undefined" )
+        return;
+
+    if( event.target.closest(".naviman_app ul li ul.children") == null && event.target.closest(".naviman_app .naviItem") == null ) {
+        document.querySelectorAll('.naviman_app ul li ul.children').forEach((item) => {
+            item.style.display = "none";
+        });
+
+        naviman.hideNaviOverlay();
+    }
+
+}
+
+/*
+Fix cho việc hover chuột qua thì hiện lên luôn trên desktop.
+ */
+/** uigen/fix_by_cases.js END****************************************/
+
+
+if (!naviman.isMobileMode()) {
+    setTimeout(() => {
+        var actions = document.getElementsByClassName("navi-hover");
+
+        for (var i = 0; i < actions.length; i++) {
+            actions[i].addEventListener("mouseover", function () {
+                if (!this.classList.contains("navi-hover-active")) {
+                    this.classList.add("navi-hover-active");
+                    this.click();
+                }
+            });
+
+            actions[i].addEventListener("mouseout", function () {
+                if (this.classList.contains("navi-hover-active")) {
+                    this.classList.remove("navi-hover-active");
+                    this.click();
+                }
+
+            });
+        }
+    }, "1000");
+}
+
+// TODO IMPORTANT: Có thể là cái này không hoạt động khi mà loading chưa kịp naviman_app_overlay_global
+
+setTimeout(() => {
+    var overlay_global = document.querySelector(".naviman_app_overlay_global");
+    if( overlay_global ) {
+        overlay_global.addEventListener("click", function (event) {
+            overlay_global.style.display = "none";
+            document.querySelectorAll('.STICKY_HAMBURGER').forEach((item) => {
+                item.style.visibility = "hidden";
+                document.body.style.overflow = "initial";
+            });
+            event.preventDefault();
+        });
+    }
+
+    var hamburgerMenus = document.querySelectorAll(".hamburger_close");
+    hamburgerMenus.forEach(menu => {
+        menu.addEventListener('click', function() {
+            var overlay_global = document.querySelector(".naviman_app_overlay_global");
+            if( overlay_global )
+                overlay_global.click();
+        });
+    });
+
+}, "3000");
+// .naviman_app_overlay_global
+
+/*
+function setVHVWDimensions() {
+    const vh = window.innerHeight; // Chiều cao của viewport
+    const vw = window.innerWidth; // Chiều rộng của viewport
+
+    console.log( vh );
+    console.log( vw );
+
+    // Thiết lập biến CSS
+    document.documentElement.style.setProperty('--vh', `${vh}rem`);
+    document.documentElement.style.setProperty('--vw', `${vw}rem`);
+}
+
+window.addEventListener('resize', setVHVWDimensions);
+setVHVWDimensions(); */
+
+var naviLanguage = (function(){
+
+    var countryList = {
+        'ab' : 'Abkhazian',
+        'aa' : 'Afar',
+        'af' : 'Afrikaans',
+        'ak' : 'Akan',
+        'sq' : 'Albanian',
+        'am' : 'Amharic',
+        'ar' : 'Arabic',
+        'an' : 'Aragonese',
+        'hy' : 'Armenian',
+        'as' : 'Assamese',
+        'av' : 'Avaric',
+        'ae' : 'Avestan',
+        'ay' : 'Aymara',
+        'az' : 'Azerbaijani',
+        'bm' : 'Bambara',
+        'ba' : 'Bashkir',
+        'eu' : 'Basque',
+        'be' : 'Belarusian',
+        'bn' : 'Bengali',
+        'bh' : 'Bihari languages',
+        'bi' : 'Bislama',
+        'bs' : 'Bosnian',
+        'br' : 'Breton',
+        'bg' : 'Bulgarian',
+        'my' : 'Burmese',
+        'ca' : 'Catalan, Valencian',
+        'km' : 'Central Khmer',
+        'ch' : 'Chamorro',
+        'ce' : 'Chechen',
+        'ny' : 'Chichewa, Chewa, Nyanja',
+        'zh' : 'Chinese',
+        'cu' : 'Church Slavonic, Old Bulgarian, Old Church Slavonic',
+        'cv' : 'Chuvash',
+        'kw' : 'Cornish',
+        'co' : 'Corsican',
+        'cr' : 'Cree',
+        'hr' : 'Croatian',
+        'cs' : 'Czech',
+        'da' : 'Danish',
+        'dv' : 'Divehi, Dhivehi, Maldivian',
+        'nl' : 'Dutch, Flemish',
+        'dz' : 'Dzongkha',
+        'en' : 'English',
+        'eo' : 'Esperanto',
+        'et' : 'Estonian',
+        'ee' : 'Ewe',
+        'fo' : 'Faroese',
+        'fj' : 'Fijian',
+        'fi' : 'Finnish',
+        'fr' : 'French',
+        'ff' : 'Fulah',
+        'gd' : 'Gaelic, Scottish Gaelic',
+        'gl' : 'Galician',
+        'lg' : 'Ganda',
+        'ka' : 'Georgian',
+        'de' : 'German',
+        'ki' : 'Gikuyu, Kikuyu',
+        'el' : 'Greek (Modern)',
+        'kl' : 'Greenlandic, Kalaallisut',
+        'gn' : 'Guarani',
+        'gu' : 'Gujarati',
+        'ht' : 'Haitian, Haitian Creole',
+        'ha' : 'Hausa',
+        'he' : 'Hebrew',
+        'hz' : 'Herero',
+        'hi' : 'Hindi',
+        'ho' : 'Hiri Motu',
+        'hu' : 'Hungarian',
+        'is' : 'Icelandic',
+        'io' : 'Ido',
+        'ig' : 'Igbo',
+        'id' : 'Indonesian',
+        'ia' : 'Interlingua (International Auxiliary Language Association)',
+        'ie' : 'Interlingue',
+        'iu' : 'Inuktitut',
+        'ik' : 'Inupiaq',
+        'ga' : 'Irish',
+        'it' : 'Italian',
+        'ja' : 'Japanese',
+        'jv' : 'Javanese',
+        'kn' : 'Kannada',
+        'kr' : 'Kanuri',
+        'ks' : 'Kashmiri',
+        'kk' : 'Kazakh',
+        'rw' : 'Kinyarwanda',
+        'kv' : 'Komi',
+        'kg' : 'Kongo',
+        'ko' : 'Korean',
+        'kj' : 'Kwanyama, Kuanyama',
+        'ku' : 'Kurdish',
+        'ky' : 'Kyrgyz',
+        'lo' : 'Lao',
+        'la' : 'Latin',
+        'lv' : 'Latvian',
+        'lb' : 'Letzeburgesch, Luxembourgish',
+        'li' : 'Limburgish, Limburgan, Limburger',
+        'ln' : 'Lingala',
+        'lt' : 'Lithuanian',
+        'lu' : 'Luba-Katanga',
+        'mk' : 'Macedonian',
+        'mg' : 'Malagasy',
+        'ms' : 'Malay',
+        'ml' : 'Malayalam',
+        'mt' : 'Maltese',
+        'gv' : 'Manx',
+        'mi' : 'Maori',
+        'mr' : 'Marathi',
+        'mh' : 'Marshallese',
+        'ro' : 'Moldovan, Moldavian, Romanian',
+        'mn' : 'Mongolian',
+        'na' : 'Nauru',
+        'nv' : 'Navajo, Navaho',
+        'nd' : 'Northern Ndebele',
+        'ng' : 'Ndonga',
+        'ne' : 'Nepali',
+        'se' : 'Northern Sami',
+        'no' : 'Norwegian',
+        'nb' : 'Norwegian Bokmål',
+        'nn' : 'Norwegian Nynorsk',
+        'ii' : 'Nuosu, Sichuan Yi',
+        'oc' : 'Occitan (post 1500)',
+        'oj' : 'Ojibwa',
+        'or' : 'Oriya',
+        'om' : 'Oromo',
+        'os' : 'Ossetian, Ossetic',
+        'pi' : 'Pali',
+        'pa' : 'Panjabi, Punjabi',
+        'ps' : 'Pashto, Pushto',
+        'fa' : 'Persian',
+        'pl' : 'Polish',
+        'pt' : 'Portuguese',
+        'qu' : 'Quechua',
+        'rm' : 'Romansh',
+        'rn' : 'Rundi',
+        'ru' : 'Russian',
+        'sm' : 'Samoan',
+        'sg' : 'Sango',
+        'sa' : 'Sanskrit',
+        'sc' : 'Sardinian',
+        'sr' : 'Serbian',
+        'sn' : 'Shona',
+        'sd' : 'Sindhi',
+        'si' : 'Sinhala, Sinhalese',
+        'sk' : 'Slovak',
+        'sl' : 'Slovenian',
+        'so' : 'Somali',
+        'st' : 'Sotho, Southern',
+        'nr' : 'South Ndebele',
+        'es' : 'Spanish, Castilian',
+        'su' : 'Sundanese',
+        'sw' : 'Swahili',
+        'ss' : 'Swati',
+        'sv' : 'Swedish',
+        'tl' : 'Tagalog',
+        'ty' : 'Tahitian',
+        'tg' : 'Tajik',
+        'ta' : 'Tamil',
+        'tt' : 'Tatar',
+        'te' : 'Telugu',
+        'th' : 'Thai',
+        'bo' : 'Tibetan',
+        'ti' : 'Tigrinya',
+        'to' : 'Tonga (Tonga Islands)',
+        'ts' : 'Tsonga',
+        'tn' : 'Tswana',
+        'tr' : 'Turkish',
+        'tk' : 'Turkmen',
+        'tw' : 'Twi',
+        'ug' : 'Uighur, Uyghur',
+        'uk' : 'Ukrainian',
+        'ur' : 'Urdu',
+        'uz' : 'Uzbek',
+        've' : 'Venda',
+        'vi' : 'Vietnamese',
+        'vo' : 'Volap_k',
+        'wa' : 'Walloon',
+        'cy' : 'Welsh',
+        'fy' : 'Western Frisian',
+        'wo' : 'Wolof',
+        'xh' : 'Xhosa',
+        'yi' : 'Yiddish',
+        'yo' : 'Yoruba',
+        'za' : 'Zhuang, Chuang',
+        'zu' : 'Zulu'
+    };
+
+    function stringByLanguage( str ) {
+        if( str == null )
+            return "";
+        str = String(str);
+        str = str.trim();
+        let arr = str.match(/<.*?>/g);
+
+        if( arr == null )
+            return str;
+
+        if( arr.length == 0 )
+            return str;
+
+        // 1. Loại bỏ các phần có <language_code: >
+        let localizeStr = str;
+        arr.forEach((item) => {
+            localizeStr = localizeStr.replace( item, "" );
+        });
+        localizeStr = localizeStr.trim();
+
+        // 2. Tạo một array gồm language_code:string
+        langStr = [];
+        langStr.push(["localize", localizeStr]);
+
+        arr.forEach((item) => {
+            let child = item.replace( "<", "" ).replace( "/>", "" ).replace( ">", "" );
+            var index = child.indexOf(':');
+            if( index > -1 ) {
+                var child_array = [child.slice(0, index).trim(), child.slice(index + 1).trim()];
+                if(child_array.length == 2)
+                    if( child_array[0] != "" )
+                        langStr.push([child_array[0], child_array[1]]);
+            }
+        });
+
+        // 3. So sánh trong danh sách trả về
+        let currentLang = currentLanguage();
+        //console.log( langStr );
+        var output = localizeStr;
+        langStr.forEach((lang) => {
+            if( lang[0] == currentLang ) {
+                output = lang[1];
+                return;
+            }
+        });
+
+        return output;
+    }
+
+    function currentLanguage() {
+        let pathName =  document.location.pathname;
+
+        if( pathName.length < 3 )
+            return "localize";
+
+        for (var lang in countryList) {
+            var langCom = "/" + lang;
+
+            if( pathName.substring(0, 3).toLowerCase() == langCom.toLowerCase() ) {
+                if( pathName.length == 3 )
+                    return lang;
+
+                if( pathName.length > 3 )
+                    if( pathName[3] == "/" || pathName[3] == "&" || pathName[3] == "#" || pathName[3] == "?" || pathName[3] == "%" )
+                        return lang;
+            }
+        }
+
+        return "localize";
+    }
+
+    return {
+        Name: "Naviman Language",
+        stringByLanguage: stringByLanguage,
+        currentLanguage: currentLanguage,
+
+    };
+
+})();
+
+
+var naviman_runApp = function (e) {
+
+/** 1.Link CSS & icons **************************************/
+    function linkCSSToHead(href) {
+        // Kiểm tra xem file CSS đã tồn tại trong <head> chưa
+        if (!document.querySelector(`link[href="${href}"]`)) {
+            const link = document.createElement('link');
+            link.href = href;
+            link.type = "text/css";
+            link.rel = 'stylesheet';
+
+            // Khi file CSS được tải xong, log ra thông báo (tùy chọn)
+            link.onload = function () {
+                console.log(`CSS file ${href} loaded successfully.`);
+            };
+
+            // Thêm phần tử <link> vào phần <head>
+            document.head.appendChild(link);
+        } else {
+            // console.log(`CSS file ${href} is already linked on this page.`);
+        }
+    }
+
+    linkCSSToHead( naviman_css );
+    linkCSSToHead( "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" );
+    linkCSSToHead( "https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.min.css" );
+
+    /** 2.Get variables **************************************/
+    var shop = document.currentScript.getAttribute('shop');
+    var embed_id = '';
+    if(document.currentScript.getAttribute('embed_id') != null)
+        embed_id = document.currentScript.getAttribute('embed_id');
+
+    var section_setting = [];
+    section_setting['embed_id'] = '';
+    section_setting['not_sticky'] = false;
+    section_setting['embed_title'] = '';
+    section_setting['embed_is_full'] = false;
+    section_setting['embed_margin'] = "0 0 0 0";
+
+    if(embed_id != '') {
+        var not_sticky = false;
+        var embed_title = "";
+        var embed_is_full = false;
+        var embed_margin = "0 0 0 0";
+
+        if (document.currentScript.getAttribute('not_sticky') != null)
+            not_sticky = document.currentScript.getAttribute('not_sticky');
+        if(embed_id != '') if(document.currentScript.getAttribute('embed_title') != null)
+            embed_title = document.currentScript.getAttribute('embed_title');
+        if(embed_id != '') if(document.currentScript.getAttribute('embed_is_full') != null)
+            embed_is_full = document.currentScript.getAttribute('embed_is_full');
+        if(embed_id != '') if(document.currentScript.getAttribute('embed_margin') != null)
+            embed_margin = document.currentScript.getAttribute('embed_margin');
+
+        section_setting['embed_id'] = embed_id.trim();
+        section_setting['not_sticky'] = not_sticky;
+        section_setting['embed_title'] = embed_title.trim();
+        section_setting['embed_is_full'] = embed_is_full;
+        section_setting['embed_margin'] = embed_margin;
+    }
+
+    // console.log(section_setting);
+
+    /*****************
+     Mỗi khi gặp đoạn mã này thì sẽ chạy một lần runNaviman. Data có thể là một danh sách hoặc 1 item
+     - Nếu all: Chạy for cho nhiều item.
+     - Nếu section:
+        1. Nếu sticky thì chạy bình thường (for vô nghĩa)
+        2. Nếu ko sticky thì bổ sung mã CSS (for vô nghĩa)
+     ***************/
+    function runNaviman( data, shopinfo ) {
+        naviman.init();
+
+        if( isNeedCartCount(data) ) {
+            naviman.asyncGetCart().then( function(result) {
+                // console.log("Cart count: " + result.item_count );
+                window.addEventListener('SCE:mutate', (event) => {
+                    naviman.checkAndUpdateCartCount();
+                });
+                naviman.setCartCount( result.item_count );
+                naviman.drawBottomNav(data, naviman_domain, shop, embed_id, section_setting);
+                naviman.generateActiveItems();
+                naviman.checkAndRelayout();
+
+                if( result.item_count == 0 ) {
+                    naviman.updateCartCount( result.item_count );
+                }
+
+            });
+        }else {
+            naviman.drawBottomNav(data, naviman_domain, shop, embed_id, section_setting);
+            naviman.generateActiveItems();
+            naviman.checkAndRelayout();
+        }
+    }
+
+
+    var api_url = naviman_json_cdn + "/" + shop.replace(".myshopify.com", '') + ".all.json";
+    if( embed_id != '' )
+        api_url = naviman_json_cdn + "/" + shop.replace(".myshopify.com", '') + "." + embed_id + ".json";
+    // TODO: Chỗ này không có là không chạy đúng
+    // api_url += "?v=" + Math.random();
+
+    var api_shopinfo_url = naviman_json_cdn + "/" + shop.replace(".myshopify.com", '') + ".info.json";
+    api_shopinfo_url += "?v=" + Math.random();
+
+    function logCache( kind, key, value ) {
+        console.log( kind + ": " + key);
+        console.log(value);
+    }
+
+    // Start here ===============================================<<
+
+    function clearNaviLocalStorage() {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+
+            if (key.includes('naviplus')) {
+                localStorage.removeItem(key);
+                i--;
+            }
+        }
+    }
+
+
+    function runApplication(shopinfo) {
+        var jsonData = naviman.getLocalStorage(api_url);
+        var jsonUpdateVersion = 0;
+        if( naviman.getLocalStorage("jsonUpdateVersion") != null )
+            jsonUpdateVersion = naviman.getLocalStorage("jsonUpdateVersion");
+
+        var isNeedRequestServer = false;
+        if( jsonData == null )
+            isNeedRequestServer = true;
+        if( shopinfo["update_version"] != jsonUpdateVersion ) {
+            console.log("There is a new version of Navi+ data! Deleted!");
+            clearNaviLocalStorage();
+            isNeedRequestServer = true;
+        }
+
+        if( isNeedRequestServer ) {
+            fetch(api_url + "?v=" + Math.random())
+                .then((response) => response.json())
+                .then((json) => {
+                    logCache( "[Server]", api_url, json );
+
+                    // Set json to localStorate
+                    naviman.setLocalStorage(api_url, json, naviman_cache_miniseconds);
+
+                    // Set update version to localStorate
+                    naviman.setLocalStorage("jsonUpdateVersion", shopinfo["update_version"], naviman_cache_miniseconds);
+
+                    runNaviman(json, shopinfo);
+                });
+        }else {
+            // logCache( "From local", api_url, jsonData );
+            runNaviman(jsonData, shopinfo);
+        }
+    }
+
+    window.naviman_shopinfo = naviman.getLocalStorage("naviman_shopinfo");
+
+    if ( window.naviman_shopinfo == null) {
+        fetch(api_shopinfo_url)
+            .then((response_shopinfo) => response_shopinfo.json())
+            .then((shopinfo) => {
+                window.naviman_shopinfo = shopinfo;
+
+                // TODO IMPORTANT ============================================================
+                //  Hiện tại setup cứ 5 giây lại load lại shopinfo một lần -> tạo áp lực lên server và
+                // thêm nữa nếu trên một trang có nhiều menu thì sẽ load nhiều lần.
+                // Giải pháp: Chờ load xong shopinfo thì mới load tiếp các menu khác -> Vòng lặp vô hạn cho đến khi phát
+                // hiện ra localstorage có data -> Nếu local storage không hoạt động thì nó có thể gây hỏng toàn bộ. liệu cần kiểm tra localstorage có hoạt động ko?
+                // TODO IMPORTANT ============================================================
+
+                naviman.setLocalStorage("naviman_shopinfo", window.naviman_shopinfo, 5000);
+
+                if (!window.isShopinfoServerLogged) {
+                    logCache( "[Server]", "naviman_shopinfo", window.naviman_shopinfo );
+                    window.isShopinfoServerLogged = true; // Đặt cờ để không log lại nữa
+                }
+
+                runApplication(window.naviman_shopinfo);
+            });
+    }else {
+        if (!window.isShopinfoLocalLogged) {
+            logCache( "[Local]", "naviman_shopinfo", window.naviman_shopinfo );
+            window.isShopinfoLocalLogged = true; // Đặt cờ để không log lại nữa
+        }
+
+        runApplication(window.naviman_shopinfo);
+    }
+
+
+    // Start here ===============================================>>
+
+
+    function containsBadgeIsCart(arr) {
+        for (let i = 0; i < arr.length; i++) {
+            const item = arr[i];
+            if( naviman.isHadValue( item["badgeiscart"] ) )
+                if( item["badgeiscart"] == 1 || item["badgeiscart"] == "1" ) {
+                    return true;
+
+                }
+
+            if (Array.isArray(item["children"]))
+                if (item["children"].length > 0) {
+                    if (containsBadgeIsCart(item["children"])) {
+                        return true;
+                    }
+                }
+        }
+
+        return false;
+    }
+
+    function isNeedCartCount( data ) {
+
+        var isNeed = false;
+        data.forEach((naviItem) => {
+            if( containsBadgeIsCart( naviItem["data"]["dragdrop"] ) ) {
+                isNeed = true;
+                return;
+            }
+        });
+        return isNeed;
+    }
+
+    /** 3.Get API data **************************************/
+    function jsonp(uri) {
+        return new Promise(function(resolve, reject) {
+            var id = '_' + Math.round(10000 * Math.random());
+            var callbackName = 'jsonp_callback_' + id;
+            window[callbackName] = function(data) {
+                delete window[callbackName];
+                var ele = document.getElementById(id);
+                ele.parentNode.removeChild(ele);
+                resolve(data);
+            }
+
+            var src = uri + '&callback=' + callbackName;
+            var script = document.createElement('script');
+            script.src = src;
+            script.id = id;
+            script.addEventListener('error', reject);
+            (document.getElementsByTagName('head')[0] || document.body || document.documentElement).appendChild(script)
+        });
+    }
+
+
+
+};
+
+naviman_runApp();
+
+
