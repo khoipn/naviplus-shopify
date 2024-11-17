@@ -1,5 +1,6 @@
+var naviman_version = "2.0.3";
 var naviman_domain = 'https://naviman.shopifas.com/';
-var naviman_css = 'https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify@latest/v1/uigen-min.css';
+var naviman_css = 'https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify/'+ naviman_version +'/uigen.min.css';
 var UIGEN_ENV = "DEPLOYMENT";
 
 
@@ -10,7 +11,7 @@ var naviman_cache_miniseconds = 3600000; // 10 minutes
 
 if (typeof naviman === 'undefined') {
     if (!window.isWelcomeLogged) {
-        console.log("%cNavi+ is Menu Builder for Mobile + Desktop: Sticky Navbar, Tab bar, Mega Menu, Slide Menu & Grid Menu.. | Website: https://apps.shopify.com/pronavi-navigation-design", "color:green; font-size: 16px");
+        console.log("%cNavi+ (Version: "+ naviman_version +" ) is Menu Builder for Mobile + Desktop: Sticky Navbar, Tab bar, Mega Menu, Slide Menu & Grid Menu.. | Website: https://apps.shopify.com/pronavi-navigation-design", "color:green; font-size: 16px");
         window.isWelcomeLogged = true;
     }
 }
@@ -4846,7 +4847,7 @@ var naviman_runApp = function (e) {
 
     linkCSSToHead( naviman_css );
     linkCSSToHead( "https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" );
-    linkCSSToHead( "https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.min.css" );
+    // linkCSSToHead( "https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.min.css" );
 
     /** 2.Get variables **************************************/
     var shop = document.currentScript.getAttribute('shop');
