@@ -1,4 +1,4 @@
-var naviman_version = "2.0.4";
+var naviman_version = "2.0.5";
 var naviman_domain = 'https://naviman.shopifas.com/';
 var naviman_css = 'https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify/'+ naviman_version +'/uigen.min.css';
 var UIGEN_ENV = "DEPLOYMENT";
