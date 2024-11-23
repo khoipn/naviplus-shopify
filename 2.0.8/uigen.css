@@ -1,0 +1,19 @@
+<?php
+header("Content-Type: text/css");
+
+// Array chứa danh sách các file CSS cần gộp
+$cssFiles = [
+    'css/conflict_avoid.css',
+    'css/common.css',
+    'css/badge.css',
+    'css/menu_sticky_hamburger.css',
+    'css/menu_section_megamenu.css',
+    'css/fix_by_cases.css'
+];
+
+// Đọc và in nội dung của từng file CSS
+foreach ($cssFiles as $file) {
+    if (file_exists($file)) {
+        readfile($file);
+    }
+}
