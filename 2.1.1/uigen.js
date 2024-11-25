@@ -1,5 +1,5 @@
-var naviman_version = "2.0.8";
-var naviman_domain = 'https://shopify.naviplus.app/';
+var naviman_version = "2.1.1";
+var naviman_domain = 'https://naviman.shopifas.com/';
 var naviman_css = 'https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify/'+ naviman_version +'/uigen.min.css';
 var UIGEN_ENV = "DEPLOYMENT";
 
@@ -701,6 +701,20 @@ var platformValue = function( val ) {
         }
     }
     return val;
+}
+
+function getHiddenDivSize(div) {
+    const clone = div.cloneNode(true); // Sao chép thẻ div
+    clone.style.visibility = 'hidden'; // Ẩn nhưng vẫn render
+    clone.style.position = 'absolute'; // Đặt ở vị trí tạm thời
+    clone.style.display = 'block';     // Đảm bảo nó được render
+
+    document.body.appendChild(clone);  // Thêm clone vào DOM
+    const width = clone.offsetWidth;
+    const height = clone.offsetHeight;
+    document.body.removeChild(clone);  // Xóa clone khỏi DOM
+
+    return { width, height };
 }
 
 /** uigen/libs.js END ****************************************/
@@ -1761,15 +1775,42 @@ var generateCSS = function(naviman_appItem, embed_id, setting, dragdrop, isNaviS
 
     // Fix arrow icons to center of menu item (dynamic -> fixing)
     setTimeout(function(){
-        const div = document.querySelector(idCssNaviPrefix + ' ul > li.is-parent-top');
+        const div = document.querySelector(idCssNaviPrefix + ' ul > li.is-parent-top > .inner');
         if( div != null ) {
             var html = '<style>';
-            html += idCssNaviPrefix + ' ul > li.is-parent-top::after { top: '+ (div.clientHeight/2 - 10) +'px; } ';
+            html += idCssNaviPrefix + ' ul > li.is-parent-top::after { top: '+ (div.clientHeight/2 - 4) +'px; } ';
             html += '</style>';
 
             naviman_appItem.insertAdjacentHTML('beforebegin', html);
         }
-    }, 2000);
+    }, 1000);
+
+    // Lưu vào biến window về hamburgerSubDirection để dùng trong hàm showLevel2Items nhằm reset all sub menus -----------------------
+    if (!window.hamburgerSubDirection) 
+        window.hamburgerSubDirection = {};
+    window.hamburgerSubDirection[embed_id] = setting["hamburgerSubDirection"];
+    
+    // Trên desktop mở menu ra ngoài thay vì xổ xuống 
+    if( setting["hamburgerSubDirection"] == 2 ) {
+        console.log("fix for hamburgerSubDirection == 2 ");
+        var parentMenuSize = getHiddenDivSize( document.querySelector(idCssNaviPrefix) );
+
+        // Đẩy submenu ra ngoài thay vì xổ xuống ---------------------------
+        addHtml += idCssNaviPrefix + ' ul li.item > ul.children { position: fixed; top: 0px; height: 100% !important; border: 0px; margin-top: 0px; border-radius: 0px;';
+        // Thêm một cái line trung tính giữa 2 submenu và parent
+        addHtml += 'border-left: solid 1px rgba( 128,128,128,0.2); '; 
+        // Đặt sub menu bằng với kích thước của parent menu
+        addHtml += 'width:' + parentMenuSize.width + 'px; ';
+        addHtml += 'left:' + parentMenuSize.width + 'px; ';
+        addHtml += ' } ';            
+
+
+        // Chỉnh lại vị trí của arrow để không sát bên phải quá. Điều chỉnh top lên 16px nhưng nếu dòng to nhỏ khác nhau sẽ ko đẹp
+        addHtml += idCssNaviPrefix + ' ul > li.is-parent-top ul li.is-parent::after { right: 8px; top: 16px } ';
+        
+
+    }
+
 
     return addHtml;
 };
@@ -2876,7 +2917,7 @@ var isItemSMS = function ( item_url ) {
                 if( naviItem["data"]["setting"]["desktopDisplay"] == false || naviItem["data"]["setting"]["desktopDisplay"] == 'false' )
                     isDisplayed = false;
 
-            console.log( naviItem["embed_id"] + " is displayed: " + isDisplayed );
+            // console.log( naviItem["embed_id"] + " is displayed: " + isDisplayed );
 
             if (isDisplayed) {
 
@@ -3171,9 +3212,9 @@ var gotoUrl = function (event, item, is_parent, url, embed_id, isNaviSection) {
         }
     } else {
         if (item.classList.contains("child"))
-            showLevel3Items(item, isNaviSection, menuKind);
+            showLevel3Items(item, isNaviSection, menuKind, embed_id);
         else
-            showLevel2Items(item, menuKind);
+            showLevel2Items(item, menuKind, embed_id);
     }
 
     // Tránh việc gọi ông con thì lại gọi thêm ông bố
@@ -3199,7 +3240,7 @@ var findIDofMenuItem = function (menuItem) {
     return findIDofMenuItem(menuItem.parentElement);
 }
 
-var showLevel3Items = function (menuItem, isNaviSection, menuKind) {
+var showLevel3Items = function (menuItem, isNaviSection, menuKind, embed_id) {
 
     var isMobileMode = (window.innerWidth <= 768);
 
@@ -3231,7 +3272,7 @@ var showLevel3Items = function (menuItem, isNaviSection, menuKind) {
         if (isInnerExpand) {
             var liTitle = document.createElement("li");
             liTitle.setAttribute("class", "overlay-container");
-            liTitle.innerHTML = '<span class="overlay" onclick="return naviman.backToLevel1(event, this)"></span>';
+            liTitle.innerHTML = '<span class="overlay" onclick="return naviman.backToLevel1(event, this)"><b class="close"><i class="ri-arrow-left-line"></i></b></span>';
             ulParent.appendChild(liTitle);
         }
 
@@ -3384,6 +3425,15 @@ var resetAllItems = function () {
         item.style.display = "none";
     });
 
+    // Chỗ này không chạy gì cả, tệ quá
+    document.querySelectorAll('.naviItem .menu-expand').forEach((item) => {
+        // Remove menu-expand of item
+        item.classList.remove('menu-expand');
+    });
+
+    
+
+
     document.querySelectorAll('.naviman_app ul.children').forEach((item) => {
         item.style.height = "initial";
     });
@@ -3412,7 +3462,7 @@ var isFromNotSkickyMenu = function (menuItem) {
     }
 }
 
-var showLevel2Items = function (menuItem, menuKind) {
+var showLevel2Items = function (menuItem, menuKind, embed_id) {
 
     // 1. Kiểm tra xem có những menu item nào đang được hiện không
     var is_showing = true;
@@ -3420,7 +3470,19 @@ var showLevel2Items = function (menuItem, menuKind) {
         is_showing = (menuItem.querySelector('ul.children').style.display === "block");
 
     // 2. Xoá sạch trạng thái hiện tại đi
+    var needResetAllItems = false;
+
+    // Giải thích: Nếu là các menu không phải hamburger thì cần reset tất cả các menu
     if (!(menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN']))
+        needResetAllItems = true;
+    // Giải thích: Nếu là hamburger thì kiểm tra nếu mở rộng ra ngoài thì cũng cần reset tất cả các menu
+    if (menuKind == NAVIGLOBAL['MENU_KINDS']['STICKY_HAMBURGER'] || menuKind == NAVIGLOBAL['MENU_KINDS']['CONTEXT_DROPDOWN']) {
+        if( window.hamburgerSubDirection[embed_id] == 2 ) 
+            needResetAllItems = true;
+    }
+        
+
+    if (needResetAllItems == true)
         resetAllItems();
 
     // 3. Kiểm tra nếu chưa hiện thì hiện các ông con
@@ -3429,6 +3491,7 @@ var showLevel2Items = function (menuItem, menuKind) {
             displayElement(menuItem.querySelector('ul.children'), true);
             displayElement(menuItem.querySelector('span.arrow'), true);
             menuItem.querySelector('ul.children').style.overflow = "auto";
+            
             menuItem.classList.add("menu-expand");
             menuItem.classList.add("menu-expand-level1");
 

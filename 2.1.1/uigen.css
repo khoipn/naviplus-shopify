@@ -466,10 +466,19 @@
     height: 100%;
     position: absolute;
     z-index: 1;
-    background: #000;
+    background: rgba(0, 0, 0, 0.2);
     left: 0px;
     top: 0px;
-    opacity: 20%;
+    
+}
+
+.naviItem ul li ul.children .overlay b.close {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    background: #fff;
+    padding: 8px 10px;
+    border-radius: 8px 0px 0px 8px;
 }
 
     /*.naviItem ul li.item:hover > ul,
@@ -1124,6 +1133,7 @@ span.telsms-click-spaces {
 
 .naviItem.STICKY_HAMBURGER ul > li.is-parent-top ul li.is-parent::after {
     right: 0px;
+    top: 16px;
 }
 
 .naviItem.STICKY_HAMBURGER ul > li.is-parent-top.menu-expand::after,
@@ -1217,6 +1227,17 @@ span.telsms-click-spaces {
 
 .naviItem.STICKY_HAMBURGER ul li.item:hover, .naviItem.STICKY_HAMBURGER ul li.child:hover {
     background: initial;
+}
+
+@media only screen and (min-width:769px){
+    .naviItem.STICKY_HAMBURGER > ul li.item:hover, .naviItem.STICKY_HAMBURGER > ul li.child:hover{
+        background: rgba(128, 128, 128, 0.03) radial-gradient(circle, transparent 0%, rgba(128, 128, 128, 0.03) 0%) center / 15000%;
+        /*text-decoration: underline;*/
+    }
+
+    .naviItem.STICKY_HAMBURGER > ul li.item.menu-expand:hover, .naviItem.STICKY_HAMBURGER > ul li.child.menu-expand:hover{
+        background: initial;
+    }
 }
 
 .naviItem.STICKY_HAMBURGER ul li.item .name:hover, .naviItem.STICKY_HAMBURGER ul li.child .name:hover {
