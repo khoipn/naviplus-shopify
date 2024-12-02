@@ -1,4 +1,4 @@
-var naviman_version = "2.2.3";
+var naviman_version = "2.2.6";
 var naviman_domain = 'https://naviman.shopifas.com/';
 var naviman_css = 'https://cdn.jsdelivr.net/gh/khoipn/naviplus-shopify/'+ naviman_version +'/uigen.min.css';
 var UIGEN_ENV = "DEPLOYMENT";
@@ -857,10 +857,10 @@ var generateCSS_UI_Level1_Background = function ( setting, cssNaviPrefix, sectio
 
     var addHtml = "";
     // Expand menu icon ---------------------------------------------------------
-    if (!isSettingBeTrue(setting['expandArrowShow'])) {
+    if (!isSettingBeTrue(setting['expandArrowShow'], true)) {
         addHtml += cssNaviPrefix + ' ul > li.is-parent-top::after { content: "" !important; } ';
         addHtml += cssNaviPrefix + ' ul > li.is-parent::after { content: "" !important; } ';
-        addHtml += cssNaviPrefix + ' ul > li.is-parent-top { padding-right: 16px !important; } ';
+        addHtml += cssNaviPrefix + ' ul > li.item.is-parent-top { padding-right: 16px !important; } ';
         
     }
 

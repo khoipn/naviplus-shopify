@@ -1372,9 +1372,9 @@ span.telsms-click-spaces {
     transform: rotate(90deg);
 }
 
-.naviItem.SECTION_MEGAMENU ul > li.is-parent-top {
+.naviItem.SECTION_MEGAMENU ul > li.item.is-parent-top {
     padding-left: 16px;
-    padding-right: 16px;
+    padding-right: 32px;
 }
 
 .naviItem.SECTION_MEGAMENU ul > li.item {
